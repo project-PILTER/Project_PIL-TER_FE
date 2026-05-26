@@ -1,9 +1,8 @@
 ## 파일 트리 구조
 이 프로젝트 프론트엔드 부분의 기본적인 파일 트리 구조는 다음과 같다.
 
-PROJECT-LIMC-FE/
-
 ```txt
+PROJECT-LIMC-FE/
 ├── .next/
 ├── app/
 ├── components/

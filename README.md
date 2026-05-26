@@ -3,6 +3,7 @@
 
 PROJECT-LIMC-FE/
 
+```txt
 ├── .next/
 ├── app/
 ├── components/
@@ -29,3 +30,4 @@ PROJECT-LIMC-FE/
 ├── postcss.config.mjs
 ├── README.md
 └── tsconfig.json
+```

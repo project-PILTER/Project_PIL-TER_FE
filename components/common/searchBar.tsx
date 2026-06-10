@@ -1,0 +1,23 @@
+"use client";
+
+/*
+  검색창 컴포넌트
+  client 쪽에 렌더링되며 검색 기능을 수행함
+*/
+
+import { Search } from "lucide-react"
+import { Button } from "../ui/button";
+
+export default function SearchBar() {
+  return(
+    <div className="flex justify-center items-center">
+      <div className="flex bg-white w-80 h-9 rounded-sm">
+      <Search className="text-black h-full mx-2"/>
+      <input className="text-black w-full outline-none" type="search" placeholder="궁금한 증상이나 키워드를 입력해주세요."></input>
+      </div>
+      <div className="ml-2 h-full">
+        <Button className="bg-white text-[#615ed6] rounded-sm hover:bg-white/90">검색하기</Button>
+      </div>
+    </div>
+  )
+}

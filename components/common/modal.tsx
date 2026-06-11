@@ -3,7 +3,7 @@
   로그인, 게시글 수정, 건강일지 수정 등에 사용하기 위한 공용 컴포넌트
 */
 
-import { ModalProps } from "@/types/modal.type";
+import { ModalProps } from "@/types/ui.type";
 import {
   Dialog,
   DialogContent,

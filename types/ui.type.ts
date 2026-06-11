@@ -9,3 +9,9 @@ export interface ModalProps {
   size?: "sm" | "md" | "lg" | "xl";
   footer?: React.ReactNode;
 }
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+}

@@ -19,7 +19,6 @@ export default function LoginButton() {
       <Button
         className="bg-white dark:bg-black text-black dark:text-white hover:bg-[#e4e3f5]"
         onClick={() => {
-          console.log("login clicked");
           setMode("login");
           setOpen(true);
         }}

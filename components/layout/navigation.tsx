@@ -8,9 +8,9 @@ import Link from "next/link";
 import logo from ".././../public/logo/logo_no_letter.png";
 import letter from "../../public/logo/letter.png"
 import Image from "next/image";
-import ThemeButton from "../common/themeButton";
+import ThemeButton from "./themeButton";
 import { Bell, } from "lucide-react";
-import LoginButton from "../common/loginButton";
+import LoginButton from "./loginButton";
 
 export default function Navigation() {
   return (

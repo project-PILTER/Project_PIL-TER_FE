@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/layout/navigation";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -43,8 +44,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
-          <Navigation />
-          {children}
+          <TooltipProvider>
+            <Navigation />
+            {children}
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

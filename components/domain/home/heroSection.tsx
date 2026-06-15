@@ -4,7 +4,7 @@
   태그는 추후에 추가 예정
 */
 
-import SearchBar from "@/components/common/searchBar"
+import SearchBar from "@/components/domain/home/searchBar"
 import { Badge } from "@/components/ui/badge"
 import { Sparkles } from "lucide-react"
 

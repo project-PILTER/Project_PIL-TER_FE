@@ -29,3 +29,14 @@ export interface ToolButtonProps {
   children: React.ReactNode;
   className?: string;
 }
+
+export interface SelectOption {
+  id: number;
+  name: string;
+}
+export interface AppSelectProps {
+  value?: string;
+  placeholder: string;
+  options: SelectOption[];
+  onValueChange: (value: string) => void;
+}

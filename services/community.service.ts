@@ -3,7 +3,6 @@
 */
 
 import { Article } from "@/types/community.type";
-import { api } from "./axios";
 
 export async function getArticles(): Promise<Article[]> {
   const articles = await fetch(`${process.env.TEST_API_URL}/articles`);

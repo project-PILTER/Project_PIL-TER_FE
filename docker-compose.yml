@@ -19,4 +19,4 @@ services:
       - "3000:3000"
     # env_file은 런타임 환경 변수용으로 그대로 두셔도 무방합니다.
     env_file:
-      - .env.production
+      - .env

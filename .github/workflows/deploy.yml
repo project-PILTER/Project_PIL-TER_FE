@@ -33,7 +33,7 @@ jobs:
             cd /home/ubuntu/frontend
 
             # 🔥 여기서 env 생성 (핵심)
-            cat << EOF > .env.production
+            cat << EOF > .env
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
             NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID }}
             NEXT_PUBLIC_KAKAO_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_KAKAO_REDIRECT_URI }}

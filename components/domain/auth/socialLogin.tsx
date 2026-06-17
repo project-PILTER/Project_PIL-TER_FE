@@ -3,11 +3,14 @@
   카카오, 구글, 네이버로 이루어져 있다.
 */
 
-import { SocialLoginProps } from "@/types/auth.type";
 import Image from "next/image";
 import kakaoLogin from "../../../public/auth/kakao_login.png";
 import googleLogin from "../../../public/auth/google_login.png";
 import naverLogin from "../../../public/auth/naver_login.png";
+
+interface SocialLoginProps {
+  onOpenChange: (open: boolean) => void;
+}
 
 export default function SocialLogin({ onOpenChange }: SocialLoginProps) {
   const handleSocialLogin = (type: "kakao" | "google" | "naver") => {

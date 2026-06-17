@@ -9,10 +9,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signupSchema } from "@/schemas/auth.schema";
-import { signupData, SignupProps } from "@/types/auth.type";
+import { signupData } from "@/types/auth.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SocialLogin from "./socialLogin";
+
+interface SignupProps {
+  onOpenChange: (open:boolean) => void;
+  onSwitchToLogin: () => void;
+}
 
 export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
   const {

@@ -8,11 +8,16 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LoginData, LoginProps } from "@/types/auth.type";
+import { LoginData } from "@/types/auth.type";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/auth.schema";
 import SocialLogin from "./socialLogin";
+
+interface LoginProps {
+  onOpenChange: (open: boolean) => void;
+  onSwitchToSignup: () => void;
+}
 
 export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
   const {

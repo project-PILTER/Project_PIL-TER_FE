@@ -1,9 +1,13 @@
 "use client";
 
-import { EditorContent } from "@tiptap/react";
+import { Editor, EditorContent } from "@tiptap/react";
 import Toolbar from "./toolbar";
 import { useState } from "react";
-import { TiptapProps } from "@/types/editor.type";
+
+interface TiptapProps {
+  editor: Editor | null;
+  charactorCount: number;
+}
 
 export default function Tiptap({editor, charactorCount}:TiptapProps) {
   const [preview, setPreview] = useState(false);

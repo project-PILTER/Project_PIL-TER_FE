@@ -1,4 +1,3 @@
-import { AppSelectProps } from "@/types/ui.type";
 import {
   Select,
   SelectContent,
@@ -6,6 +5,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+
+interface SelectOption {
+  id: number;
+  name: string;
+}
+
+interface AppSelectProps {
+  value?: string;
+  placeholder: string;
+  options: SelectOption[];
+  onValueChange: (value: string) => void;
+}
 
 export default function AppSelect({
   value,

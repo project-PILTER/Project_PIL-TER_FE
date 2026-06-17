@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { WriteHeaderProps } from "@/types/community.type";
 import { FileText, Navigation, Save } from "lucide-react";
+
+interface WriteHeaderProps {
+  onOpenDrafts: () => void;
+  onSave: () => void;
+  onPublish: () => void;
+}
 
 export default function WriteHeader({onOpenDrafts, onSave, onPublish}:WriteHeaderProps) {
   return (

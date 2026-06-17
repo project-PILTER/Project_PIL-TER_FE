@@ -6,10 +6,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
-import { DraftCardProps } from "@/types/community.type";
 import { Trash2 } from "lucide-react";
 import { categories } from "../categoryExamples";
 import getRelativeTime from "@/utils/date";
+import { Draft } from "@/types/community.type";
+
+interface DraftCardProps {
+  draft: Draft;
+  onLoad: () => void;
+  onDelete: () => void;
+}
 
 export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
   const categoryName =

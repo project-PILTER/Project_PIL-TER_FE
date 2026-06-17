@@ -6,9 +6,16 @@
 */
 
 import Modal from "@/components/common/modal";
-import { AuthModalProps } from "@/types/auth.type";
 import Login from "./login";
 import Signup from "./signup";
+
+interface AuthModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  
+  mode: "login" | "signup"
+  onModeChange: (mode: "login" | "signup") => void;
+}
 
 export default function AuthModal({ open, onOpenChange, mode, onModeChange }: AuthModalProps) {
   

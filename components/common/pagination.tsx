@@ -1,5 +1,10 @@
-import { PaginationProps } from "@/types/ui.type";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "../ui/pagination";
+
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+}
 
 export default function CommonPagination({currentPage, totalPages, basePath}:PaginationProps) {
   const pages = Array.from(

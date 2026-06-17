@@ -1,5 +1,10 @@
 import Tiptap from "@/components/common/editor/tiptap";
-import { WriteEditorProps } from "@/types/community.type";
+import { Editor } from "@tiptap/react";
+
+interface WriteEditorProps {
+  editor: Editor | null;
+  characterCount: number;
+}
 
 export default function WriteEditor({editor, characterCount}:WriteEditorProps) {
   return(

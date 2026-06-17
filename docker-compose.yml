@@ -1,8 +1,22 @@
+version: '3.8'
+
 services:
   frontend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # 👇 .env.production 파일에 정의된 변수들을 빌드 타임 인자(args)로 전달합니다.
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+        - NEXT_PUBLIC_KAKAO_CLIENT_ID=${NEXT_PUBLIC_KAKAO_CLIENT_ID}
+        - NEXT_PUBLIC_KAKAO_REDIRECT_URI=${NEXT_PUBLIC_KAKAO_REDIRECT_URI}
+        - NEXT_PUBLIC_NAVER_CLIENT_ID=${NEXT_PUBLIC_NAVER_CLIENT_ID}
+        - NEXT_PUBLIC_NAVER_REDIRECT_URI=${NEXT_PUBLIC_NAVER_REDIRECT_URI}
+        - NEXT_PUBLIC_GOOGLE_CLIENT_ID=${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        - NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${NEXT_PUBLIC_GOOGLE_REDIRECT_URI}
     container_name: pilter-FE
     ports:
       - "3000:3000"
+    # env_file은 런타임 환경 변수용으로 그대로 두셔도 무방합니다.
     env_file:
       - .env.production

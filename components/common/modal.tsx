@@ -3,7 +3,6 @@
   로그인, 게시글 수정, 건강일지 수정 등에 사용하기 위한 공용 컴포넌트
 */
 
-import { ModalProps } from "@/types/ui.type";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +17,16 @@ const sizeClasses = {
   lg: "max-w-lg h-[31.25rem]",
   xl: "max-w-xl h-[37.5rem]",
 };
+
+interface ModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title?: string;
+  description?: string;
+  children: React.ReactNode;
+  size?: "sm" | "md" | "lg" | "xl";
+  footer?: React.ReactNode;
+}
 
 export default function Modal({
   open,

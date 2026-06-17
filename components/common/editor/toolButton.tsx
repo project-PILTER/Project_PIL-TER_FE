@@ -4,7 +4,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { ToolButtonProps } from "@/types/ui.type";
+
+interface ToolButtonProps {
+  tooltip: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+  className?: string;
+}
 
 export default function ToolButton({
   tooltip,

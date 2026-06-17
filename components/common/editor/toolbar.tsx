@@ -1,4 +1,3 @@
-import { ToolbarProps } from "@/types/ui.type";
 import {
   Bold,
   Eye,
@@ -11,6 +10,13 @@ import {
 } from "lucide-react";
 import ToolButton from "./toolButton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Editor } from "@tiptap/react";
+
+interface ToolbarProps {
+  editor: Editor | null;
+  onImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPreview: () => void;
+}
 
 export default function Toolbar({
   editor,

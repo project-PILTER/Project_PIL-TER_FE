@@ -1,8 +1,6 @@
 /*
   게시글에 관한 타입
 */
-
-import { Editor } from "@tiptap/react";
 export interface Category {
   id: number;
   name: string;
@@ -31,28 +29,6 @@ export interface Article {
   updatedAt: string; // 수정일
 }
 
-export interface CommunityListProps {
-  article: Article;
-}
-
-export interface WriteHeaderProps {
-  onOpenDrafts: () => void;
-  onSave: () => void;
-  onPublish: () => void;
-}
-
-export interface WriteEditorProps {
-  editor: Editor;
-  characterCount: number;
-}
-
-export interface WriteFormProps {
-  title: string;
-  categoryId: string;
-  onTitleChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
-}
-
 export interface Draft {
   id: string;
   categoryId: string;
@@ -62,17 +38,3 @@ export interface Draft {
 }
 
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
-
-export interface DraftCardProps {
-  draft: Draft;
-  onLoad: () => void;
-  onDelete: () => void;
-}
-
-export interface DraftModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  drafts: Draft[];
-  onLoad: (draft: Draft) => void;
-  onDelete: (draftId: string) => void;
-}

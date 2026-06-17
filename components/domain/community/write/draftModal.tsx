@@ -1,7 +1,15 @@
 import { Button } from "@/components/ui/button";
 import DraftCard from "./draftCard";
 import Modal from "@/components/common/modal";
-import { DraftModalProps } from "@/types/community.type";
+import { Draft } from "@/types/community.type";
+
+interface DraftModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  drafts: Draft[];
+  onLoad: (draft: Draft) => void;
+  onDelete: (draftId: string) => void;
+}
 
 export default function DraftModal({
   open,

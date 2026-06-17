@@ -1,7 +1,13 @@
 import AppSelect from "@/components/common/appSelect";
 import { Input } from "@/components/ui/input";
-import { WriteFormProps } from "@/types/community.type";
 import { categories } from "../categoryExamples";
+
+interface WriteFormProps {
+  title: string;
+  categoryId: string;
+  onTitleChange: (value: string) => void;
+  onCategoryChange: (value: string) => void;
+}
 
 export default function WriteForm({title, categoryId, onTitleChange, onCategoryChange}:WriteFormProps) {
   return(

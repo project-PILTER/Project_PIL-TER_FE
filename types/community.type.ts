@@ -1,3 +1,5 @@
+import { User } from "./auth.type";
+
 /*
   게시글에 관한 타입
 */
@@ -6,10 +8,8 @@ export interface Category {
   name: string;
 }
 
-export interface Author {
+export type Author=Omit<User, "email"> & {
   id: string;
-  nickname: string;
-  profileImage: string;
 }
 
 export interface Article {
@@ -38,3 +38,17 @@ export interface Draft {
 }
 
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
+
+export type CommentUser = Omit<User, "email"> & {
+  id: string;
+}
+export interface Comment {
+  id: number;
+  articleId: number;
+  parentId: number | null // 대댓글시 부모 댓글 id
+  author: CommentUser;
+  content: string;
+  likeCount: number;
+  createdAt: string;
+}
+

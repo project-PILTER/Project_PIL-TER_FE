@@ -30,7 +30,7 @@ export interface Article {
 }
 
 export interface Draft {
-  id: string;
+  id: number;
   categoryId: string;
   title: string;
   content: string;
@@ -40,7 +40,7 @@ export interface Draft {
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
 
 export type CommentUser = Omit<User, "email"> & {
-  id: string;
+  id: number;
 }
 export interface Comment {
   id: number;

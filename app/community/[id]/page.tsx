@@ -1,5 +1,6 @@
 import ArticleDetail from "@/components/domain/community/articleDetail";
 import { articles } from "@/components/domain/community/articleExamples";
+import CommentForm from "@/components/domain/community/comment/commentForm";
 import { notFound } from "next/navigation";
 
 interface ArticlePageProps {
@@ -21,6 +22,7 @@ export default async function ArticlePage({params}:ArticlePageProps) {
       <div className="flex flex-col gap-4">
         <ArticleDetail article={article} />
       </div>
+      <CommentForm />
     </div>
   );
 }

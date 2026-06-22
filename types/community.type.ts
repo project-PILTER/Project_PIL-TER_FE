@@ -30,7 +30,7 @@ export interface Article {
 }
 
 export interface Draft {
-  id: number;
+  id: string;
   categoryId: string;
   title: string;
   content: string;

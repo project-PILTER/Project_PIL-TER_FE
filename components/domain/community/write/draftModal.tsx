@@ -8,7 +8,7 @@ interface DraftModalProps {
   onOpenChange: (open: boolean) => void;
   drafts: Draft[];
   onLoad: (draft: Draft) => void;
-  onDelete: (draftId: string) => void;
+  onDelete: (draftId: number) => void;
 }
 
 export default function DraftModal({

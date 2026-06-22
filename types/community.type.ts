@@ -40,7 +40,7 @@ export interface Draft {
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
 
 export type CommentUser = Omit<User, "email"> & {
-  id: number;
+  id: string;
 }
 export interface Comment {
   id: number;

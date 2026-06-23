@@ -1,5 +1,5 @@
-import { articles } from "@/components/domain/community/articleExamples";
-import ArticleCard from "@/components/domain/community/articleCard";
+import { articles } from "@/components/domain/community/examples/articleExamples";
+import ArticleCard from "@/components/domain/community/article/articleCard";
 import { getArticles } from "@/services/community.service";
 import CommonPagination from "@/components/common/pagination";
 import { ClipboardList, SquarePen } from "lucide-react";

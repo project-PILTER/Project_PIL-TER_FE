@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import { Article } from "@/types/community.type";
 import { Bookmark, Eye, Heart, MoreHorizontal, Share2 } from "lucide-react";
 import Image from "next/image";
-import Profile from "../../../public/logo/logo.png";
 
 interface ArticleDetailProps {
   article: Article;
@@ -24,8 +23,10 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
           <div className="w-11 h-11 rounded-full">
             {article.author.profileImage && (
               <Image
-                className="bg-[#efeefa] w-full h-full rounded-full"
-                src={Profile}
+                className="bg-[#efeefa] rounded-full"
+                src={article.author.profileImage}
+                width={44}
+                height={44}
                 alt="프로필 이미지"
               />
             )}

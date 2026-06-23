@@ -1,7 +1,7 @@
-import ArticleDetail from "@/components/domain/community/articleDetail";
-import { articles } from "@/components/domain/community/articleExamples";
+import ArticleDetail from "@/components/domain/community/article/articleDetail";
+import { articles } from "@/components/domain/community/examples/articleExamples";
 import CommentList from "@/components/domain/community/comment/commentList";
-import { comments } from "@/components/domain/community/commentExamples";
+import { comments } from "@/components/domain/community/examples/commentExamples";
 import { notFound } from "next/navigation";
 
 interface ArticlePageProps {

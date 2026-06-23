@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Eye, Flame, Heart, MessageCircle } from "lucide-react";
 import Image from "next/image";
-import Profile from "../../../public/logo/logo.png";
 import getRelativeTime from "@/utils/date";
 import { Article } from "@/types/community.type";
 import Link from "next/link";
@@ -35,7 +34,7 @@ export default function ArticleCard({ article }: CommunityListProps) {
           <p className="mr-4">{getRelativeTime(article.updatedAt)}</p>
         </div>
 
-        <div className="mx-4">{article.title}</div>
+        <div className="mx-4 font-bold hover:text-[#615ED6]">{article.title}</div>
 
         <div className="mx-4 truncate">{article.content}</div>
 
@@ -43,8 +42,10 @@ export default function ArticleCard({ article }: CommunityListProps) {
           <div className="flex">
             {article.author.profileImage && (
               <Image
-                className="bg-[#efeefa] w-6 h-6 rounded-sm"
-                src={Profile}
+                className="bg-[#efeefa] rounded-sm object-cover"
+                width={24}
+                height={24}
+                src={article.author.profileImage}
                 alt="건강"
               />
             )}

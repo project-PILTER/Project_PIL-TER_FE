@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { Trash2 } from "lucide-react";
-import { categories } from "../categoryExamples";
+import { categories } from "../examples/categoryExamples";
 import getRelativeTime from "@/utils/date";
 import { Draft } from "@/types/community.type";
 

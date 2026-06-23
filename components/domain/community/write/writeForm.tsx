@@ -1,6 +1,6 @@
 import AppSelect from "@/components/common/appSelect";
 import { Input } from "@/components/ui/input";
-import { categories } from "../categoryExamples";
+import { categories } from "../examples/categoryExamples";
 
 interface WriteFormProps {
   title: string;

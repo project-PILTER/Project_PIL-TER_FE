@@ -12,10 +12,10 @@ import {
 } from "../ui/dialog";
 
 const sizeClasses = {
-  sm: "max-w-sm h-[18.75rem]",
   md: "max-w-md h-[25rem]",
   lg: "max-w-lg h-[31.25rem]",
   xl: "max-w-xl h-[37.5rem]",
+  "2xl": "max-w-2xl max-h-[90vh] overflow-y-auto",
 };
 
 interface ModalProps {
@@ -24,7 +24,7 @@ interface ModalProps {
   title?: string;
   description?: string;
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "md" | "lg" | "xl" | "2xl";
   footer?: React.ReactNode;
 }
 

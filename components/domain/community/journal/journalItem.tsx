@@ -9,22 +9,22 @@ import { Pencil, Trash2 } from "lucide-react";
 
 interface JournalItemProps {
   journal: JournalDiary;
-  onEdit?: (id: number) => void;
+  onEdit?: (journal: JournalDiary) => void;
   onDelete?: (id: number) => void;
 }
 
 const conditionConfig = {
   GOOD: {
     label: "좋음",
-    className: "bg-green-100 text-green-600",
+    className: " ml-2 bg-green-100 text-green-600",
   },
   NORMAL: {
     label: "보통",
-    className: "bg-yellow-100 text-yellow-600",
+    className: "ml-2 bg-yellow-100 text-yellow-600",
   },
   BAD: {
     label: "나쁨",
-    className: "bg-red-100 text-red-600",
+    className: "ml-2 bg-red-100 text-red-600",
   },
 };
 
@@ -36,7 +36,7 @@ export default function JournalItem({
   const condition = conditionConfig[journal.conditionStatus];
 
   return (
-    <Card className="p-6">
+    <Card className="relative p-6 overflow-hidden">
       <div
         className={cn(
           "absolute left-0 top-0 h-full w-1",
@@ -54,16 +54,25 @@ export default function JournalItem({
               })}
             </h3>
 
-            <Badge>{condition.label}</Badge>
+            <Badge className={condition.className}>{condition.label}</Badge>
 
-            <p>{journal.painScore}</p>
+            <p className="ml-2 text-muted-foreground text-sm">
+              {" "}
+              통증 {journal.painScore}/10
+            </p>
           </div>
         </div>
         <div>
-          <Button onClick={() => onEdit?.(journal.id)}>
+          <Button
+            className="bg-white text-black-300 hover:text-white hover:bg-[#7F82E8] rounded-lg"
+            onClick={() => onEdit?.(journal)}
+          >
             <Pencil />
           </Button>
-          <Button onClick={() => onDelete?.(journal.id)}>
+          <Button
+            className="bg-white text-red-500 hover:bg-[#7F82E8]"
+            onClick={() => onDelete?.(journal.id)}
+          >
             <Trash2 />
           </Button>
         </div>

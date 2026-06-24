@@ -144,3 +144,48 @@
 .ProseMirror:focus {
   outline: none !important;
 }
+
+.journalGood,
+.journalNormal,
+.journalBad {
+  position: relative;
+}
+
+.journalGood::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #22c55e;
+  z-index: 50;
+}
+
+.journalNormal::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #eab308;
+  z-index: 50;
+}
+
+.journalBad::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #ef4444;
+  z-index: 50;
+}

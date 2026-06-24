@@ -1,3 +1,9 @@
+import { journalExamples } from "@/components/domain/community/examples/journalExamples";
+import JournalPageClient from "@/components/domain/community/journal/journalPageClint";
+
 export default function JournalPage() {
-  return <h1>journalPage</h1>
+  const journals = journalExamples;
+  return(
+    <JournalPageClient journals={journals} />
+  )
 }

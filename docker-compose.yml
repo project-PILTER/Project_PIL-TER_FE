@@ -15,6 +15,12 @@ services:
     container_name: pilter-FE
     ports:
       - "3000:3000"
+    networks:
+      - backend_default
     # env_file은 런타임 환경 변수용으로 그대로 두셔도 무방합니다.
     env_file:
       - .env
+
+networks:
+  backend_default:
+    external: true

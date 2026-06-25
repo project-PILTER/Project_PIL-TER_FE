@@ -21,7 +21,8 @@ export default function LoginButton() {
   if(user) {
     return(
       <Link href="/mypage">
-        <Image src={user.profileImage} alt="프로필" width={40} height={40} className="rounded-full object-cover" />
+        {user.profileImage ? (<Image src={user.profileImage} alt="프로필" width={40} height={40} className="rounded-full object-cover" />) : <div className="w-10 h-10 rounded-full bg-[#5c59da] text-white flex items-center justify-center">{user.nickname.charAt(0)}</div>}
+        
       </Link>
     )
   }

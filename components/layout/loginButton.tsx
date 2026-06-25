@@ -9,10 +9,22 @@ import { Button } from "../ui/button";
 import { LogIn } from "lucide-react";
 import { useState } from "react";
 import AuthModal from "../domain/auth/authModal";
+import Link from "next/link";
+import Image from "next/image";
+import { useAuthStore } from "@/stores/authStore";
 
 export default function LoginButton() {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"login" | "signup">("login");
+  const user = useAuthStore((state) => state.user);
+
+  if(user) {
+    return(
+      <Link href="/mypage">
+        <Image src={user.profileImage} alt="프로필" width={40} height={40} className="rounded-full object-cover" />
+      </Link>
+    )
+  }
 
   return (
     <div>

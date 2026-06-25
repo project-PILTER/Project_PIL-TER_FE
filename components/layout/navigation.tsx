@@ -6,23 +6,26 @@
 
 import Link from "next/link";
 import logo from ".././../public/logo/logo_no_letter.png";
-import letter from "../../public/logo/letter.png"
+import letter from "../../public/logo/letter.png";
 import Image from "next/image";
 import ThemeButton from "./themeButton";
-import { Bell, } from "lucide-react";
+import { Bell } from "lucide-react";
 import LoginButton from "./loginButton";
 
 export default function Navigation() {
   return (
     <header className="flex items-center justify-between mx-auto w-7xl">
-      <div className="flex items-center">
-        <Image
-          className="h-15 w-auto"
-          src={logo}
-          alt="PIL-TER"
-        />
-        <Image className="h-11 w-auto" src={letter} alt="PIL-TER" loading="eager" />
-      </div>
+      <Link href="/">
+        <div className="flex items-center">
+          <Image className="h-15 w-auto" src={logo} alt="PIL-TER" />
+          <Image
+            className="h-11 w-auto"
+            src={letter}
+            alt="PIL-TER"
+            loading="eager"
+          />
+        </div>
+      </Link>
       <nav>
         <ul className="flex items-center gap-[1.5625rem]">
           <li className="list-none transition-all duration-100 ease-in-out hover:scale-105">

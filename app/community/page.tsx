@@ -28,7 +28,7 @@ export default async function CommunityPage({
           <h2 className="ml-2 font-bold text-xl">커뮤니티 게시글 목록</h2>
         </div>
         <Button className="bg-[#615ed6]" asChild>
-          <Link href="/community/write">
+          <Link href="/community/articles/write">
             <SquarePen />
             글쓰기
           </Link>

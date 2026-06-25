@@ -19,7 +19,6 @@ export default async function ArticlePage({params}:ArticlePageProps) {
 
   return (
     <div className="w-4xl mx-auto p-4 space-y-4">
-      <h1 className="text-2xl font-bold mb-6">커뮤니티 게시글 목록</h1>
       <div className="flex flex-col gap-4">
         <ArticleDetail article={article} />
       </div>

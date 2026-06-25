@@ -17,7 +17,7 @@ interface CommunityListProps {
 
 export default function ArticleCard({ article }: CommunityListProps) {
   return (
-    <Link href={`/community/${article.id}`} className="block">
+    <Link href={`/community/articles/${article.id}`} className="block">
       <Card className="w-full p-6">
         <div className="flex justify-between items-center mb-4">
           <div className="flex ml-2 gap-2">

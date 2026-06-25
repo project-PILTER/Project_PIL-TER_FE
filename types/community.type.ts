@@ -8,7 +8,7 @@ export interface Category {
   name: string;
 }
 
-export type Author=Omit<User, "email"> & {
+export type Author=Omit<User, "email" | "createdAt"> & {
   id: string;
 }
 

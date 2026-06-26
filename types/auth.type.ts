@@ -24,3 +24,11 @@ export interface UserActivityCounts {
   totalLikesReceived: number; // 받은 좋아요 수
   totalHealthDays: number; // 건강 기록 총 일수
 }
+
+export interface MonthlyActivitySummary {
+  currentPosts: number; // 이번 달 게시글
+  targetPosts: number; // 목표 게시글 수
+  currentComments: number; // 이번 달 댓글
+  targetComments: number; // 목표 댓글 수
+  healthRecordRate: number; // 건강 기록 달성률
+}

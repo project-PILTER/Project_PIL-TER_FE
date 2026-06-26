@@ -1,17 +1,19 @@
 "use client";
 
 import { useAuthStore } from "@/stores/authStore";
-import { Camera, Pencil, Settings, UserCheck } from "lucide-react";
+import { Camera, Pencil, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Skeleton from "./skeleton";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
+import ProfileModal from "./profileModal";
 
 export default function ProfileSection() {
   const user = useAuthStore((state) => state.user);
   const isLoading = useAuthStore((state) => state.isLoading);
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   if (isLoading) {
     return <Skeleton />;
@@ -81,16 +83,18 @@ export default function ProfileSection() {
       </div>
 
       <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-end">
-        <Button className="h-10 px-4 rounded-xl border-gray-200 text-gray-700 hover:bg-gray-50 font-medium text-sm flex items-center gap-1.5 transition-all" variant="outline">
-          <Pencil className="w-4 h-4 text-gray-500" />
+        <Button onClick={() => setIsProfileModalOpen(true)} className="group h-10 px-4 rounded-xl border-gray-200 hover:bg-[#5c59da] hover:text-white text-gray-700  font-medium text-sm flex items-center gap-1.5 transition-all" variant="outline">
+          <Pencil className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
           프로필 수정
         </Button>
 
-        <Button className="h-10 px-4 rounded-xl border-gray-200 text-gray-700 hover:bg-gray-50 font-medium text-sm flex items-center gap-1.5 transition-all" variant="outline">
-          <Settings className="w-4 h-4 text-gray-500" />
+        <Button className=" group h-10 px-4 rounded-xl border-gray-200 text-gray-700 hover:bg-[#5c59da] hover:text-white font-medium text-sm flex items-center gap-1.5 transition-all" variant="outline">
+          <Settings className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
           설정
         </Button>
       </div>
+
+      <ProfileModal open={isProfileModalOpen} onOpenChange={setIsProfileModalOpen} nickname={user.nickname} email={user.email} />
     </div>
   );
 }

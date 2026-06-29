@@ -7,19 +7,20 @@ import { useState } from "react";
 interface TiptapProps {
   editor: Editor | null;
   charactorCount: number;
+  onImageFileAdd: (blobUrl: string, file: File) => void;
 }
 
-export default function Tiptap({editor, charactorCount}:TiptapProps) {
+export default function Tiptap({editor, charactorCount, onImageFileAdd}:TiptapProps) {
   const [preview, setPreview] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (!file || !editor) return;
 
     const imageUrl = URL.createObjectURL(file);
 
     editor.chain().focus().setImage({ src: imageUrl }).run();
+    onImageFileAdd(imageUrl, file);
   };
 
   return (

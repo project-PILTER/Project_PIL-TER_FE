@@ -42,13 +42,14 @@ export default function ActivityCountCard({counts}: ActivityCountCardProps) {
       {items.map((item) => {
         const Icon = item.icon;
         return (
-          <Card key={item.title} className="p-5 border border-gray-100 shadow-sm rounded-2xl flex items-center justify-between">
-            <div className="space-y-1">
+          <Card key={item.title} className="p-5 border border-gray-100 shadow-sm rounded-2xl flex flex-row items-center gap-4">
+            <div className={`p-3 rounded-xl shrink-0 ${item.bgColor}`}>
+              <Icon className={`w-5 h-5 ${item.iconColor}`}/>
+            </div>
+
+            <div className="flex flex-col gap-1 text-left min-w-0">
               <p className="text-xs font-medium text-gray-400">{item.title}</p>
               <p className="text-2xl font-bold text-gray-900">{item.value}</p>
-            </div>
-            <div className={`p-3 rounded-xl ${item.bgColor}`}>
-              <Icon className={`w-5 h-5 ${item.iconColor}`}/>
             </div>
           </Card>
         );

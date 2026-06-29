@@ -1,3 +1,5 @@
+"use client";
+
 import { getUser } from "@/services/auth.service";
 import { useAuthStore } from "@/stores/authStore";
 import { useEffect } from "react";
@@ -8,7 +10,7 @@ export default function AuthProvider({children}: {children: React.ReactNode}) {
   const setLoading = useAuthStore((state) => state.setLoading);
 
   useEffect(() => {
-    const initializeUser = async() => {
+    const initializeUser = async () => {
       setLoading(true);
 
       try {

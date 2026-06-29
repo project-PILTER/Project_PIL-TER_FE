@@ -2,30 +2,44 @@
   로그인, 회원가입 관련 api 처리 함수들 모음
 */
 
-import { User } from "@/types/auth.type";
+import { signupData, User } from "@/types/auth.type";
+import { api } from "./axios";
 
+// 유저 정보 조회
 export async function getUser(): Promise<User | null> {
   try {
-    // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`, {
-    //   credentials: "include"
-    // })
-    // if(!res.ok) {
-    //   return null;
-    // }
-    // const user: User = await res.json();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+      credentials: "include"
+    })
 
-    // return user;
-    const res = await new Promise((resolve) => setTimeout(resolve, 500));
-    return {
-      email: "health@example.com",
-      nickname: "건강지키미",
-      profileImage: "/logo/logo.png", // 가짜 이미지 URL을 넣거나 빈 값 유지
-      isMedicalExpert: true,
-      expertTitle: "헬스 마스터",
-      createdAt: "2024-03-05"
-    };
+    if(!res.ok) {
+      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})` );
+    }
+
+    const user: User = await res.json();
+
+    return user;
   } catch(error) {
     console.error("유저 정보 조회 실패", error);
     return null;
   }
 }
+
+// 회원가입
+export async function signupUser(signupData: signupData) {
+  try {
+    const res = await api.post(`/login`, signupData);
+
+    return res.data;
+  } catch(error) {
+    console.error("회원 가입 실패", error);
+    throw error;
+  }
+}
+
+// 마이페이지
+
+// 마이페이지 데이터 조회
+// export async function getMypage(): Promise<> {
+  
+// }

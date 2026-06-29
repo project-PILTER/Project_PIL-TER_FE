@@ -26,7 +26,7 @@ export default function MonthlySummary({ summary }: MonthlySummaryProps) {
 
         <div className="space-y-6">
           <div className="space-y-2">
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-sm gap-4">
               <span className="text-gray-500 font-medium">
                 이번 달 작성 게시글
               </span>
@@ -63,7 +63,7 @@ export default function MonthlySummary({ summary }: MonthlySummaryProps) {
         </div>
       </div>
 
-      <div className="mt-8 rounded-xl p-4 flex justify-between items-center bg-violet-50">
+      <div className="rounded-xl p-4 flex justify-between items-center bg-violet-50">
         <HeartPulse className="w-4 h-4 text-[#5c59da]" />
         <span className="text-sm text-gray-600 font-medium">
           이번 달 건강 기록 달성률

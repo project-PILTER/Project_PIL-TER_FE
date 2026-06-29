@@ -1,7 +1,7 @@
 import ArticleDetail from "@/components/domain/community/article/articleDetail";
-import { articles } from "@/components/domain/community/examples/articleExamples";
 import CommentList from "@/components/domain/community/comment/commentList";
 import { comments } from "@/components/domain/community/examples/commentExamples";
+import { getArticleDetail } from "@/services/community.service";
 import { notFound } from "next/navigation";
 
 interface ArticlePageProps {
@@ -11,7 +11,13 @@ interface ArticlePageProps {
 export default async function ArticlePage({params}:ArticlePageProps) {
   const resolvedParams = await params;
   const articleId = Number(resolvedParams.id);
-  const article = articles.find((item) => item.id === articleId);
+
+  let article;
+  try {
+    article = await getArticleDetail(articleId);
+  } catch (error) {
+    notFound();
+  }
 
   if(!article) {
     notFound();

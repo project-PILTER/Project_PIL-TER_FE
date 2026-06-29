@@ -1,4 +1,3 @@
-import { articles } from "@/components/domain/community/examples/articleExamples";
 import ArticleCard from "@/components/domain/community/article/articleCard";
 import { getArticles } from "@/services/community.service";
 import CommonPagination from "@/components/common/pagination";
@@ -12,8 +11,7 @@ export default async function CommunityPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const params = await searchParams;
-
-  // const articles = await getArticles();
+  const articles = await getArticles();
 
   const page = Number(params.page ?? 1);
   const PAGE_SIZE = 8;

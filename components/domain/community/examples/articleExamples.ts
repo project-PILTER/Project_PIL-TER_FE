@@ -1,204 +1,231 @@
 import { Article } from "@/types/community.type";
 
+
 export const articles: Article[] = [
   {
     id: 1,
-    title: "두통이 3일째 계속되는데 병원 가야 할까요?",
-    content: "진통제를 먹어도 잠깐만 괜찮아지고 다시 아프네요.",
-    category: {
-      id: 1,
-      name: "두통"
+    title: "여름철 에어컨 사용 시 영유아 냉방병 예방 수칙",
+    content: "<p>아이들은 성인보다 체온 조절 능력이 떨어집니다. 실내외 온도 차이를 5도 이내로 유지하고, 2시간마다 환기하는 것이 중요합니다.</p>",
+    category: { id: 101, name: "소아청소년과" },
+    author: { 
+      id: "user_01", 
+      nickname: "정성소아과_박원장", 
+      profileImage: "https://example.com/profiles/doctor1.png",
+      isMedicalExpert: true,
+      expertTitle: "소아청소년과 전문의"
     },
-    author: {
-      id: "user001",
-      nickname: "건강최고",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 523,
-    likeCount: 31,
-    commentCount: 14,
+    imageUrl: "https://example.com/images/baby-health.png",
+    viewCount: 1540,
+    likeCount: 120,
+    commentCount: 2,
     isHot: true,
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11"
+    createdAt: "2026-06-25T10:00:00Z",
+    updatedAt: "2026-06-25T14:30:00Z",
+    comments: [
+      { id: "c1", categoryId: "101", title: "댓글1", content: "좋은 정보 감사합니다! 오늘부터 실천해야겠어요.", createdAt: "2026-06-25T11:00:00Z" },
+      { id: "c2", categoryId: "101", title: "댓글2", content: "혹시 신생아 방 온도는 몇도가 적당할까요?", createdAt: "2026-06-25T12:15:00Z" }
+    ]
   },
   {
     id: 2,
-    title: "감기약 먹고 졸린 이유가 뭔가요?",
-    content: "낮에 먹었는데 너무 졸려서 업무 집중이 안 됩니다.",
-    category: {
-      id: 2,
-      name: "감기"
+    title: "생후 6개월 아기 이유식 시작 시기 질문합니다 ㅠㅠ",
+    content: "<p>완모 중인 아기인데 이제 딱 180일 되었어요. 쌀 미음부터 시작하면 될까요? 알레르기 반응 테스트는 어떻게 하는지 궁금합니다.</p>",
+    category: { id: 101, name: "소아청소년과" },
+    author: { 
+      id: "user_02", 
+      nickname: "초보맘_지우", 
+      profileImage: null, // 프로필 이미지가 없는 경우
+      isMedicalExpert: false, // 일반 유저
+      expertTitle: undefined
     },
-    author: {
-      id: "user002",
-      nickname: "직장인A",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 201,
-    likeCount: 12,
-    commentCount: 4,
+    imageUrl: "",
+    viewCount: 340,
+    likeCount: 8,
+    commentCount: 1,
     isHot: false,
-    createdAt: "2026-06-11",
-    updatedAt: "2026-06-11"
+    createdAt: "2026-06-26T08:15:00Z",
+    updatedAt: "2026-06-26T08:15:00Z",
+    comments: [
+      { id: "c3", categoryId: "101", title: "댓글3", content: "쌀 미음 3일 먹여보시고 이상 없으면 소고기 추가하세요!", createdAt: "2026-06-26T09:00:00Z" }
+    ]
   },
   {
     id: 3,
-    title: "비염 때문에 잠을 못 자겠어요",
-    content: "밤마다 코가 막혀서 자주 깨는데 좋은 방법 있을까요?",
-    category: {
-      id: 3,
-      name: "비염"
+    title: "직장인 거북목 예방을 위한 5분 스트레칭 루틴",
+    content: "<p>모니터를 자주 보는 직장인들은 승모근과 심부경추굴곡근이 약해지기 쉽습니다. 턱 당기기 운동(Chin-tuck)을 수시로 해주세요.</p>",
+    category: { id: 102, name: "정형외과" },
+    author: { 
+      id: "user_03", 
+      nickname: "바른척추_강원장", 
+      profileImage: "https://example.com/profiles/doctor2.png",
+      isMedicalExpert: true,
+      expertTitle: "정형외과 전문의"
     },
-    author: {
-      id: "user003",
-      nickname: "코막힘",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 412,
-    likeCount: 22,
-    commentCount: 18,
+    imageUrl: "https://example.com/images/stretching.png",
+    viewCount: 2450,
+    likeCount: 198,
+    commentCount: 1,
     isHot: true,
-    createdAt: "2026-06-10",
-    updatedAt: "2026-06-10"
+    createdAt: "2026-06-20T03:00:00Z",
+    updatedAt: "2026-06-21T05:00:00Z",
+    comments: [
+      { id: "c4", categoryId: "102", title: "댓글4", content: "일하다가 생각날 때마다 하니까 목이 한결 편하네요.", createdAt: "2026-06-20T04:20:00Z" }
+    ]
   },
   {
     id: 4,
-    title: "소화불량에 효과 있었던 약 추천",
-    content: "기름진 음식 먹고 나면 항상 속이 더부룩합니다.",
-    category: {
-      id: 4,
-      name: "소화불량"
+    title: "스쿼트 하다가 오른쪽 무릎에서 딱 소리가 나는데 병원 가야 하나요?",
+    content: "<p>통증은 없는데 앉았다 일어날 때마다 무릎에서 소리가 납니다. 통증이 없어도 연골판에 무리가 가고 있는 걸까요?</p>",
+    category: { id: 102, name: "정형외과" },
+    author: { 
+      id: "user_04", 
+      nickname: "헬스보이99", 
+      profileImage: "https://example.com/profiles/user4.png",
+      isMedicalExpert: false,
+      expertTitle: undefined
     },
-    author: {
-      id: "user004",
-      nickname: "위튼튼",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 178,
-    likeCount: 9,
-    commentCount: 3,
+    imageUrl: "",
+    viewCount: 880,
+    likeCount: 12,
+    commentCount: 0,
     isHot: false,
-    createdAt: "2026-06-09",
-    updatedAt: "2026-06-09"
+    createdAt: "2026-06-27T12:00:00Z",
+    updatedAt: "2026-06-27T12:00:00Z",
+    comments: []
   },
   {
     id: 5,
-    title: "허리 통증 때문에 운동을 쉬고 있습니다",
-    content: "앉아 있을 때 특히 심한데 스트레칭 추천 부탁드립니다.",
-    category: {
-      id: 5,
-      name: "근육통"
+    title: "자외선 차단제(선크림) 올바른 선택 및 세안 방법",
+    content: "<p>무기자차와 유기자차의 차이점을 알고 피부 타입에 맞게 선택해야 합니다. 또한, 잔여물이 남으면 트러블을 유발하므로 이중 세안이 필수입니다.</p>",
+    category: { id: 103, name: "피부과" },
+    author: { 
+      id: "user_05", 
+      nickname: "피부꿀팁_이선생", 
+      profileImage: "https://example.com/profiles/doctor3.png",
+      isMedicalExpert: true,
+      expertTitle: "피부과 전문의"
     },
-    author: {
-      id: "user005",
-      nickname: "운동러",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 320,
-    likeCount: 15,
-    commentCount: 7,
-    isHot: false,
-    createdAt: "2026-06-08",
-    updatedAt: "2026-06-08"
+    imageUrl: "https://example.com/images/suncream.png",
+    viewCount: 3120,
+    likeCount: 285,
+    commentCount: 2,
+    isHot: true,
+    createdAt: "2026-06-24T15:45:00Z",
+    updatedAt: "2026-06-24T16:20:00Z",
+    comments: [
+      { id: "c5", categoryId: "103", title: "댓글5", content: "민감성 피부는 무기자차가 확실히 자극이 덜하더라고요.", createdAt: "2026-06-24T17:00:00Z" },
+      { id: "c6", categoryId: "103", title: "댓글6", content: "꿀정보 감사합니다!", createdAt: "2026-06-24T18:30:00Z" }
+    ]
   },
   {
     id: 6,
-    title: "알레르기 약 장기 복용해도 괜찮나요?",
-    content: "계절마다 복용 중인데 걱정이 됩니다.",
-    category: {
-      id: 6,
-      name: "알레르기"
+    title: "턱 주변에 화농성 여드름이 계속 올라오는데 원인이 뭘까요?",
+    content: "<p>최근 들어 스트레스를 많이 받아서 그런지 마스크 닿는 부위랑 턱 쪽에만 뒤집어지네요. 압출을 받아야 할까요?</p>",
+    category: { id: 103, name: "피부과" },
+    author: { 
+      id: "user_06", 
+      nickname: "매끈피부원망", 
+      profileImage: "https://example.com/profiles/user6.png",
+      isMedicalExpert: false,
+      expertTitle: undefined
     },
-    author: {
-      id: "user006",
-      nickname: "꽃가루",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 287,
-    likeCount: 18,
-    commentCount: 12,
+    imageUrl: "https://example.com/images/trouble.png",
+    viewCount: 620,
+    likeCount: 15,
+    commentCount: 0,
     isHot: false,
-    createdAt: "2026-06-08",
-    updatedAt: "2026-06-08"
+    createdAt: "2026-06-28T01:10:00Z",
+    updatedAt: "2026-06-28T01:10:00Z",
+    comments: []
   },
   {
     id: 7,
-    title: "불면증 때문에 멜라토닌 먹어보신 분?",
-    content: "실제로 효과가 있는지 궁금합니다.",
-    category: {
-      id: 7,
-      name: "수면"
+    title: "성인 당뇨 예방을 위한 당화혈색소(HbA1c) 관리 기준",
+    content: "<p>공복 혈당 수치뿐만 아니라 3개월간의 평균 혈당을 대변하는 당화혈색소 수치를 5.6% 이하로 관리하는 것이 대사증후군 예방의 핵심입니다.</p>",
+    category: { id: 104, name: "내과" },
+    author: { 
+      id: "user_07", 
+      nickname: "내과_김닥터", 
+      profileImage: "https://example.com/profiles/doctor4.png",
+      isMedicalExpert: true,
+      expertTitle: "내과 전문의"
     },
-    author: {
-      id: "user007",
-      nickname: "잠좀자자",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 640,
-    likeCount: 44,
-    commentCount: 26,
-    isHot: true,
-    createdAt: "2026-06-07",
-    updatedAt: "2026-06-07"
+    imageUrl: "https://example.com/images/diabetes-info.png",
+    viewCount: 1890,
+    likeCount: 142,
+    commentCount: 1,
+    isHot: false,
+    createdAt: "2026-06-23T06:30:00Z",
+    updatedAt: "2026-06-23T09:00:00Z",
+    comments: [
+      { id: "c7", categoryId: "104", title: "댓글7", content: "정기 검진 때 당화혈색소도 꼭 확인해봐야겠네요.", createdAt: "2026-06-23T07:15:00Z" }
+    ]
   },
   {
     id: 8,
-    title: "눈이 자주 건조한데 인공눈물 추천",
-    content: "컴퓨터를 오래 사용해서 그런지 눈이 뻑뻑합니다.",
-    category: {
-      id: 8,
-      name: "안구건조증"
+    title: "며칠 전부터 명치 쪽이 쥐어짜듯 아픈데 위염일까요?",
+    content: "<p>야식 먹고 바로 자는 습관이 있긴 한데, 제산제를 먹어도 통증이 가라앉지 않네요. 혹시 역류성 식도염 증상인가요?</p>",
+    category: { id: 104, name: "내과" },
+    author: { 
+      id: "user_08", 
+      nickname: "소화불량러", 
+      profileImage: null,
+      isMedicalExpert: false,
+      expertTitle: undefined
     },
-    author: {
-      id: "user008",
-      nickname: "개발자",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 192,
-    likeCount: 10,
-    commentCount: 5,
+    imageUrl: "",
+    viewCount: 920,
+    likeCount: 11,
+    commentCount: 1,
     isHot: false,
-    createdAt: "2026-06-06",
-    updatedAt: "2026-06-06"
+    createdAt: "2026-06-28T22:00:00Z",
+    updatedAt: "2026-06-29T02:00:00Z",
+    comments: [
+      { id: "c8", categoryId: "104", title: "댓글8", content: "통증이 지속되면 내시경 검사를 꼭 받아보시는 걸 추천합니다.", createdAt: "2026-06-29T00:30:00Z" }
+    ]
   },
   {
     id: 9,
-    title: "고혈압 약 복용 시간 언제가 좋나요?",
-    content: "아침과 저녁 중 어느 때가 더 효과적인지 궁금합니다.",
-    category: {
-      id: 9,
-      name: "고혈압"
+    title: "현대인의 고질병 '번아웃 증후군' 자가진단과 극복법",
+    content: "<p>끝없는 무기력감과 일에 대한 냉소적 태도가 지속된다면 의지 부족이 아닌 뇌의 지친 신호입니다. 완벽주의를 내려놓는 연습이 필요합니다.</p>",
+    category: { id: 105, name: "정신건강의학과" },
+    author: { 
+      id: "user_09", 
+      nickname: "마음쉼터_최원장", 
+      profileImage: "https://example.com/profiles/doctor5.png",
+      isMedicalExpert: true,
+      expertTitle: "정신건강의학과 전문의"
     },
-    author: {
-      id: "user009",
-      nickname: "건강관리",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 501,
-    likeCount: 28,
-    commentCount: 11,
+    imageUrl: "https://example.com/images/burnout.png",
+    viewCount: 4110,
+    likeCount: 354,
+    commentCount: 1,
     isHot: true,
-    createdAt: "2026-06-05",
-    updatedAt: "2026-06-05"
+    createdAt: "2026-06-22T11:20:00Z",
+    updatedAt: "2026-06-22T11:20:00Z",
+    comments: [
+      { id: "c9", categoryId: "105", title: "댓글9", content: "글 읽는데 눈물 날 뻔했네요.. 제 이야기 같습니다.", createdAt: "2026-06-22T13:00:00Z" }
+    ]
   },
   {
     id: 10,
-    title: "위염 증상 있을 때 먹기 좋은 음식",
-    content: "자극적이지 않은 식단 추천 부탁드립니다.",
-    category: {
-      id: 10,
-      name: "위염"
+    title: "최근 들어 밤에 잠이 너무 안 오고 중간에 자주 깨요.",
+    content: "<p>불면증 증상이 한 달 넘게 가고 있어요. 수면유도제를 약국에서 사 먹어보는 게 나을까요, 아니면 병원 상담을 받아야 할까요?</p>",
+    category: { id: 105, name: "정신건강의학과" },
+    author: { 
+      id: "user_10", 
+      nickname: "잠들고싶은밤", 
+      profileImage: "https://example.com/profiles/user10.png",
+      isMedicalExpert: false,
+      expertTitle: undefined
     },
-    author: {
-      id: "user010",
-      nickname: "식단관리",
-      profileImage: "/logo/logo.png"
-    },
-    viewCount: 260,
-    likeCount: 13,
-    commentCount: 6,
+    imageUrl: "",
+    viewCount: 1150,
+    likeCount: 42,
+    commentCount: 0,
     isHot: false,
-    createdAt: "2026-06-04",
-    updatedAt: "2026-06-04"
+    createdAt: "2026-06-29T10:00:00Z",
+    updatedAt: "2026-06-29T10:00:00Z",
+    comments: []
   }
 ];

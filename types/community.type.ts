@@ -20,6 +20,7 @@ export interface Article {
   category: Category;
 
   author: Author;
+  imageUrl: string;
 
   viewCount: number; // 조회수
   likeCount: number; // 좋아요 수
@@ -27,6 +28,7 @@ export interface Article {
   isHot: boolean; // HOT한 게시물인가
   createdAt: string; // 생성일
   updatedAt: string; // 수정일
+  comments: Draft[]; // 댓글들
 }
 
 export interface Draft {
@@ -52,3 +54,17 @@ export interface Comment {
   createdAt: string;
 }
 
+// api request 게시글
+export interface ArticleInput {
+  title: string;
+  content: string;
+  categoryId: number;
+  imageUrl?: string | null;
+  draft: boolean;
+}
+
+// api request 댓글
+export interface CommentInput {
+  communityArticleId: number;
+  content: string;
+}

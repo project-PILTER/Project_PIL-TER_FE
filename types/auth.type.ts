@@ -18,6 +18,16 @@ export interface User {
   expertTitle?: string; // 어느 전공 전문의인지
 }
 
+export interface Mypage{
+  nickname: string;
+  email: string;
+  createdAt: string;
+  articleCount: number;
+  commentCount: number;
+  totalLikesReceived: number;
+  totalHealthDays: number;
+}
+
 export interface UserActivityCounts {
   totalPosts: number; // 작성 게시글 수
   totalComments: number; // 댓글 수
@@ -31,4 +41,11 @@ export interface MonthlyActivitySummary {
   currentComments: number; // 이번 달 댓글
   targetComments: number; // 목표 댓글 수
   healthRecordRate: number; // 건강 기록 달성률
+}
+
+export interface RecentJournalRecord {
+  id: string;
+  dateLabel: "오늘" | "어제" | "2일 전" | string; // ui 표시 날짜
+  note: string; // 기록 내용
+  status: "좋음" | "보통" | "나쁨" | string;
 }

@@ -11,7 +11,7 @@ import useCommunityEditor from "@/hooks/useCommunityEditor";
 import useDraft from "@/hooks/useDraft";
 import { postArticle } from "@/services/community.service";
 import { Draft } from "@/types/community.type";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ImageFileMap {

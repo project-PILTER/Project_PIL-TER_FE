@@ -6,7 +6,7 @@ import { Article, ArticleInput, CommentInput } from "@/types/community.type";
 import { api } from "./axios";
 
 // 모든 게시글 가져오기
-export async function getArticles(): Promise<Article[]> {
+export async function getArticles(): Promise<Article[] | null> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/community/articles`,
@@ -14,13 +14,14 @@ export async function getArticles(): Promise<Article[]> {
     );
 
     if (!res.ok) {
-      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})`);
+      console.error("게시글 로드 실패");
+      return null;
     }
 
     return await res.json();
   } catch (error) {
-    console.error("게시글 가져오기 실패");
-    throw error;
+    console.error("게시글 가져오기 실패", error);
+    return null;
   }
 }
 
@@ -37,7 +38,7 @@ export async function postArticle(articleData: ArticleInput) {
 }
 
 // 특정 게시글 조회
-export async function getArticleDetail(id: number): Promise<Article> {
+export async function getArticleDetail(id: number): Promise<Article | null> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/community/articles/${id}`,
@@ -45,13 +46,14 @@ export async function getArticleDetail(id: number): Promise<Article> {
     );
 
     if (!res.ok) {
-      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})`);
+      console.error("특정 게시글 로드 실패")
+      return null;
     }
 
     return await res.json();
   } catch (error) {
     console.error("특정 게시글 가져오기 실패", error);
-    throw error;
+    return null;
   }
 }
 
@@ -80,7 +82,7 @@ export async function deleteArticle(id: number) {
 }
 
 // 임시저장 글 조회
-export async function getTemporaryArticles(): Promise<Article[]> {
+export async function getTemporaryArticles(): Promise<Article[] | null> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/community/articles/drafts`,
@@ -88,12 +90,13 @@ export async function getTemporaryArticles(): Promise<Article[]> {
     );
 
     if (!res.ok) {
-      throw new Error(`임시저장 게시글 조회 실패 (Status: ${res.status})`);
+      console.error("임시저장 조회 실패");
+      return null;
     }
     return await res.json();
   } catch (error) {
     console.error("임시 저장 글 조회 실패", error);
-    throw error;
+    return null;
   }
 }
 

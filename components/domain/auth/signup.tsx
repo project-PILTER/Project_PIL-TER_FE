@@ -13,6 +13,8 @@ import { signupData } from "@/types/auth.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SocialLogin from "./socialLogin";
+import { signupUser } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 interface SignupProps {
   onOpenChange: (open:boolean) => void;
@@ -25,7 +27,21 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(signupSchema) });
-  const onSubmit = (data: signupData) => console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async(data: signupData) => {
+    const res = await signupUser(data);
+    const user = res.data;
+
+    if(user) {
+      alert("회원가입이 완료되었습니다.");
+      router.push("/");
+      onOpenChange(false);
+    } else {
+      alert("회원가입에 실패하였습니다. 다시시도해주세요.");
+    }
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>

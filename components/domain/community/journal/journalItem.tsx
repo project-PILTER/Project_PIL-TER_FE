@@ -14,6 +14,10 @@ interface JournalItemProps {
 }
 
 const conditionConfig = {
+  EXCELLENT: {
+    label: "아주 좋음",
+    className: ""
+  },
   GOOD: {
     label: "좋음",
     className: " ml-2 bg-green-100 text-green-600",
@@ -26,6 +30,10 @@ const conditionConfig = {
     label: "나쁨",
     className: "ml-2 bg-red-100 text-red-600",
   },
+  AWFUL: {
+    label: "아주 나쁨",
+    className: ""
+  }
 };
 
 export default function JournalItem({

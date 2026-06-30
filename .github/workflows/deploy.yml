@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. GitHub Actions 가상머신으로 최신 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. EC2로 전체 파일 전송
+      # 2. EC2로 전체 파일 전송 (전송 전 기존 유령 파일들 싹 청소하도록 RM 옵션 추가)
       - name: Copy files to EC2 via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -21,6 +22,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "."
           target: "/home/ubuntu/frontend"
+          rm: true # 🚨 핵심 1: 전송하기 전에 EC2의 target 폴더 내 기존 파일을 깨끗이 지웁니다. 유령 파일 박살용!
 
       # 3. EC2에서 Docker Compose 실행
       - name: Deploy on EC2
@@ -30,9 +32,13 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # 🚨 핵심 2: 기존에 실행 중이던 좀비 컨테이너와 볼륨을 완벽하게 다운시킵니다.
+            # 이 단계를 제일 먼저 실행해야 컨테이너 이름 충돌(Conflict)이 안 납니다.
             cd /home/ubuntu/frontend
+            docker compose down -v || true
+            docker rm -f pilter-FE || true
 
-            # 🔥 여기서 env 생성 (핵심)
+            # 🔥 환경변수(.env) 생성
             cat << EOF > .env
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
             NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID }}
@@ -43,7 +49,6 @@ jobs:
             NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GOOGLE_REDIRECT_URI }}
             EOF
 
-            docker compose down || true
-            docker rm -f pilter-FE || true
+            # 🚨 핵심 3: 완벽하게 갱신된 파일로 캐시 없이 완전 생짜 빌드 후 실행
             docker compose build --no-cache
             docker compose up -d

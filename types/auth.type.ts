@@ -43,9 +43,14 @@ export interface MonthlyActivitySummary {
   healthRecordRate: number; // 건강 기록 달성률
 }
 
-export interface RecentJournalRecord {
-  id: string;
-  dateLabel: "오늘" | "어제" | "2일 전" | string; // ui 표시 날짜
-  note: string; // 기록 내용
-  status: "좋음" | "보통" | "나쁨" | string;
+export interface MypageInfo extends Mypage {
+  recentJournals: {
+    dataLabel: string,
+    condition: string
+  }
+}
+
+export interface ProfileDataRequest {
+  nickname: string;
+  profileImageUrl: string;
 }

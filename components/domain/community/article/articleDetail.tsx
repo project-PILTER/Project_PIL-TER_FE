@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { postLike } from "@/services/community.service";
 import { Article } from "@/types/community.type";
 import { Bookmark, Eye, Heart, MoreHorizontal, Share2 } from "lucide-react";
 import Image from "next/image";
@@ -10,14 +11,18 @@ import { useState } from "react";
 
 interface ArticleDetailProps {
   article: Article;
+  id: number;
 }
 
-export default function ArticleDetail({ article }: ArticleDetailProps) {
+export default function ArticleDetail({ article, id }: ArticleDetailProps) {
   const [likeCount, setLikeCount] = useState(article.likeCount);
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleLikeClick = async() => {
-    if(isLiked) {
+  const handleLikeClick = async () => {
+    const previousIsLiked = isLiked;
+    const previousLikeCount = likeCount;
+
+    if (isLiked) {
       setLikeCount((prev) => prev - 1);
       setIsLiked(false);
     } else {
@@ -25,12 +30,21 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
       setIsLiked(true);
     }
 
-    // try {
-    //   await postLike();
-    // } catch(error) {
-    //   console.error("좋아요 보내기 에러")
-    // }
-  }
+    try {
+      const res = await postLike(id);
+
+      if (!res || !res.data) {
+        throw new Error("좋아요 api 실패");
+      }
+    } catch (error) {
+      console.error("좋아요 요청 실패", error);
+      alert("좋아요에 실패했습니다. 다시시작해주세요.");
+
+      setIsLiked(previousIsLiked);
+      setLikeCount(previousLikeCount);
+    }
+  };
+
   return (
     <Card className="w-full p-8 border-none shadow-sm rounded-2xl">
       <div className="flex flex-wrap gap-2 mb-6">
@@ -82,10 +96,13 @@ export default function ArticleDetail({ article }: ArticleDetailProps) {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            className="flex items-center gap-1 px-4 py-2 border-gray-100 rounded-lg hover:bg-gray-50"
+            className={`flex items-center gap-1 px-4 py-2 border-gray-100 rounded-lg hover:bg-gray-50 ${isLiked ? "text-red-500 border-red-100 bg-red-50/50" : ""}`}
             onClick={handleLikeClick}
           >
-            <Heart className="w-4 h-4" />
+            <Heart
+              className="w-4 h-4"
+              fill={isLiked ? "currentColor" : "none"}
+            />
             <span>좋아요</span>
             <span className="font-medium">{likeCount}</span>
           </Button>

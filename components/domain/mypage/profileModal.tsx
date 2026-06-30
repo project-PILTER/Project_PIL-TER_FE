@@ -1,3 +1,5 @@
+"use client";
+
 import Modal from "@/components/common/modal";
 import { Input } from "@/components/ui/input";
 import { ProfileFormValues, profileSchema } from "@/schemas/profile.schema";
@@ -5,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { putProfile } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 interface ProfileModalProps {
   open: boolean;
@@ -17,13 +21,14 @@ export default function ProfileModal({
   open,
   onOpenChange,
   nickname,
-  email,
+  email
 }: ProfileModalProps) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
   });
@@ -37,9 +42,22 @@ export default function ProfileModal({
     }
   }, [open, nickname, email, reset]);
 
-  const onSubmit = (data: ProfileFormValues) => {
-    console.log(data);
-    onOpenChange(false);
+  // imageUrl은 나중에 다시 처리
+  const onSubmit = async(data: ProfileFormValues) => {
+    try {
+      const requestData = {
+        nickname: data.nickname,
+        profileImageUrl: "/logo/logo.png" 
+      }
+      await putProfile(requestData);
+      
+      alert("프로필이 성공적으로 수정되었습니다.");
+      onOpenChange(false);
+
+      router.refresh();
+    } catch (error) {
+      alert("프로필 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
   }
 
   return (
@@ -79,7 +97,7 @@ export default function ProfileModal({
           >
             취소
           </Button>
-          <Button className="bg-[#5c59da]" type="submit">저장</Button>
+          <Button className="bg-[#5c59da]" type="submit">{isSubmitting ? "저장 중..." : "저장"}</Button>
         </div>
       </form>
     </Modal>

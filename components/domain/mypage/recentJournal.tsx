@@ -1,8 +1,8 @@
-import { RecentJournalRecord } from "@/types/auth.type";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import getRelativeTime from "@/utils/date";
 import { Calendar } from "lucide-react";
+import { RecentJournalRecord } from "@/types/journal.type";
 
 interface RecentJournalProps {
   records: RecentJournalRecord[];
@@ -31,9 +31,6 @@ export default function RecentJournal({ records }: RecentJournalProps) {
               <span className="text-sm font-bold text-gray-700">
                 {getRelativeTime(record.dateLabel)}
               </span>
-              <p className="text-xs font-medium text-gray-400 truncate">
-                {record.note}
-              </p>
             </div>
             <Badge
               variant="outline"

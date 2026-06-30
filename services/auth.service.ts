@@ -58,20 +58,21 @@ export async function signupUser(signupData: signupData) {
 // 마이페이지
 
 // 마이페이지 데이터 조회
-export async function getMypage(): Promise<MypageInfo> {
+export async function getMypage(): Promise<MypageInfo | null> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage`, {
       credentials: "include",
     });
 
     if (!res.ok) {
-      throw new Error(`마이페이지 데이터 조회 실패 (Status: ${res.status})`);
+      console.error("마이페이지 데이터 로드 실패");
+      return null;
     }
 
     return res.json();
   } catch (error) {
     console.error("마이페이지 데이터 조회 실패", error);
-    throw error;
+    return null;
   }
 }
 

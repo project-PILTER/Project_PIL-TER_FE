@@ -10,6 +10,10 @@ import { redirect } from "next/navigation";
 export default async function Mypage() {
   const mypageData = await getMypage();
 
+  if(!mypageData) {
+    redirect("/");
+  }
+
   let recordsArray: RecentJournalRecord[] = [];
   
   if(mypageData.recentJournals) {
@@ -29,10 +33,6 @@ export default async function Mypage() {
         status: statusText
       }
     ]
-  }
-
-  if(!mypageData) {
-    redirect("/");
   }
 
   return(

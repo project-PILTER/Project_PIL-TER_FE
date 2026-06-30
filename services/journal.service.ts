@@ -13,7 +13,8 @@ export async function getJournals(): Promise<JournalDiary[] | null> {
     });
 
     if (!res.ok) {
-      throw new Error(`건강일지 조회 실패 (Status: ${res.status})`);
+      console.error("건강일지 데이터 실패");
+      return null;
     }
     return res.json();
   } catch (error) {
@@ -43,13 +44,14 @@ export async function getOneJournal(id: number) {
     );
 
     if (!res.ok) {
-      throw new Error(`건강일지 단건 조회 실패 (Status: ${res.status})`);
+      console.error("건강일지 단건 실패");
+      return null;
     }
 
     return res.json();
   } catch (error) {
     console.error("건강일지 단건 조회 실패", error);
-    throw error;
+    return null;
   }
 }
 

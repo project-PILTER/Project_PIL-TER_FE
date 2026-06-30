@@ -4,6 +4,7 @@ import CommonPagination from "@/components/common/pagination";
 import { ClipboardList, SquarePen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function CommunityPage({
   searchParams,
@@ -12,6 +13,9 @@ export default async function CommunityPage({
 }) {
   const params = await searchParams;
   const articles = await getArticles();
+  if(!articles) {
+    redirect('/')
+  }
 
   const page = Number(params.page ?? 1);
   const PAGE_SIZE = 8;

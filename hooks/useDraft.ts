@@ -23,7 +23,7 @@ export default function useDraft() {
     alert("저장이 완료되었습니다.");
   }
 
-  const deleteDraft = (id: string) => {
+  const deleteDraft = async (id: string) => {
     const updatedDrafts = drafts.filter((draft) => draft.id !== id)
 
     setDrafts(updatedDrafts);

@@ -28,49 +28,45 @@ export default function WritePage() {
   const [imageFiles, setImageFiles] = useState<ImageFileMap[]>([]);
 
   const { drafts, saveDraft, loadDrafts, deleteDraft } = useDraft();
-  const {editor, characterCount} = useCommunityEditor();
+  const { editor, characterCount } = useCommunityEditor();
 
   if (!editor) return null;
 
   const handleImageFileAdd = (blobUrl: string, file: File) => {
-    setImageFiles((prev) => [...prev, {blobUrl, file}]);
-  }
+    setImageFiles((prev) => [...prev, { blobUrl, file }]);
+  };
 
   const handleOpenDrafts = () => {
     loadDrafts();
     setIsDraftModalOpen(true);
-  }
+  };
 
   const handleSave = () => {
-    saveDraft({title, categoryId, content: editor.getHTML()})
-  }
+    saveDraft({ title, categoryId, content: editor.getHTML() });
+  };
 
-  const handlePublish = async() => {
-    if(!title.trim()) return alert("제목을 입력해주세요.");
-    if(!categoryId) return alert("카테고리를 선택하세요.");
-    if(editor.isEmpty) return alert("내용을 입력해주세요.");
+  const handlePublish = async () => {
+    if (!title.trim()) return alert("제목을 입력해주세요.");
+    if (!categoryId) return alert("카테고리를 선택하세요.");
+    if (editor.isEmpty) return alert("내용을 입력해주세요.");
 
     setIsSubmitting(true);
 
-    // try {
-    //   let contentHtml = editor.getHTML();
-    //   let firstImageUrl: string | null = null;
-    //   const currentImagesInEditor = imageFiles.filter((img) => contentHtml.includes(img.blobUrl));
-    //   for(let i = 0; i < currentImagesInEditor.length; i++) {
-    //     const {blobUrl, file} = currentImagesInEditor[i];
+    // 아직 imageUrl은 미구현
 
-    //   }
-    //   const response = await postArticle({
-    //     title,
-    //     content: editor.getHTML(),
-    //     categoryId: Number(categoryId),
-    //     draft: false,
-    //     imageUrl
-    //   })
-    // } catch (error) {
-      
-    // }
-  }
+    const res = await postArticle({
+      title,
+      content: editor.getHTML(),
+      categoryId: Number(categoryId),
+      draft: false,
+      imageUrl: "/logo/logo.png",
+    });
+
+    if (!res.data) {
+      alert("게시글 보내기에 실패했습니다. 다시시도해주세요.");
+      router.push("/community/articles");
+    }
+  };
 
   const handleLoadDraft = (draft: Draft) => {
     setTitle(draft.title);
@@ -79,7 +75,7 @@ export default function WritePage() {
     editor.commands.setContent(draft.content);
 
     setIsDraftModalOpen(false);
-  }
+  };
 
   return (
     <div className="w-4xl mx-auto mt-4">
@@ -88,10 +84,19 @@ export default function WritePage() {
         onSave={handleSave}
         onPublish={handlePublish}
       />
-      
-      <WriteForm title={title} categoryId={categoryId} onTitleChange={setTitle} onCategoryChange={setCategoryId} />
 
-      <WriteEditor editor={editor} characterCount={characterCount} onImageFileAdd={handleImageFileAdd}/>
+      <WriteForm
+        title={title}
+        categoryId={categoryId}
+        onTitleChange={setTitle}
+        onCategoryChange={setCategoryId}
+      />
+
+      <WriteEditor
+        editor={editor}
+        characterCount={characterCount}
+        onImageFileAdd={handleImageFileAdd}
+      />
 
       <DraftModal
         open={isDraftModalOpen}

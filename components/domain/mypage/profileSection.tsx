@@ -1,37 +1,28 @@
 "use client";
 
-import { useAuthStore } from "@/stores/authStore";
 import { Camera, Pencil, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Skeleton from "./skeleton";
 import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import ProfileModal from "./profileModal";
+import { MypageInfo } from "@/types/auth.type";
+import { useAuthStore } from "@/stores/authStore";
 
-export default function ProfileSection() {
-  const user = useAuthStore((state) => state.user);
-  const isLoading = useAuthStore((state) => state.isLoading);
+interface ProfileSectionProps {
+  data: MypageInfo;
+}
+
+export default function ProfileSection({data}:ProfileSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-
-  if (isLoading) {
-    return <Skeleton />;
-  }
-
-  if (!user) {
-    return (
-      <div>
-        <p>로그인이 필요합니다.</p>
-      </div>
-    );
-  }
+  const user = useAuthStore((state) => state.user);
 
   const handleProfileImageChange = () => {
     fileInputRef.current?.click();
   };
 
-  const joinedDate = new Date(user.createdAt).toLocaleString("ko-KR", {
+  const joinedDate = new Date(data.createdAt).toLocaleString("ko-KR", {
     year: "numeric",
     month: "long",
   });
@@ -42,15 +33,15 @@ export default function ProfileSection() {
 
         <div className="relative w-28 h-28">
           <div className="relative w-full h-full rounded-full bg-[#5c59da] text-white flex items-center justify-center text-2xl font-bold overflow-hidden shadow-inner">
-            {user.profileImage ? (
+            {user?.profileImage ? (
               <Image
                 src={user.profileImage}
-                alt={`${user.nickname}의 프로필`}
+                alt={`${data.nickname}의 프로필`}
                 fill
                 className="object-cover"
               />
             ) : (
-              <span>{user.nickname.charAt(0).toUpperCase() ?? "?"}</span>
+              <span>{data.nickname.charAt(0).toUpperCase() ?? "?"}</span>
             )}
           </div>
           <div>
@@ -66,9 +57,9 @@ export default function ProfileSection() {
 
         <div className="text-center sm:text-left space-y-1">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
-            <h2 className="text-2xl font-bold text-gray-900">{user.nickname}</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{data.nickname}</h2>
 
-            {user.isMedicalExpert ? (
+            {user?.isMedicalExpert ? (
               <span className="bg-[#efeefa] text-[#6e6ed7] text-xs font-semibold px-2.5 py-0.5 rounded-full flex items-center gap-1">
                 {user.expertTitle || "헬스 마스터"}
               </span>
@@ -77,8 +68,8 @@ export default function ProfileSection() {
             )}
           </div>
 
-          <p className="text-sm text-gray-500">{user.email}</p>
-          {user.createdAt && <p className="text-xs text-gray-400">{joinedDate} 가입</p>}
+          <p className="text-sm text-gray-500">{data.email}</p>
+          {data.createdAt && <p className="text-xs text-gray-400">{joinedDate} 가입</p>}
         </div>
       </div>
 
@@ -94,7 +85,7 @@ export default function ProfileSection() {
         </Button>
       </div>
 
-      <ProfileModal open={isProfileModalOpen} onOpenChange={setIsProfileModalOpen} nickname={user.nickname} email={user.email} />
+      <ProfileModal open={isProfileModalOpen} onOpenChange={setIsProfileModalOpen} nickname={data.nickname} email={data.email} />
     </div>
   );
 }

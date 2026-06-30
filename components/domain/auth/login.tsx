@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/auth.schema";
 import SocialLogin from "./socialLogin";
+import { loginUser } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 interface LoginProps {
   onOpenChange: (open: boolean) => void;
@@ -25,7 +27,20 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginData>({ resolver: zodResolver(loginSchema) });
-  const onSubmit = (data: LoginData) => console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async(data: LoginData) => {
+    const res = await loginUser(data);
+    const user = res.data;
+    
+    if(user) {
+      alert("로그인에 성공했습니다.");
+      router.push("/")
+    } else {
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+    }
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>

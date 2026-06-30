@@ -10,11 +10,11 @@ export const articles: Article[] = [
     author: { 
       id: "user_01", 
       nickname: "정성소아과_박원장", 
-      profileImage: "https://example.com/profiles/doctor1.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: true,
       expertTitle: "소아청소년과 전문의"
     },
-    imageUrl: "https://example.com/images/baby-health.png",
+    imageUrl: "/logo/logo.png",
     viewCount: 1540,
     likeCount: 120,
     commentCount: 2,
@@ -57,11 +57,11 @@ export const articles: Article[] = [
     author: { 
       id: "user_03", 
       nickname: "바른척추_강원장", 
-      profileImage: "https://example.com/profiles/doctor2.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: true,
       expertTitle: "정형외과 전문의"
     },
-    imageUrl: "https://example.com/images/stretching.png",
+    imageUrl: "/logo/logo.png",
     viewCount: 2450,
     likeCount: 198,
     commentCount: 1,
@@ -80,7 +80,7 @@ export const articles: Article[] = [
     author: { 
       id: "user_04", 
       nickname: "헬스보이99", 
-      profileImage: "https://example.com/profiles/user4.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: false,
       expertTitle: undefined
     },
@@ -101,11 +101,11 @@ export const articles: Article[] = [
     author: { 
       id: "user_05", 
       nickname: "피부꿀팁_이선생", 
-      profileImage: "https://example.com/profiles/doctor3.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: true,
       expertTitle: "피부과 전문의"
     },
-    imageUrl: "https://example.com/images/suncream.png",
+    imageUrl: "/logo/logo.png",
     viewCount: 3120,
     likeCount: 285,
     commentCount: 2,
@@ -125,11 +125,11 @@ export const articles: Article[] = [
     author: { 
       id: "user_06", 
       nickname: "매끈피부원망", 
-      profileImage: "https://example.com/profiles/user6.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: false,
       expertTitle: undefined
     },
-    imageUrl: "https://example.com/images/trouble.png",
+    imageUrl: "/logo/logo.png",
     viewCount: 620,
     likeCount: 15,
     commentCount: 0,
@@ -146,11 +146,11 @@ export const articles: Article[] = [
     author: { 
       id: "user_07", 
       nickname: "내과_김닥터", 
-      profileImage: "https://example.com/profiles/doctor4.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: true,
       expertTitle: "내과 전문의"
     },
-    imageUrl: "https://example.com/images/diabetes-info.png",
+    imageUrl: "/logo/logo.png",
     viewCount: 1890,
     likeCount: 142,
     commentCount: 1,
@@ -192,11 +192,11 @@ export const articles: Article[] = [
     author: { 
       id: "user_09", 
       nickname: "마음쉼터_최원장", 
-      profileImage: "https://example.com/profiles/doctor5.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: true,
       expertTitle: "정신건강의학과 전문의"
     },
-    imageUrl: "https://example.com/images/burnout.png",
+    imageUrl: "/logo/logo.png",
     viewCount: 4110,
     likeCount: 354,
     commentCount: 1,
@@ -215,7 +215,7 @@ export const articles: Article[] = [
     author: { 
       id: "user_10", 
       nickname: "잠들고싶은밤", 
-      profileImage: "https://example.com/profiles/user10.png",
+      profileImage: "/logo/logo.png",
       isMedicalExpert: false,
       expertTitle: undefined
     },

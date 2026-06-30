@@ -2,24 +2,26 @@
   커뮤니티 관련 api 함수들 모음
 */
 
-import { Article, ArticleInput, CommentInput,  } from "@/types/community.type";
+import { Article, ArticleInput, CommentInput } from "@/types/community.type";
 import { api } from "./axios";
 
 // 모든 게시글 가져오기
 export async function getArticles(): Promise<Article[]> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/community/articles`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/community/articles`,
+      { credentials: "include" },
+    );
 
-    if(!res.ok) {
-      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})` );
+    if (!res.ok) {
+      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})`);
     }
 
     return await res.json();
-  } catch(error) {
+  } catch (error) {
     console.error("게시글 가져오기 실패");
-    throw(error);
+    throw error;
   }
-  
 }
 
 // 새로운 게시글 등록
@@ -28,7 +30,7 @@ export async function postArticle(articleData: ArticleInput) {
     const res = await api.post("/community/articles", articleData);
 
     return res.data;
-  } catch(error) {
+  } catch (error) {
     console.error("게시글 등록 실패", error);
     throw error;
   }
@@ -37,14 +39,17 @@ export async function postArticle(articleData: ArticleInput) {
 // 특정 게시글 조회
 export async function getArticleDetail(id: number): Promise<Article> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/community/articles/${id}`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/community/articles/${id}`,
+      { credentials: "include" },
+    );
 
-    if(!res.ok) {
-      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})` );
+    if (!res.ok) {
+      throw new Error(`특정 게시글 조회 실패 (Status: ${res.status})`);
     }
 
     return await res.json();
-  } catch(error) {
+  } catch (error) {
     console.error("특정 게시글 가져오기 실패", error);
     throw error;
   }
@@ -56,7 +61,7 @@ export async function putArticle(articleData: ArticleInput, id: number) {
     const res = await api.put(`/community/articles/${id}`, articleData);
 
     return res.data;
-  } catch(error) {
+  } catch (error) {
     console.error("게시글 수정 실패", error);
     throw error;
   }
@@ -68,7 +73,7 @@ export async function deleteArticle(id: number) {
     const res = await api.delete(`/community/articles/${id}`);
 
     return res.data;
-  } catch(error) {
+  } catch (error) {
     console.error("게시글 삭제 실패", error);
     throw error;
   }
@@ -77,9 +82,12 @@ export async function deleteArticle(id: number) {
 // 임시저장 글 조회
 export async function getTemporaryArticles(): Promise<Article[]> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/community/articles/drafts`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/community/articles/drafts`,
+      { credentials: "include" },
+    );
 
-    if(!res.ok) {
+    if (!res.ok) {
       throw new Error(`임시저장 게시글 조회 실패 (Status: ${res.status})`);
     }
     return await res.json();
@@ -97,7 +105,7 @@ export async function postComment(commentData: CommentInput) {
     const res = await api.post(`/community/comments`, commentData);
 
     return res.data;
-  } catch(error) {
+  } catch (error) {
     console.error("댓글 작성 실패", error);
     throw error;
   }
@@ -109,7 +117,7 @@ export async function putComment(commentData: CommentInput, id: number) {
     const res = await api.put(`/community/comments/${id}`, commentData.content);
 
     return res.data;
-  } catch(error) {
+  } catch (error) {
     console.error("댓글 수정 실패", error);
     throw error;
   }

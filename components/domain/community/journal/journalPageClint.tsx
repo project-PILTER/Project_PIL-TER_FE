@@ -10,6 +10,8 @@ import JournalModal from "./journalModal";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Plus } from "lucide-react";
+import { deleteJournal, postJournal, putJournal } from "@/services/journal.service";
+import { useRouter } from "next/navigation";
 
 interface JournalPageClientProps {
   journals: JournalDiary[];
@@ -18,6 +20,7 @@ interface JournalPageClientProps {
 export default function JournalPageClient({
   journals,
 }: JournalPageClientProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"create" | "edit">("create");
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -25,16 +28,38 @@ export default function JournalPageClient({
     JournalDiary | undefined
   >();
 
-  const handleEdit = (journal: JournalDiary) => {
+  const handleEdit = async(journal: JournalDiary) => {
     setMode("edit");
     setSelectedJournal(journal);
     setOpen(true);
   };
 
-  const handleSubmit = (data: JournalFormValues) => {
-    console.log(data);
-    setOpen(false);
+  const handleSubmit = async(data: JournalFormValues) => {
+    try {
+      if(mode === "edit" && selectedJournal) {
+        await putJournal(data, selectedJournal.id);
+        alert("건강기록이 수정되었습니다.");
+      } else {
+        await postJournal(data);
+        alert("건강기록이 등록되었습니다.");
+      }
+
+      setOpen(false);
+      router.refresh();
+    } catch (error) {
+      alert("건강기록 처리 실패");
+      setOpen(false);
+    }
   };
+
+  const handleDelete = async(id: number) => {
+    try {
+      await deleteJournal(id);
+      alert("건강기록이 삭제되었습니다.");
+    } catch (error) {
+      alert("건강기록 삭제 실패");
+    }
+  }
 
   const filteredJournals = selectedDate
     ? journals.filter(
@@ -67,7 +92,7 @@ export default function JournalPageClient({
 
       <div className="grid gap-6 lg:grid-cols-[1fr_21.875rem]">
         <div className="space-y-4">
-          <JournalList journals={filteredJournals} onEdit={handleEdit} />
+          <JournalList journals={filteredJournals} onEdit={handleEdit} onDelete={handleDelete}/>
         </div>
         <div>
           <JournalCalendar

@@ -4,6 +4,7 @@
 
 import { Article, ArticleInput, CommentInput } from "@/types/community.type";
 import { api } from "./axios";
+import { articles } from "@/components/domain/community/examples/articleExamples";
 
 // 모든 게시글 가져오기
 export async function getArticles(): Promise<Article[] | null> {
@@ -40,17 +41,22 @@ export async function postArticle(articleData: ArticleInput) {
 // 특정 게시글 조회
 export async function getArticleDetail(id: number): Promise<Article | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/community/articles/${id}`,
-      { credentials: "include" },
-    );
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_API_URL}/community/articles/${id}`,
+    //   { credentials: "include" },
+    // );
 
-    if (!res.ok) {
-      console.error("특정 게시글 로드 실패")
-      return null;
-    }
+    // if (!res.ok) {
+    //   console.error("특정 게시글 로드 실패")
+    //   return null;
+    // }
 
-    return await res.json();
+    // return await res.json();
+
+    // 하드코딩된 데이터로 불러오기
+    const mockArticle = articles.find((item) => item.id === id);
+
+    return mockArticle ?? null;
   } catch (error) {
     console.error("특정 게시글 가져오기 실패", error);
     return null;
@@ -115,9 +121,9 @@ export async function postComment(commentData: CommentInput) {
 }
 
 // 댓글 수정
-export async function putComment(commentData: CommentInput, id: number) {
+export async function putComment(content: string, id: number) {
   try {
-    const res = await api.put(`/community/comments/${id}`, commentData.content);
+    const res = await api.put(`/community/comments/${id}`, content);
 
     return res.data;
   } catch (error) {

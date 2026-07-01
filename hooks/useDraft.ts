@@ -1,40 +1,71 @@
 "use client";
 
-import { Draft, DraftInput } from "@/types/community.type";
-import { useState } from "react";
+import { getTemporaryArticles } from "@/services/community.service";
+import { Article, Draft, DraftInput } from "@/types/community.type";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useDraft() {
   const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const saveDraft = (draft: DraftInput) => {
-    const savedDrafts: Draft[] = JSON.parse(localStorage.getItem("community-drafts") ?? "[]");
-
-    const newDraft = {
-      ...draft,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString()
-    };
-
-    savedDrafts.push(newDraft);
-
-    localStorage.setItem("community-drafts", JSON.stringify(savedDrafts));
-    setDrafts(savedDrafts);
-
-    alert("저장이 완료되었습니다.");
-  }
+  const saveDraft = async (draft: DraftInput) => {
+    // const res = await postDraft();
+    // if(res) {
+    //   alert("임시저장 되었습니다.");
+    // } else {
+    //   alert("임시저장 실패");
+    // }
+  };
 
   const deleteDraft = async (id: string) => {
-    const updatedDrafts = drafts.filter((draft) => draft.id !== id)
+    // const res = await deleteDraft(id);
+    // await loadDrafts();
+    // if(res) {
+    //   alert("임시저장 글 삭제 완료");
+    // } else {
+    //   alert("임시저장 삭제 실패");
+    // }
+  };
 
-    setDrafts(updatedDrafts);
+  const loadDrafts = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res: Article[] | null = await getTemporaryArticles();
+      if (res) {
+        const mappedDrafts: Draft[] = res.map((article) => ({
+          id: String(article.id),
+          categoryId: String(article.category?.id || ""),
+          title: article.title,
+          content: article.content,
+          createdAt: article.createdAt
+        }))
 
-    localStorage.setItem("community-drafts", JSON.stringify(updatedDrafts));
-  }
+        setDrafts(mappedDrafts);
+      } else {
+        setDrafts([]);
+      }
+    } catch (error) {
+      console.error("임시저장 조회 실패");
+      setDrafts([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-  const loadDrafts = () => {
-    const savedDrafts: Draft[] = JSON.parse(localStorage.getItem("community-drafts") ?? "[]");
+  useEffect(() => {
+    let isMounted = true;
 
-    setDrafts(savedDrafts);
-  }
-  return{ drafts, saveDraft, deleteDraft, loadDrafts };
+    const fetchData = async () => {
+      if (isMounted) {
+        await loadDrafts();
+      }
+    };
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [loadDrafts]);
+
+  return { drafts, saveDraft, deleteDraft, loadDrafts };
 }

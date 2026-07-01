@@ -8,8 +8,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Trash2 } from "lucide-react";
 import { categories } from "../examples/categoryExamples";
-import getRelativeTime from "@/utils/date";
 import { Draft } from "@/types/community.type";
+import { getRelativeTime } from "@/utils/date";
 
 interface DraftCardProps {
   draft: Draft;

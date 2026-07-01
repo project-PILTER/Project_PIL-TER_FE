@@ -1,8 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import getRelativeTime from "@/utils/date";
 import { Calendar } from "lucide-react";
 import { RecentJournalRecord } from "@/types/journal.type";
+import { getRelativeTime } from "@/utils/date";
 
 interface RecentJournalProps {
   records: RecentJournalRecord[];

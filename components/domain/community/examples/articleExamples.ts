@@ -1,12 +1,11 @@
 import { Article } from "@/types/community.type";
 
-
 export const articles: Article[] = [
   {
     id: 1,
     title: "여름철 에어컨 사용 시 영유아 냉방병 예방 수칙",
-    content: "<p>아이들은 성인보다 체온 조절 능력이 떨어집니다. 실내외 온도 차이를 5도 이내로 유지하고, 2시간마다 환기하는 것이 중요합니다.</p>",
-    category: { id: 101, name: "소아청소년과" },
+    content: "아이들은 성인보다 체온 조절 능력이 떨어집니다. 실내외 온도 차이를 5도 이내로 유지하고, 2시간마다 환기하는 것이 중요합니다.",
+    category: { id: 1, name: "공통" },
     author: { 
       id: "user_01", 
       nickname: "정성소아과_박원장", 
@@ -19,7 +18,7 @@ export const articles: Article[] = [
     likeCount: 120,
     commentCount: 2,
     isHot: true,
-    createdAt: "2026-06-25T10:00:00Z",
+    createdAt: "2026-06-25",
     updatedAt: "2026-06-25T14:30:00Z",
     comments: [
       { id: "c1", categoryId: "101", title: "댓글1", content: "좋은 정보 감사합니다! 오늘부터 실천해야겠어요.", createdAt: "2026-06-25T11:00:00Z" },

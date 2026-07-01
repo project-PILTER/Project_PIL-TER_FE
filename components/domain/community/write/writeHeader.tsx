@@ -5,22 +5,34 @@ interface WriteHeaderProps {
   onOpenDrafts: () => void;
   onSave: () => void;
   onPublish: () => void;
+  isEditMode?: boolean;
 }
 
-export default function WriteHeader({onOpenDrafts, onSave, onPublish}:WriteHeaderProps) {
+export default function WriteHeader({
+  onOpenDrafts,
+  onSave,
+  onPublish,
+  isEditMode,
+}: WriteHeaderProps) {
   return (
     <div className="flex justify-end gap-2">
-      <Button variant="outline" onClick={onOpenDrafts}>
-        <FileText size={18}/>
-        임시저장
+      {!isEditMode && (
+        <Button variant="outline" onClick={onOpenDrafts}>
+          <FileText size={18} />
+          임시저장 목록
         </Button>
-      <Button variant="outline" onClick={onSave}>
-        <Save size={18} />
-        저장
+      )}
+
+      {!isEditMode && (
+        <Button variant="outline" onClick={onSave}>
+          <Save size={18} />
+          임시저장
         </Button>
+      )}
+
       <Button className="bg-[#615ed6]" onClick={onPublish}>
         <Navigation size={18} />
-        등록
+        {isEditMode ? "수정하기" : "등록하기"}
       </Button>
     </div>
   );

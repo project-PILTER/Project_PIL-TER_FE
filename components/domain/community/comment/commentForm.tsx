@@ -1,42 +1,59 @@
 "use client";
 
 import Image from "next/image";
-import Profile from "../../../../public/logo/logo.png";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SendHorizonal } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { CommentUser } from "@/types/community.type";
 import defaultProfile from "../../../../public/logo/logo.png"
+import { useForm } from "react-hook-form";
+import { CommentFormData, commentSchema } from "@/schemas/community.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface CommentFormProps {
   author?: CommentUser | null;
+  onSubmit: (content: string) => Promise<void>;
 }
 
-export default function CommentForm({author}:CommentFormProps) {
-  const [comment, setComment] = useState("");
+export default function CommentForm({author, onSubmit}:CommentFormProps) {
   const profileSrc = author?.profileImage || defaultProfile;
+  const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<CommentFormData>({
+    resolver: zodResolver(commentSchema),
+    defaultValues: {
+      content: ""
+    }
+  })
+
+  const onValidSubmit = async(data: CommentFormData) => {
+    try {
+      await onSubmit(data.content);
+      reset();
+    } catch (error) {
+      console.error("댓글 등록 실패");
+    }
+  }
   return (
-    <div className="w-full">
+    <form onSubmit={handleSubmit(onValidSubmit)} className="w-full">
       <div className="flex items-center gap-4">
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <Image src={profileSrc} className="w-full h-full" width={40} height={40} alt="프로필" />
         </div>
         <div className="flex-1">
           <Textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            {...register("content")}
             placeholder="댓글을 입력하세요..."
+            disabled={isSubmitting}
             className="h-20 min-h-[5rem] w-full border-gray-200 text-sm focus-visible:border-violet-500 resize-none p-3 transition-all"
           />
+          {errors.content && (<span className="text-xs text-red-500">{errors.content.message}</span>)}
         </div>
       </div>
       <div className="flex justify-end mt-2">
-        <Button className="gap-2 text-white font-medium bg-[#615ed6]">
+        <Button type="submit" className="gap-2 text-white font-medium bg-[#615ed6]" disabled={isSubmitting}>
           <SendHorizonal className="w-4 h-4"/>
-          댓글 작성
+          {isSubmitting ? "등록 중" : "댓글 작성"}
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

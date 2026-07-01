@@ -1,12 +1,27 @@
 "use client";
 
+import Dropdown from "@/components/common/dropdown";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { postLike } from "@/services/community.service";
+import {
+  deleteArticle,
+  postLike,
+  putArticle,
+} from "@/services/community.service";
 import { Article } from "@/types/community.type";
-import { Bookmark, Eye, Heart, MoreHorizontal, Share2 } from "lucide-react";
+import { DropdownOption } from "@/types/ui.type";
+import {
+  Bookmark,
+  Edit2,
+  Eye,
+  Heart,
+  MoreHorizontal,
+  Share2,
+  Trash2,
+} from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ArticleDetailProps {
@@ -15,8 +30,26 @@ interface ArticleDetailProps {
 }
 
 export default function ArticleDetail({ article, id }: ArticleDetailProps) {
+  const router = useRouter();
+
   const [likeCount, setLikeCount] = useState(article.likeCount);
   const [isLiked, setIsLiked] = useState(false);
+
+  const handleEdit = () => {
+    router.push(`/community/articles/edit/${id}`);
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
+
+    try {
+      await deleteArticle(id);
+      alert("삭제되었습니다.");
+      router.push("/community/articles");
+    } catch (error) {
+      alert("삭제에 실패했습니다.");
+    }
+  };
 
   const handleLikeClick = async () => {
     const previousIsLiked = isLiked;
@@ -44,6 +77,19 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
       setLikeCount(previousLikeCount);
     }
   };
+
+  const dropdownOptions: DropdownOption[] = [
+    {
+      label: "수정하기",
+      icon: <Edit2 className="w-4 h-4" />,
+      onClick: handleEdit,
+    },
+    {
+      label: "삭제하기",
+      icon: <Trash2 className="w-4 h-4" />,
+      onClick: handleDelete,
+    },
+  ];
 
   return (
     <Card className="w-full p-8 border-none shadow-sm rounded-2xl">
@@ -83,9 +129,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
           </div>
         </div>
 
-        <Button variant="ghost" size="icon">
-          <MoreHorizontal className="w-5 h-5" />
-        </Button>
+        <Dropdown options={dropdownOptions} />
       </div>
 
       <div className="whitespace-pre-wrap leading-relaxed text-1.125rem min-h-[18.75rem] mb-8">

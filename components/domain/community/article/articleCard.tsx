@@ -7,9 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Eye, Flame, Heart, MessageCircle } from "lucide-react";
 import Image from "next/image";
-import getRelativeTime from "@/utils/date";
 import { Article } from "@/types/community.type";
 import Link from "next/link";
+import { getRelativeTime } from "@/utils/date";
 
 interface CommunityListProps {
   article: Article;

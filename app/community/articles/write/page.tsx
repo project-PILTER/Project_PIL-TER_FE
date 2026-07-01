@@ -9,34 +9,64 @@ import WriteForm from "@/components/domain/community/write/writeForm";
 import WriteHeader from "@/components/domain/community/write/writeHeader";
 import useCommunityEditor from "@/hooks/useCommunityEditor";
 import useDraft from "@/hooks/useDraft";
-import { postArticle } from "@/services/community.service";
+import { getArticleDetail, getTemporaryArticles, postArticle, putArticle } from "@/services/community.service";
 import { Draft } from "@/types/community.type";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ImageFileMap {
   blobUrl: string;
   file: File;
 }
 
-export default function WritePage() {
+interface WritePageProps {
+  articleId?: number;
+}
+
+export default function WritePage({articleId}:WritePageProps) {
   const router = useRouter();
+  const isEditMode = !!articleId;
+
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState<string>("");
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageFiles, setImageFiles] = useState<ImageFileMap[]>([]);
+  const [isLoading, setIsLoading] = useState(isEditMode);
 
   const { drafts, saveDraft, loadDrafts, deleteDraft } = useDraft();
   const { editor, characterCount } = useCommunityEditor();
 
-  if (!editor) return null;
+  useEffect(() => {
+    if(!isEditMode || !articleId || !editor) return;
+  
+    const fetchOriginalArticle = async() => {
+      try {
+        const res = await getArticleDetail(articleId);
+        if(res) {
+          setTitle(res.title);
+          setCategoryId(String(res.category.id));
+          editor.commands.setContent(res.content);
+        }
+      } catch (error) {
+        alert("기존 글을 불러오는데 실패했습니다.");
+        router.back();
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchOriginalArticle();
+  }, [articleId, isEditMode, editor, router])
+
+  if (!editor || isLoading) return <div>로딩중...</div>
+  
 
   const handleImageFileAdd = (blobUrl: string, file: File) => {
     setImageFiles((prev) => [...prev, { blobUrl, file }]);
   };
 
-  const handleOpenDrafts = () => {
+  const handleOpenDrafts = async() => {
+    await getTemporaryArticles();
     loadDrafts();
     setIsDraftModalOpen(true);
   };
@@ -52,19 +82,39 @@ export default function WritePage() {
 
     setIsSubmitting(true);
 
-    // 아직 imageUrl은 미구현
+    try {
+      if (isEditMode && articleId) {
+        // 수정모드
+        const res = await putArticle({
+          title,
+          content: editor.getHTML(),
+          categoryId: Number(categoryId),
+          imageUrl: "/logo/logo.png",
+          draft: false
+        }, articleId)
 
-    const res = await postArticle({
-      title,
-      content: editor.getHTML(),
-      categoryId: Number(categoryId),
-      draft: false,
-      imageUrl: "/logo/logo.png",
-    });
+        if(res.data) {
+          alert("수정이 완료되었습니다.")
+          router.push(`/community/articles/${articleId}`);
+        }
+      } else {
+        const res = await postArticle({
+          title,
+          content: editor.getHTML(),
+          categoryId: Number(categoryId),
+          imageUrl: "/logo/logo.png",
+          draft: false
+        });
 
-    if (!res.data) {
-      alert("게시글 보내기에 실패했습니다. 다시시도해주세요.");
-      router.push("/community/articles");
+        if(res.data) {
+          alert("글이 등록되었습니다.");
+          router.push(`/community/articles/${res.data.id}`);
+        }
+      }
+    } catch (error) {
+      alert("요청 처리에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -80,9 +130,10 @@ export default function WritePage() {
   return (
     <div className="w-4xl mx-auto mt-4">
       <WriteHeader
-        onOpenDrafts={handleOpenDrafts}
+        onOpenDrafts={isEditMode ? () => {} : handleOpenDrafts}
         onSave={handleSave}
         onPublish={handlePublish}
+        isEditMode={isEditMode}
       />
 
       <WriteForm

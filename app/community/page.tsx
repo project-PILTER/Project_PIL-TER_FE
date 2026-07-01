@@ -5,6 +5,7 @@ import { ClipboardList, SquarePen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { articles } from "@/components/domain/community/examples/articleExamples";
 
 export default async function CommunityPage({
   searchParams,
@@ -12,10 +13,10 @@ export default async function CommunityPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const params = await searchParams;
-  const articles = await getArticles();
-  if(!articles) {
-    redirect('/')
-  }
+  // const articles = await getArticles();
+  // if(!articles) {
+  //   redirect('/');
+  // }
 
   const page = Number(params.page ?? 1);
   const PAGE_SIZE = 8;

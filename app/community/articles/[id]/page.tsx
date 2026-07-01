@@ -1,5 +1,6 @@
 import ArticleDetail from "@/components/domain/community/article/articleDetail";
 import CommentList from "@/components/domain/community/comment/commentList";
+import { articles } from "@/components/domain/community/examples/articleExamples";
 import { comments } from "@/components/domain/community/examples/commentExamples";
 import { getArticleDetail } from "@/services/community.service";
 import { redirect } from "next/navigation";
@@ -12,7 +13,8 @@ export default async function ArticlePage({params}:ArticlePageProps) {
   const resolvedParams = await params;
   const articleId = Number(resolvedParams.id);
 
-  const article = await getArticleDetail(articleId);
+  // const article = await getArticleDetail(articleId);
+  const article = articles.find((item) => item.id === articleId);
 
   if(!article) {
     alert("검색된 게시글이 없습니다.");
@@ -24,7 +26,7 @@ export default async function ArticlePage({params}:ArticlePageProps) {
       <div className="flex flex-col gap-4">
         <ArticleDetail article={article} id={articleId}/>
       </div>
-      <CommentList comments={comments} />
+      <CommentList initialComments={comments} articleId={articleId}/>
     </div>
   );
 }

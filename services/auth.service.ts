@@ -8,28 +8,29 @@ import {
   ProfileDataRequest,
   signupData,
   User,
+  UserInfo,
 } from "@/types/auth.type";
 import { api } from "./axios";
 
 // 유저 정보 조회
-// export async function getUser(): Promise<User | null> {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-//       credentials: "include"
-//     })
+export async function getUser(): Promise<UserInfo | null> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+      credentials: "include"
+    })
 
-//     if(!res.ok) {
-//       throw new Error(`유저 정보 조회 실패 (Status: ${res.status})`);
-//     }
+    if(!res.ok) {
+      throw new Error(`유저 정보 조회 실패 (Status: ${res.status})`);
+    }
 
-//     const user: User = await res.json();
+    const user: UserInfo = await res.json();
 
-//     return user;
-//   } catch(error) {
-//     console.error("유저 정보 조회 실패", error);
-//     return null;
-//   }
-// }
+    return user;
+  } catch(error) {
+    console.error("유저 정보 조회 실패", error);
+    return null;
+  }
+}
 
 // 로그인
 export async function loginUser(loginData: LoginData) {
@@ -46,11 +47,27 @@ export async function loginUser(loginData: LoginData) {
 // 회원가입
 export async function signupUser(signupData: signupData) {
   try {
-    const res = await api.post("/user", signupData);
+    const res = await api.post("/user/signup", signupData);
 
     return res.data;
   } catch (error) {
     console.error("회원 가입 실패", error);
+    throw error;
+  }
+}
+
+// 로그아웃
+export async function logOut(id: number) {
+  try {
+    const res = await api.post("/logout", null, {
+      params: {
+        id
+      }
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("로그아웃 실패", error);
     throw error;
   }
 }

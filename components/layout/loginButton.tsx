@@ -21,7 +21,6 @@ export default function LoginButton() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"login" | "signup">("login");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const user = useAuthStore((state) => state.user);
 
@@ -29,7 +28,7 @@ export default function LoginButton() {
     router.push("/");
     return null;
   }
-  
+
   const dropdownOptions: DropdownOption[] = [
     {
       label: "마이페이지",

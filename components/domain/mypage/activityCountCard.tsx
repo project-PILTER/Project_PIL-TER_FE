@@ -49,7 +49,7 @@ export default function ActivityCountCard({counts}: ActivityCountCardProps) {
 
             <div className="flex flex-col gap-1 text-left min-w-0">
               <p className="text-xs font-medium text-gray-400">{item.title}</p>
-              <p className="text-2xl font-bold text-gray-900">{item.value}</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{item.value}</p>
             </div>
           </Card>
         );

@@ -4,7 +4,7 @@ export const journalSchema = z.object({
   journalDate: z.string(),
 
   conditionStatus: z.enum([
-    "GOOD", "NORMAL", "BAD"
+    "EXCELLENT", "GOOD", "NORMAL", "BAD", "AWFUL"
   ]),
 
   painScore: z.number().min(0, "통증 점수는 0 이상이어야 합니다.").max(10, "통증 점수는 10 이하여야 합니다."),

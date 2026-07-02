@@ -1,18 +1,20 @@
 /*
   메인페이지
   배너(HeroSection)가 있으며
-  하드코딩된 게시글이 1개 보인다.
+  하드코딩된 게시글이 보인다.
 */
 
-import { articles } from '@/components/domain/community/examples/articleExamples';
 import '../globals.css';
 import ArticleCard from '@/components/domain/community/article/articleCard';
 import HeroSection from '@/components/domain/home/heroSection';
 import { TrendingUp } from 'lucide-react';
+import { getArticles } from '@/services/community.service';
+import { articles } from '@/components/domain/community/examples/articleExamples';
 
-export default function Home() {
+export default async function Home() {
+  // const articles = await getArticles() ?? [];
   const hotArticles = articles.filter((article) => article.isHot)
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
+
   return (
     <div>
       <HeroSection />

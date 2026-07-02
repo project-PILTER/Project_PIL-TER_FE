@@ -1,4 +1,4 @@
-export type conditionType = "GOOD" | "NORMAL" | "BAD";
+export type conditionType = "EXCELLENT" | "GOOD" | "NORMAL" | "BAD" | "AWFUL";
 
 export interface JournalDiary {
   id: number;

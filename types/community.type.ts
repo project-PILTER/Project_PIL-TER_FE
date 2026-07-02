@@ -8,9 +8,9 @@ export interface Category {
   name: string;
 }
 
-export type Author=Omit<User, "email" | "createdAt"> & {
-  id: string;
-}
+export type Author=Omit<User, "email" | "createdAt">;
+
+export type CommentUser = Omit<User, "email" | "createdAt">;
 
 export interface Article {
   id: number; // 게시글 id
@@ -28,7 +28,7 @@ export interface Article {
   isHot: boolean; // HOT한 게시물인가
   createdAt: string; // 생성일
   updatedAt: string; // 수정일
-  comments: Draft[]; // 댓글들
+  comments: Comment[]; // 댓글들
 }
 
 export interface Draft {
@@ -40,10 +40,6 @@ export interface Draft {
 }
 
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
-
-export type CommentUser = Omit<User, "email" | "createdAt"> & {
-  id: string;
-}
 export interface Comment {
   id: number;
   articleId: number;

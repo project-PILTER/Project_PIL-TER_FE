@@ -54,8 +54,10 @@ export default function ArticleCard({ article }: CommunityListProps) {
           <div className="flex items-end gap-1">
             <Heart className="h-5 w-5" />
             <p className="mr-2">{article.likeCount}</p>
+
             <MessageCircle className="h-5 w-5" />
             <p className="mr-2">{article.commentCount}</p>
+            
             <Eye className="h-5 w-5" />
             <p>{article.viewCount}</p>
           </div>

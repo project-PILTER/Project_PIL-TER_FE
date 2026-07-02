@@ -9,6 +9,7 @@ export type LoginData = z.infer<typeof loginSchema>
 export type signupData = z.infer<typeof signupSchema>
 
 export interface User {
+  id: number;
   email: string;
   nickname: string;
   profileImage?: string | null;
@@ -53,4 +54,11 @@ export interface MypageInfo extends Mypage {
 export interface ProfileDataRequest {
   nickname: string;
   profileImageUrl: string;
+}
+
+export interface UserInfo {
+  id: number;
+  email: string;
+  name: string;
+  role: string;
 }

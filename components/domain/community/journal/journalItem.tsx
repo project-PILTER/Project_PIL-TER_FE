@@ -72,13 +72,13 @@ export default function JournalItem({
         </div>
         <div>
           <Button
-            className="bg-white text-black-300 hover:text-white hover:bg-[#7F82E8] rounded-lg"
+            className="bg-transparent text-black dark:text-white hover:text-white hover:bg-[#7F82E8] rounded-lg"
             onClick={() => onEdit?.(journal)}
           >
             <Pencil />
           </Button>
           <Button
-            className="bg-white text-red-500 hover:bg-[#7F82E8]"
+            className="bg-transparent text-red-500 hover:bg-[#7F82E8]"
             onClick={() => onDelete?.(journal.id)}
           >
             <Trash2 />

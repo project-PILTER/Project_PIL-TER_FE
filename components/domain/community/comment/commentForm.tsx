@@ -4,30 +4,43 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { SendHorizonal } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
-import { CommentUser } from "@/types/community.type";
+import { Author } from "@/types/community.type";
 import defaultProfile from "../../../../public/logo/logo.png"
 import { useForm } from "react-hook-form";
 import { CommentFormData, commentSchema } from "@/schemas/community.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@/types/auth.type";
+import { useEffect } from "react";
 
 interface CommentFormProps {
-  author?: CommentUser | null;
+  author?: Author | User | null;
   onSubmit: (content: string) => Promise<void>;
+  initialContent?: string;
 }
 
-export default function CommentForm({author, onSubmit}:CommentFormProps) {
+export default function CommentForm({author, onSubmit, initialContent = ""}:CommentFormProps) {
   const profileSrc = author?.profileImage || defaultProfile;
+
+  const isEditMode = !!initialContent;
+
   const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<CommentFormData>({
     resolver: zodResolver(commentSchema),
     defaultValues: {
-      content: ""
+      content: initialContent
     }
   })
+
+  useEffect(() => {
+    if(initialContent) {
+      reset({content: initialContent})
+    }
+  }, [initialContent, reset])
+  
 
   const onValidSubmit = async(data: CommentFormData) => {
     try {
       await onSubmit(data.content);
-      reset();
+      reset({content: ""});
     } catch (error) {
       console.error("댓글 등록 실패");
     }
@@ -51,7 +64,7 @@ export default function CommentForm({author, onSubmit}:CommentFormProps) {
       <div className="flex justify-end mt-2">
         <Button type="submit" className="gap-2 text-white font-medium bg-[#615ed6]" disabled={isSubmitting}>
           <SendHorizonal className="w-4 h-4"/>
-          {isSubmitting ? "등록 중" : "댓글 작성"}
+          {isSubmitting ? (isEditMode ? "수정 중" : "등록 중") : (isEditMode ? "수정 완료" : "댓글 작성")}
         </Button>
       </div>
     </form>

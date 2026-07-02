@@ -1,3 +1,4 @@
+import { mypageInfo } from "@/components/domain/auth/mypageExamples";
 import ActivityCountCard from "@/components/domain/mypage/activityCountCard";
 import MonthlySummary from "@/components/domain/mypage/monthlySummary";
 import { monthlyActivitySummary, userActivityCounts } from "@/components/domain/mypage/mypageExamples";
@@ -8,15 +9,15 @@ import { RecentJournalRecord } from "@/types/journal.type";
 import { redirect } from "next/navigation";
 
 export default async function Mypage() {
-  const mypageData = await getMypage();
+  // const mypageData = await getMypage();
 
-  if(!mypageData) {
-    redirect("/");
-  }
+  // if(!mypageData) {
+  //   redirect("/");
+  // }
 
   let recordsArray: RecentJournalRecord[] = [];
   
-  if(mypageData.recentJournals) {
+  if(mypageInfo.recentJournals) {
     const conditionMap: Record<string, string> = {
       EXCELLENT: "아주 좋음",
       GOOD: "좋음",
@@ -24,12 +25,12 @@ export default async function Mypage() {
       BAD: "나쁨",
       AWFUL: "아주 나쁨"
     }
-    const statusText = conditionMap[mypageData.recentJournals.condition] || "보통";
+    const statusText = conditionMap[mypageInfo.recentJournals.condition] || "보통";
 
     recordsArray = [
       {
         id: "1",
-        dateLabel: mypageData.recentJournals.dataLabel,
+        dateLabel: mypageInfo.recentJournals.dataLabel,
         status: statusText
       }
     ]
@@ -37,7 +38,7 @@ export default async function Mypage() {
 
   return(
     <div className="w-7xl mx-auto px-4 py-6 space-y-6">
-      <ProfileSection data={mypageData} />
+      <ProfileSection data={mypageInfo} />
 
       <ActivityCountCard counts={userActivityCounts} />
 

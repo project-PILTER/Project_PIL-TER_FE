@@ -3,228 +3,329 @@ import { Article } from "@/types/community.type";
 export const articles: Article[] = [
   {
     id: 1,
-    title: "여름철 에어컨 사용 시 영유아 냉방병 예방 수칙",
-    content: "아이들은 성인보다 체온 조절 능력이 떨어집니다. 실내외 온도 차이를 5도 이내로 유지하고, 2시간마다 환기하는 것이 중요합니다.",
-    category: { id: 1, name: "공통" },
+    title: "항암 치료 중 식사 관리 및 면역력 높이는 방법",
+    content: "항암 치료를 받으실 때 가장 중요한 것 중 하나가 영양 섭취입니다. 입맛이 없으시더라도 단백질 위주의 식단을 구성하셔야 하며, 날음식은 감염 위험이 있으니 반드시 피하셔야 합니다. 보호자 분들이 자주 묻는 질문들을 정리했습니다.",
+    category: { id: 2, name: "암" },
     author: { 
-      id: "user_01", 
-      nickname: "정성소아과_박원장", 
+      id: 1, 
+      nickname: "김종양 박사", 
       profileImage: "/logo/logo.png",
       isMedicalExpert: true,
-      expertTitle: "소아청소년과 전문의"
+      expertTitle: "혈액종양내과 전문의"
     },
     imageUrl: "/logo/logo.png",
-    viewCount: 1540,
-    likeCount: 120,
+    viewCount: 3420,
+    likeCount: 210,
     commentCount: 2,
     isHot: true,
-    createdAt: "2026-06-25",
+    createdAt: "2026-06-25T10:00:00Z",
     updatedAt: "2026-06-25T14:30:00Z",
     comments: [
-      { id: "c1", categoryId: "101", title: "댓글1", content: "좋은 정보 감사합니다! 오늘부터 실천해야겠어요.", createdAt: "2026-06-25T11:00:00Z" },
-      { id: "c2", categoryId: "101", title: "댓글2", content: "혹시 신생아 방 온도는 몇도가 적당할까요?", createdAt: "2026-06-25T12:15:00Z" }
+      {
+        id: 1001,
+        articleId: 1,
+        parentId: null,
+        author: { 
+          id: 11, // 변경: "user_normal_01" -> 11
+          nickname: "희망을그대에게", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "어머니가 곧 2차 항암 들어가시는데 식단을 어떻게 짜야 할지 막막했습니다. 전문의 선생님 글이라 정말 큰 도움이 되네요.",
+        likeCount: 15,
+        createdAt: "2026-06-25T11:15:00Z"
+      },
+      {
+        id: 1002,
+        articleId: 1,
+        parentId: 1001,
+        author: { 
+          id: 1, // 변경: "user_expert_01" -> 1 (위의 김종양 박사와 동일인)
+          nickname: "김종양 박사", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: true,
+          expertTitle: "혈액종양내과 전문의"
+        },
+        content: "어머님의 쾌유를 빕니다. 고기를 삶거나 푹 익혀서 부드럽게 드시도록 도와주세요. 궁금한 점이 있다면 언제든 편하게 댓글 남겨주세요.",
+        likeCount: 8,
+        createdAt: "2026-06-25T11:45:00Z"
+      }
     ]
   },
   {
     id: 2,
-    title: "생후 6개월 아기 이유식 시작 시기 질문합니다 ㅠㅠ",
-    content: "<p>완모 중인 아기인데 이제 딱 180일 되었어요. 쌀 미음부터 시작하면 될까요? 알레르기 반응 테스트는 어떻게 하는지 궁금합니다.</p>",
-    category: { id: 101, name: "소아청소년과" },
+    title: "직장인 번아웃 증후군 자가진단 및 극복 루틴",
+    content: "최근 부쩍 무기력하고 출근길이 공포스럽게 느껴진다면 번아웃 증후군을 의심해봐야 합니다. 일과 일상의 명확한 경계를 긋고, 하루 10분씩 온전히 나만을 위한 이완 시간을 갖는 정신건강 관리법을 소개합니다.",
+    category: { id: 3, name: "정신건강" },
     author: { 
-      id: "user_02", 
-      nickname: "초보맘_지우", 
-      profileImage: null, // 프로필 이미지가 없는 경우
-      isMedicalExpert: false, // 일반 유저
-      expertTitle: undefined
-    },
-    imageUrl: "",
-    viewCount: 340,
-    likeCount: 8,
-    commentCount: 1,
-    isHot: false,
-    createdAt: "2026-06-26T08:15:00Z",
-    updatedAt: "2026-06-26T08:15:00Z",
-    comments: [
-      { id: "c3", categoryId: "101", title: "댓글3", content: "쌀 미음 3일 먹여보시고 이상 없으면 소고기 추가하세요!", createdAt: "2026-06-26T09:00:00Z" }
-    ]
-  },
-  {
-    id: 3,
-    title: "직장인 거북목 예방을 위한 5분 스트레칭 루틴",
-    content: "<p>모니터를 자주 보는 직장인들은 승모근과 심부경추굴곡근이 약해지기 쉽습니다. 턱 당기기 운동(Chin-tuck)을 수시로 해주세요.</p>",
-    category: { id: 102, name: "정형외과" },
-    author: { 
-      id: "user_03", 
-      nickname: "바른척추_강원장", 
-      profileImage: "/logo/logo.png",
-      isMedicalExpert: true,
-      expertTitle: "정형외과 전문의"
-    },
-    imageUrl: "/logo/logo.png",
-    viewCount: 2450,
-    likeCount: 198,
-    commentCount: 1,
-    isHot: true,
-    createdAt: "2026-06-20T03:00:00Z",
-    updatedAt: "2026-06-21T05:00:00Z",
-    comments: [
-      { id: "c4", categoryId: "102", title: "댓글4", content: "일하다가 생각날 때마다 하니까 목이 한결 편하네요.", createdAt: "2026-06-20T04:20:00Z" }
-    ]
-  },
-  {
-    id: 4,
-    title: "스쿼트 하다가 오른쪽 무릎에서 딱 소리가 나는데 병원 가야 하나요?",
-    content: "<p>통증은 없는데 앉았다 일어날 때마다 무릎에서 소리가 납니다. 통증이 없어도 연골판에 무리가 가고 있는 걸까요?</p>",
-    category: { id: 102, name: "정형외과" },
-    author: { 
-      id: "user_04", 
-      nickname: "헬스보이99", 
-      profileImage: "/logo/logo.png",
-      isMedicalExpert: false,
-      expertTitle: undefined
-    },
-    imageUrl: "",
-    viewCount: 880,
-    likeCount: 12,
-    commentCount: 0,
-    isHot: false,
-    createdAt: "2026-06-27T12:00:00Z",
-    updatedAt: "2026-06-27T12:00:00Z",
-    comments: []
-  },
-  {
-    id: 5,
-    title: "자외선 차단제(선크림) 올바른 선택 및 세안 방법",
-    content: "<p>무기자차와 유기자차의 차이점을 알고 피부 타입에 맞게 선택해야 합니다. 또한, 잔여물이 남으면 트러블을 유발하므로 이중 세안이 필수입니다.</p>",
-    category: { id: 103, name: "피부과" },
-    author: { 
-      id: "user_05", 
-      nickname: "피부꿀팁_이선생", 
-      profileImage: "/logo/logo.png",
-      isMedicalExpert: true,
-      expertTitle: "피부과 전문의"
-    },
-    imageUrl: "/logo/logo.png",
-    viewCount: 3120,
-    likeCount: 285,
-    commentCount: 2,
-    isHot: true,
-    createdAt: "2026-06-24T15:45:00Z",
-    updatedAt: "2026-06-24T16:20:00Z",
-    comments: [
-      { id: "c5", categoryId: "103", title: "댓글5", content: "민감성 피부는 무기자차가 확실히 자극이 덜하더라고요.", createdAt: "2026-06-24T17:00:00Z" },
-      { id: "c6", categoryId: "103", title: "댓글6", content: "꿀정보 감사합니다!", createdAt: "2026-06-24T18:30:00Z" }
-    ]
-  },
-  {
-    id: 6,
-    title: "턱 주변에 화농성 여드름이 계속 올라오는데 원인이 뭘까요?",
-    content: "<p>최근 들어 스트레스를 많이 받아서 그런지 마스크 닿는 부위랑 턱 쪽에만 뒤집어지네요. 압출을 받아야 할까요?</p>",
-    category: { id: 103, name: "피부과" },
-    author: { 
-      id: "user_06", 
-      nickname: "매끈피부원망", 
-      profileImage: "/logo/logo.png",
-      isMedicalExpert: false,
-      expertTitle: undefined
-    },
-    imageUrl: "/logo/logo.png",
-    viewCount: 620,
-    likeCount: 15,
-    commentCount: 0,
-    isHot: false,
-    createdAt: "2026-06-28T01:10:00Z",
-    updatedAt: "2026-06-28T01:10:00Z",
-    comments: []
-  },
-  {
-    id: 7,
-    title: "성인 당뇨 예방을 위한 당화혈색소(HbA1c) 관리 기준",
-    content: "<p>공복 혈당 수치뿐만 아니라 3개월간의 평균 혈당을 대변하는 당화혈색소 수치를 5.6% 이하로 관리하는 것이 대사증후군 예방의 핵심입니다.</p>",
-    category: { id: 104, name: "내과" },
-    author: { 
-      id: "user_07", 
-      nickname: "내과_김닥터", 
-      profileImage: "/logo/logo.png",
-      isMedicalExpert: true,
-      expertTitle: "내과 전문의"
-    },
-    imageUrl: "/logo/logo.png",
-    viewCount: 1890,
-    likeCount: 142,
-    commentCount: 1,
-    isHot: false,
-    createdAt: "2026-06-23T06:30:00Z",
-    updatedAt: "2026-06-23T09:00:00Z",
-    comments: [
-      { id: "c7", categoryId: "104", title: "댓글7", content: "정기 검진 때 당화혈색소도 꼭 확인해봐야겠네요.", createdAt: "2026-06-23T07:15:00Z" }
-    ]
-  },
-  {
-    id: 8,
-    title: "며칠 전부터 명치 쪽이 쥐어짜듯 아픈데 위염일까요?",
-    content: "<p>야식 먹고 바로 자는 습관이 있긴 한데, 제산제를 먹어도 통증이 가라앉지 않네요. 혹시 역류성 식도염 증상인가요?</p>",
-    category: { id: 104, name: "내과" },
-    author: { 
-      id: "user_08", 
-      nickname: "소화불량러", 
-      profileImage: null,
-      isMedicalExpert: false,
-      expertTitle: undefined
-    },
-    imageUrl: "",
-    viewCount: 920,
-    likeCount: 11,
-    commentCount: 1,
-    isHot: false,
-    createdAt: "2026-06-28T22:00:00Z",
-    updatedAt: "2026-06-29T02:00:00Z",
-    comments: [
-      { id: "c8", categoryId: "104", title: "댓글8", content: "통증이 지속되면 내시경 검사를 꼭 받아보시는 걸 추천합니다.", createdAt: "2026-06-29T00:30:00Z" }
-    ]
-  },
-  {
-    id: 9,
-    title: "현대인의 고질병 '번아웃 증후군' 자가진단과 극복법",
-    content: "<p>끝없는 무기력감과 일에 대한 냉소적 태도가 지속된다면 의지 부족이 아닌 뇌의 지친 신호입니다. 완벽주의를 내려놓는 연습이 필요합니다.</p>",
-    category: { id: 105, name: "정신건강의학과" },
-    author: { 
-      id: "user_09", 
-      nickname: "마음쉼터_최원장", 
+      id: 2, // 변경: "user_expert_02" -> 2
+      nickname: "마음테라피", 
       profileImage: "/logo/logo.png",
       isMedicalExpert: true,
       expertTitle: "정신건강의학과 전문의"
     },
     imageUrl: "/logo/logo.png",
-    viewCount: 4110,
-    likeCount: 354,
+    viewCount: 2450,
+    likeCount: 185,
     commentCount: 1,
     isHot: true,
-    createdAt: "2026-06-22T11:20:00Z",
-    updatedAt: "2026-06-22T11:20:00Z",
+    createdAt: "2026-06-28T09:00:00Z",
+    updatedAt: "2026-06-28T09:00:00Z",
     comments: [
-      { id: "c9", categoryId: "105", title: "댓글9", content: "글 읽는데 눈물 날 뻔했네요.. 제 이야기 같습니다.", createdAt: "2026-06-22T13:00:00Z" }
+      {
+        id: 2001,
+        articleId: 2,
+        parentId: null,
+        author: { 
+          id: 12, // 변경: "user_normal_02" -> 12
+          nickname: "야근요정", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "글 읽는데 눈물이 핑 도네요. 딱 제 이야기입니다. 오늘부터 퇴근 후엔 업무 메신저 알림을 꺼야겠어요.",
+        likeCount: 32,
+        createdAt: "2026-06-28T13:20:00Z"
+      }
     ]
   },
   {
-    id: 10,
-    title: "최근 들어 밤에 잠이 너무 안 오고 중간에 자주 깨요.",
-    content: "<p>불면증 증상이 한 달 넘게 가고 있어요. 수면유도제를 약국에서 사 먹어보는 게 나을까요, 아니면 병원 상담을 받아야 할까요?</p>",
-    category: { id: 105, name: "정신건강의학과" },
+    id: 3,
+    title: "일상 속 바른 자세를 위한 거북목 예방 3분 스트레칭",
+    content: "모니터를 오랫동안 보는 현대인들에게 거북목은 고질병입니다. 거북목 상태가 지속되면 목디스크로 발전할 수 있으니 의자에서 가볍게 할 수 있는 맥켄지 운동과 턱 당기기 스트레칭을 생활화해보세요.",
+    category: { id: 1, name: "공통" },
     author: { 
-      id: "user_10", 
-      nickname: "잠들고싶은밤", 
+      id: 13, // 변경: "user_normal_03" -> 13
+      nickname: "건강지킴이", 
       profileImage: "/logo/logo.png",
-      isMedicalExpert: false,
-      expertTitle: undefined
+      isMedicalExpert: false
     },
-    imageUrl: "",
-    viewCount: 1150,
+    imageUrl: "/logo/logo.png",
+    viewCount: 980,
     likeCount: 42,
     commentCount: 0,
     isHot: false,
-    createdAt: "2026-06-29T10:00:00Z",
-    updatedAt: "2026-06-29T10:00:00Z",
+    createdAt: "2026-06-29T12:10:00Z",
+    updatedAt: "2026-06-29T12:10:00Z",
     comments: []
+  },
+  {
+    id: 4,
+    title: "유방암 자가진단 시기와 올바른 방법 (동영상 가이드 포함)",
+    content: "유방암은 조기 발견 시 생존율이 매우 높은 암 중 하나입니다. 매달 생리가 끝난 후 3~5일 사이에 거울을 보며 모양을 관찰하고, 누워서 촉진을 진행하는 올바른 자가진단 루틴을 공유해 드립니다.",
+    category: { id: 2, name: "암" },
+    author: { 
+      id: 3, // 변경: "user_expert_03" -> 3
+      nickname: "박유방 의사", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: true,
+      expertTitle: "외과 전문의"
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 1890,
+    likeCount: 124,
+    commentCount: 1,
+    isHot: false,
+    createdAt: "2026-06-30T15:00:00Z",
+    updatedAt: "2026-06-30T15:00:00Z",
+    comments: [
+      {
+        id: 4001,
+        articleId: 4,
+        parentId: null,
+        author: { 
+          id: 14, // 변경: "user_normal_04" -> 14
+          nickname: "건강한내일", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "시기가 언제인지 늘 헷갈렸는데 생리 끝나고 하는 거였군요! 좋은 팁 감사합니다.",
+        likeCount: 14,
+        createdAt: "2026-06-30T16:40:00Z"
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: "불면증을 극복하는 수면 위생 환경 만들기 5원칙",
+    content: "잠자리에 누워서 30분 이상 뒤척이신다면 수면 위생을 점검해야 합니다. 침실 온도는 20도 안팎 유지, 수면 1시간 전 스마트폰 금지, 낮 시간 햇볕 쬐기 등 뇌가 숙면 모드로 들어갈 수 있도록 돕는 조건들을 알아봅니다.",
+    category: { id: 3, name: "정신건강" },
+    author: { 
+      id: 2, // 변경: "user_expert_02" -> 2 (마음테라피)
+      nickname: "마음테라피", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: true,
+      expertTitle: "정신건강의학과 전문의"
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 3120,
+    likeCount: 240,
+    commentCount: 1,
+    isHot: true,
+    createdAt: "2026-07-01T02:00:00Z",
+    updatedAt: "2026-07-01T04:15:00Z",
+    comments: [
+      {
+        id: 5001,
+        articleId: 5,
+        parentId: null,
+        author: { 
+          id: 15, // 변경: "user_normal_05" -> 15
+          nickname: "프로꿀잠러", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "휴대폰 멀리 두고 자는 것만으로도 수면의 질이 확 달라지더라고요. 추천합니다.",
+        likeCount: 22,
+        createdAt: "2026-07-01T03:00:00Z"
+      }
+    ]
+  },
+  {
+    id: 6,
+    title: "암 환우를 위한 건강한 저염식 밑반찬 레시피 공유",
+    content: "항암 치료 시 입맛을 돋우면서도 나트륨을 과하게 섭취하지 않는 간장 무조림, 버섯 들깨볶음 레시피입니다. 자극적인 양념 대신 다시마 멸치 육수와 들깨가루를 활용해 깊은 맛을 냈습니다.",
+    category: { id: 2, name: "암" },
+    author: { 
+      id: 11, // 변경: "user_normal_01" -> 11 (희망을그대에게)
+      nickname: "희망을그대에게", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: false
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 1420,
+    likeCount: 78,
+    commentCount: 0,
+    isHot: false,
+    createdAt: "2026-07-01T08:30:00Z",
+    updatedAt: "2026-07-01T08:30:00Z",
+    comments: []
+  },
+  {
+    id: 7,
+    title: "영양제, 언제 먹어야 가장 효과적일까요? (식전 vs 식후)",
+    content: "종합비타민, 오메가3, 유산균, 칼슘제 등 몸에 좋은 영양제도 먹는 시간에 따라 흡수율이 완전히 달라집니다. 수용성과 지용성 비타민의 특성에 맞춰 올바른 섭취 타임라인을 짜 드립니다.",
+    category: { id: 1, name: "공통" },
+    author: { 
+      id: 4, // 변경: "user_expert_04" -> 4
+      nickname: "약사김씨", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: true,
+      expertTitle: "가정의학과 전문의"
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 4120,
+    likeCount: 310,
+    commentCount: 1,
+    isHot: true,
+    createdAt: "2026-07-01T23:00:00Z",
+    updatedAt: "2026-07-01T23:00:00Z",
+    comments: [
+      {
+        id: 7001,
+        articleId: 7,
+        parentId: null,
+        author: { 
+          id: 16, // 변경: "user_normal_06" -> 16
+          nickname: "건강염려증", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "유산균은 공복에, 오메가3는 식후에! 머릿속에 꼭 저장해놓고 실천하겠습니다.",
+        likeCount: 19,
+        createdAt: "2026-07-02T01:10:00Z"
+      }
+    ]
+  },
+  {
+    id: 8,
+    title: "가벼운 우울감과 우울증의 차이, 치료가 필요한 순간은?",
+    content: "누구나 일시적으로 기분이 가라앉을 수 있습니다. 하지만 우울한 기분이 2주 이상 지속되고 식욕 저하, 의욕 상실, 수면 장애 등이 동반된다면 마음의 감기라 불리는 우울증일 가능성이 높습니다. 주저 말고 전문가를 찾으셔야 합니다.",
+    category: { id: 3, name: "정신건강" },
+    author: { 
+      id: 2, // 변경: "user_expert_02" -> 2 (마음테라피)
+      nickname: "마음테라피", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: true,
+      expertTitle: "정신건강의학과 전문의"
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 1750,
+    likeCount: 95,
+    commentCount: 1,
+    isHot: false,
+    createdAt: "2026-07-02T02:00:00Z",
+    updatedAt: "2026-07-02T02:45:00Z",
+    comments: [
+      {
+        id: 8001,
+        articleId: 8,
+        parentId: null,
+        author: { 
+          id: 12, // 변경: "user_normal_02" -> 12 (야근요정)
+          nickname: "야근요정", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "정신과 방문에 대한 문턱이 많이 낮아졌으면 좋겠어요. 아프면 병원에 가는 게 당연하니까요.",
+        likeCount: 26,
+        createdAt: "2026-07-02T03:15:00Z"
+      }
+    ]
+  },
+  {
+    id: 9,
+    title: "대장암 예방을 위한 식습관과 정기 대장내시경의 중요성",
+    content: "서구화된 식습관으로 인해 국내 대장암 발병률이 꾸준히 늘고 있습니다. 과도한 적색육 섭취를 줄이고 신선한 야채와 통곡물을 가까이하세요. 특히 50세 이상이라면 증상이 없어도 5년 주기로 내시경 검사를 받는 것이 필수적입니다.",
+    category: { id: 2, name: "암" },
+    author: { 
+      id: 1, // 변경: "user_expert_01" -> 1 (김종양 박사)
+      nickname: "김종양 박사", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: true,
+      expertTitle: "혈액종양내과 전문의"
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 1220,
+    likeCount: 59,
+    commentCount: 0,
+    isHot: false,
+    createdAt: "2026-07-02T06:00:00Z",
+    updatedAt: "2026-07-02T06:00:00Z",
+    comments: []
+  },
+  {
+    id: 10,
+    title: "하루 물 2리터 마시기 프로젝트, 진짜 건강에 도움이 될까?",
+    content: "물은 우리 몸의 대사를 원활하게 해주고 피부 미용 coffee 변비 예방에 탁월합니다. 하지만 무작정 2리터를 채우기보다, 본인의 체중과 활동량에 맞춰 조금씩 자주 나눠 마시는 것이 좋습니다. 올바른 수분 섭취 가이드라인을 알려드립니다.",
+    category: { id: 1, name: "공통" },
+    author: { 
+      id: 17, // 변경: "user_normal_07" -> 17
+      nickname: "물하마", 
+      profileImage: "/logo/logo.png",
+      isMedicalExpert: false
+    },
+    imageUrl: "/logo/logo.png",
+    viewCount: 2280,
+    likeCount: 94,
+    commentCount: 1,
+    isHot: false,
+    createdAt: "2026-07-02T09:10:00Z",
+    updatedAt: "2026-07-02T09:15:00Z",
+    comments: [
+      {
+        id: 10001,
+        articleId: 10,
+        parentId: null,
+        author: { 
+          id: 13, // 변경: "user_normal_03" -> 13 (건강지킴이)
+          nickname: "건강지킴이", 
+          profileImage: "/logo/logo.png",
+          isMedicalExpert: false
+        },
+        content: "한 번에 벌컥벌컥 마시는 게 아니라 나눠 마셔야 하는 거였군요. 텀블러 두고 수시로 마셔야겠습니다.",
+        likeCount: 9,
+        createdAt: "2026-07-02T09:50:00Z"
+      }
+    ]
   }
 ];

@@ -3,16 +3,18 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Comment } from "@/types/community.type";
+import { Author, Comment } from "@/types/community.type";
 import { MessageSquare, Pencil, ThumbsUp, Trash2 } from "lucide-react";
 import { useState } from "react";
 import CommentForm from "./commentForm";
 import { getRelativeTime } from "@/utils/date";
-import { commentCurrentUser } from "../../auth/userExamples";
 import { DropdownOption } from "@/types/ui.type";
 import Dropdown from "@/components/common/dropdown";
+import { useRouter } from "next/navigation";
+import { User } from "@/types/auth.type";
 
 interface CommentItemProps {
+  author: Author | User;
   comment: Comment;
   isReply?: boolean;
   onReplySubmit?: (content: string, parentId: number) => Promise<void> | void;
@@ -21,6 +23,7 @@ interface CommentItemProps {
   onDelete?: (commentId: number) => Promise<void> | void;
 }
 export default function CommentItem({
+  author,
   comment,
   isReply = false,
   onReplySubmit,
@@ -28,13 +31,16 @@ export default function CommentItem({
   onUpdate,
   onDelete,
 }: CommentItemProps) {
-  const { id, author, content, likeCount, createdAt } = comment;
+  const { id, author: commentAuthor, content, likeCount, createdAt } = comment;
+
+  const router = useRouter();
+
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [liked, setLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
 
-  const isMyComment = author.id === commentCurrentUser.id;
+  const isMyComment = author.nickname === commentAuthor.nickname;
 
   const handleLikeClick = () => {
     const nextLikedState = !liked;
@@ -50,7 +56,13 @@ export default function CommentItem({
     }
   };
 
-  const handleReplySubmit = async (content: string) => {};
+  const handleReplySubmit = async (content: string) => {
+    if(onReplySubmit) {
+      await onReplySubmit(content, id);
+      setIsReplying(false);
+    }
+    
+  };
 
   const dropdownOptions: DropdownOption[] = [
     {
@@ -68,13 +80,14 @@ export default function CommentItem({
   ];
   return (
     <div className="flex flex-col w-full">
-      <div className="flex gap-4 ittems-start w-full">
+      <div className="flex gap-4 items-start w-full">
         <Avatar className="w-10 h-10">
-          <AvatarImage />
-          <AvatarFallback>{author.nickname}</AvatarFallback>
+          <AvatarImage src={commentAuthor.profileImage ?? undefined} alt={commentAuthor.nickname} />
+          <AvatarFallback>{commentAuthor.nickname}</AvatarFallback>
         </Avatar>
 
-        <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 w-full">
+        <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
             <p className="font-semibold text-sm">{author.nickname}</p>
             {author.isMedicalExpert && (
@@ -84,14 +97,18 @@ export default function CommentItem({
             )}
             <p className="text-xs">{getRelativeTime(createdAt)}</p>
           </div>
+
           {isMyComment && !isEditing && (
             <Dropdown options={dropdownOptions} align="end" />
           )}
-          (isEditing ? (
+        </div>
+
+          {isEditing ? (
           <div>
             <CommentForm
-              author={commentCurrentUser}
+              author={author}
               onSubmit={handleEditSubmit}
+              initialContent={content}
             />
             <Button
               variant="ghost"
@@ -106,7 +123,8 @@ export default function CommentItem({
           <p className="text-sm leading-relaxed whitespace-pre-wrap">
             {content}
           </p>
-          ))
+          )}
+
           {!isEditing && (
             <div className="flex items-center gap-4 mb-2">
               <Button
@@ -116,6 +134,7 @@ export default function CommentItem({
                 <ThumbsUp />
                 <p>{currentLikeCount}</p>
               </Button>
+
               {!isReply && (
                 <Button
                   className="flex items-center gap-2 text-xs text-gray-400 bg-transparent transition-colors duration-200 hover:bg-[#615ed6] hover:text-white"
@@ -129,10 +148,11 @@ export default function CommentItem({
           )}
         </div>
       </div>
+
       {isReplying && (
         <div className="mt-4 pl-14 w-full">
           <CommentForm
-            author={commentCurrentUser}
+            author={author}
             onSubmit={handleReplySubmit}
           />
         </div>

@@ -14,9 +14,11 @@ export function getJournalStats(journals: JournalDiary[]) {
         );
 
   const conditionCount = {
+    EXCELLENT: 0,
     GOOD: 0,
     NORMAL: 0,
     BAD: 0,
+    AWFUL: 0
   };
 
   journals.forEach((journal) => {
@@ -24,9 +26,11 @@ export function getJournalStats(journals: JournalDiary[]) {
   });
 
   const conditionLabel = {
+    EXCELLENT: "아주 좋음",
     GOOD: "좋음",
     NORMAL: "보통",
     BAD: "나쁨",
+    AWFUL: "아주 나쁨"
   };
 
   const averageCondition =

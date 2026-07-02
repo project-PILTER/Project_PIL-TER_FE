@@ -1,6 +1,6 @@
 import { JournalDiary } from "@/types/journal.type";
 
-export const journalExamples: JournalDiary[] = [
+export const journals: JournalDiary[] = [
   {
     id: 1,
     userId: 1,

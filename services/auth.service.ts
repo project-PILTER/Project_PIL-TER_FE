@@ -6,7 +6,7 @@ import {
   LoginData,
   MypageInfo,
   ProfileDataRequest,
-  signupData,
+  Signup,
   User,
   UserInfo,
 } from "@/types/auth.type";
@@ -45,7 +45,7 @@ export async function loginUser(loginData: LoginData) {
 }
 
 // 회원가입
-export async function signupUser(signupData: signupData) {
+export async function signupUser(signupData: Signup) {
   try {
     const res = await api.post("/user/signup", signupData);
 

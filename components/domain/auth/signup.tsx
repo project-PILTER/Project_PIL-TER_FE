@@ -60,6 +60,20 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
             <p className="mt-2 text-red-500">{errors.email.message}</p>
           )}
 
+          <div className="space-y-2">
+            <label htmlFor="nickname">닉네임</label>
+            <Input
+              className="mt-1"
+              {...register("nickname")}
+              type="nickname"
+              placeholder="닉네임"
+            />
+          </div>
+
+          {errors.nickname && (
+            <p className="mt-2 text-red-500">{errors.nickname.message}</p>
+          )}
+
           <div className="mt-4">
             <label htmlFor="password">비밀번호</label>
             <Input

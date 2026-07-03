@@ -6,7 +6,13 @@ import { loginSchema, signupSchema } from "@/schemas/auth.schema";
 import z from "zod";
 
 export type LoginData = z.infer<typeof loginSchema>
-export type signupData = z.infer<typeof signupSchema>
+export type SignupData = z.infer<typeof signupSchema>
+
+export interface Signup {
+  email: string;
+  password: string;
+  nickname: string;
+}
 
 export interface User {
   id: number;

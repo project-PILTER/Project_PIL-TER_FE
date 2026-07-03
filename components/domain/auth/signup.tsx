@@ -9,7 +9,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signupSchema } from "@/schemas/auth.schema";
-import { signupData } from "@/types/auth.type";
+import { SignupData } from "@/types/auth.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SocialLogin from "./socialLogin";
@@ -29,7 +29,7 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
   } = useForm({ resolver: zodResolver(signupSchema) });
   const router = useRouter();
 
-  const onSubmit = async(data: signupData) => {
+  const onSubmit = async(data: SignupData) => {
     const res = await signupUser(data);
     const user = res.data;
 

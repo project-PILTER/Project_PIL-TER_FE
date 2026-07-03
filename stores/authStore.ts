@@ -12,14 +12,7 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: {
-    id: 1,
-    email: "test123@gmail.com",
-    nickname: "희망을그대에게",
-    profileImage: "/logo/logo.png",
-    isMedicalExpert: false,
-    createdAt: "2026-06-26"
-  },
+  user: null,
   isLoading: true,
 
   setUser: (user) => set({ user }),

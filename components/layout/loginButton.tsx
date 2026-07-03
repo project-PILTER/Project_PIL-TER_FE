@@ -23,32 +23,25 @@ export default function LoginButton() {
   const [mode, setMode] = useState<"login" | "signup">("login");
 
   const user = useAuthStore((state) => state.user);
-
-  if(!user) {
-    router.push("/");
-    return null;
-  }
-
-  const dropdownOptions: DropdownOption[] = [
-    {
-      label: "마이페이지",
-      icon: <User className="w-4 h-4" />,
-      onClick: () => router.push("/mypage"),
-      className: "hover:bg-gray-100 dark:hover:bg-neutral-100"
-    },
-    {
-      label: "로그아웃",
-      icon: <LogOut className="w-4 h-4" />,
-      onClick: async() => {
-        await logOut(user.id);
-        console.log("로그아웃 실행")
+  if (user) {
+    const dropdownOptions: DropdownOption[] = [
+      {
+        label: "마이페이지",
+        icon: <User className="w-4 h-4" />,
+        onClick: () => router.push("/mypage"),
+        className: "hover:bg-gray-100 dark:hover:bg-neutral-100"
       },
-      className: "hover:bg-red-50 dark:hover:bg-red-950"
-    }
-  ]
-
-  if(user) {
-    return(
+      {
+        label: "로그아웃",
+        icon: <LogOut className="w-4 h-4" />,
+        onClick: async () => {
+          await logOut(user.id);
+          console.log("로그아웃 실행")
+        },
+        className: "hover:bg-red-50 dark:hover:bg-red-950"
+      }
+    ]
+    return (
       <Dropdown options={dropdownOptions} align="end" trigger={
         <Button>
           {user.profileImage ? (
@@ -83,3 +76,4 @@ export default function LoginButton() {
     </div>
   );
 }
+

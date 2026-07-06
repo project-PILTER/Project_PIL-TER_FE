@@ -35,7 +35,7 @@ jobs:
             # 1. 먼저 프론트엔드 소스 코드가 전송된 폴더로 이동합니다.
             cd /home/ubuntu/frontend
 
-            # 2. 🔥 Next.js 빌드 시 환경변수가 주입되도록 프론트엔드 폴더 내에 .env 생성 (핵심)
+            # 2. Next.js 빌드 시 환경변수가 주입되도록 프론트엔드 폴더 내에 .env 생성
             cat << EOF > .env
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
             NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID }}
@@ -49,15 +49,14 @@ jobs:
             # 3. 주도권을 쥔 백엔드 디렉토리로 이동합니다.
             cd /home/ubuntu/backend
 
-            # 4. 이름 충돌(Conflict) 방지를 위해 기존 프론트엔드 컨테이너를 안전하게 정지 및 삭제합니다.
-            docker compose stop pilter-FE || true
-            docker compose rm -f pilter-FE || true
+            # 4. 🚨 이름 충돌 및 확실한 교체를 위해 컨테이너 이름을 직접 지정해 강제 삭제합니다.
+            docker rm -f pilter-FE || true
 
-            # 5. 방금 생성한 최신 .env와 소스 코드를 바탕으로 프론트엔드만 캐시 없이 타겟 빌드합니다.
-            docker compose build --no-cache pilter-FE
+            # 5. 🚨 서비스명(frontend)을 조준하여 캐시 없이 최신 코드로 빌드합니다.
+            docker compose build --no-cache frontend
 
-            # 6. 빌드된 새 이미지를 기반으로 프론트엔드 컨테이너만 백그라운드로 올립니다.
-            docker compose up -d pilter-FE
+            # 6. 🚨 빌드된 새 이미지를 기반으로 프론트엔드 서비스만 백그라운드로 올립니다.
+            docker compose up -d frontend
 
-            # 7. 배포 상태 모니터링 (컨테이너가 잘 Up 되었는지 확인용)
+            # 7. 배포 상태 모니터링 (STATUS가 방금 켜진 'Up Less than a minute'로 바뀌는지 확인용)
             docker ps

@@ -31,13 +31,12 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
 
   const onSubmit = async(data: LoginData) => {
     const res = await loginUser(data);
-    const user = res.data;
     
-    if(user) {
+    if(res) {
       alert("로그인에 성공했습니다.");
-      router.push("/")
+      router.push("/");
     } else {
-      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      alert("로그인에 실패했습니다. 다시시도해주세요.");
     }
   }
 

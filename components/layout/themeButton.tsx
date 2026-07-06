@@ -12,6 +12,6 @@ import { Moon, Sun } from "lucide-react";
 export default function ThemeButton() {
   const {resolvedTheme, setTheme} = useTheme();
   return(
-    <Button variant="ghost" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>{resolvedTheme === "dark" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}</Button>
+    <Button className="rounded-full" variant="ghost" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>{resolvedTheme === "dark" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}</Button>
   )
 }

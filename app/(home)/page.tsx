@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <div>
       <HeroSection />
-      <div className='mx-auto max-w-7xl flex items-center gap-2 mt-6'>
+      <div className='mx-auto max-w-7xl flex items-center gap-2 my-4'>
         <TrendingUp />
         <h2 className='text-xl font-bold text-foreground'>인기 게시글</h2>
       </div>

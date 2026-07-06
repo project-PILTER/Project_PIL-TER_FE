@@ -25,7 +25,7 @@ export default async function ArticlePage({params}:ArticlePageProps) {
   const comments = article.comments;
 
   return (
-    <div className="w-4xl mx-auto p-4 space-y-4">
+    <div className="w-full max-w-4xl mx-auto p-4 space-y-4">
       <div className="flex flex-col gap-4">
         <ArticleDetail article={article} id={articleId}/>
       </div>

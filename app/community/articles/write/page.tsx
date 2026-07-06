@@ -128,7 +128,7 @@ export default function WritePage({articleId}:WritePageProps) {
   };
 
   return (
-    <div className="w-4xl mx-auto mt-4">
+    <div className="w-full max-w-4xl mx-auto mt-4">
       <WriteHeader
         onOpenDrafts={isEditMode ? () => {} : handleOpenDrafts}
         onSave={handleSave}

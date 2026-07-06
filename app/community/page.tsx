@@ -24,7 +24,7 @@ export default async function CommunityPage({
   const currentArticles = articles.slice(startIndex, startIndex + PAGE_SIZE);
 
   return (
-    <div className="w-7xl mx-auto mt-2">
+    <div className="w-full max-w-7xl mx-auto mt-2">
       <div className="flex justify-between my-4">
         <div className="flex">
           <ClipboardList />

@@ -11,10 +11,11 @@ import Image from "next/image";
 import ThemeButton from "./themeButton";
 import { Bell } from "lucide-react";
 import LoginButton from "./loginButton";
+import { Button } from "../ui/button";
 
 export default function Navigation() {
   return (
-    <header className="flex items-center justify-between mx-auto w-7xl">
+    <header className="flex items-center justify-between mx-auto w-full max-w-7xl">
       <Link href="/">
         <div className="flex items-center">
           <Image className="h-15 w-auto" src={logo} alt="PIL-TER" />
@@ -45,9 +46,11 @@ export default function Navigation() {
           </li>
         </ul>
       </nav>
-      <div className="flex items-center gap-4 pr-4">
+      <div className="flex items-center gap-2 pr-4">
         <ThemeButton />
-        <Bell />
+        <Button className="rounded-full bg-transparent text-black hover:bg-neutral-100">
+          <Bell />
+        </Button>
         <LoginButton />
       </div>
     </header>

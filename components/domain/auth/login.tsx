@@ -15,6 +15,7 @@ import { loginSchema } from "@/schemas/auth.schema";
 import SocialLogin from "./socialLogin";
 import { loginUser } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/authStore";
 
 interface LoginProps {
   onOpenChange: (open: boolean) => void;
@@ -27,14 +28,18 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginData>({ resolver: zodResolver(loginSchema) });
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const router = useRouter();
 
   const onSubmit = async(data: LoginData) => {
     const res = await loginUser(data);
-    
-    if(res) {
+
+    if(res.accessToken && res.refreshToken) {
       alert("로그인에 성공했습니다.");
-      router.push("/");
+      setAccessToken(res.accessToken);
+
+      onOpenChange(false);
+      router.refresh();
     } else {
       alert("로그인에 실패했습니다. 다시시도해주세요.");
     }

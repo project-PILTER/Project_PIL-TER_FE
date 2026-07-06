@@ -9,7 +9,6 @@ import { Button } from "../ui/button";
 import { LogIn, LogOut, User } from "lucide-react";
 import { useState } from "react";
 import AuthModal from "../domain/auth/authModal";
-import Link from "next/link";
 import Image from "next/image";
 import { useAuthStore } from "@/stores/authStore";
 import { DropdownOption } from "@/types/ui.type";
@@ -23,6 +22,8 @@ export default function LoginButton() {
   const [mode, setMode] = useState<"login" | "signup">("login");
 
   const user = useAuthStore((state) => state.user);
+  const clearUser = useAuthStore((state) => state.clearUser);
+
   if (user) {
     const dropdownOptions: DropdownOption[] = [
       {
@@ -35,15 +36,24 @@ export default function LoginButton() {
         label: "로그아웃",
         icon: <LogOut className="w-4 h-4" />,
         onClick: async () => {
-          await logOut(user.id);
-          console.log("로그아웃 실행")
+          try {
+            await logOut(user.id);
+          } catch (error) {
+            console.error("서버 로그아웃 처리 실패")
+          }
+
+          clearUser();
+          alert("로그아웃 되었습니다.");
+
+          router.push("/");
+          router.refresh();
         },
         className: "hover:bg-red-50 dark:hover:bg-red-950"
       }
     ]
     return (
       <Dropdown options={dropdownOptions} align="end" trigger={
-        <Button>
+        <Button className="bg-transparent hover:bg-neutral-100 border-none rounded-full p-0 w-10 h-10">
           {user.profileImage ? (
             <Image src={user.profileImage} alt={user.nickname} width={40} height={40} className="rounded-full object-cover border border-gray-200 dark:border-neutral-100" />
           ) : (

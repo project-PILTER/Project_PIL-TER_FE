@@ -24,7 +24,7 @@ jobs:
           target: "/home/ubuntu/frontend"
           rm: true # 🚨 핵심 1: 전송하기 전에 EC2의 target 폴더 내 기존 파일을 깨끗이 지웁니다. 유령 파일 박살용!
 
-      # 3. EC2에서 백엔드 통합 구조에 맞춰 프론트엔드만 갱신 및 실행
+      # 3. 프론트엔드 자체 폴더에서 완벽하게 빌드 및 배포 실행
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -32,10 +32,10 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # 1. 먼저 프론트엔드 소스 코드가 전송된 폴더로 이동합니다.
+            # 1. 프론트엔드 소스 폴더로 이동합니다.
             cd /home/ubuntu/frontend
 
-            # 2. Next.js 빌드 시 환경변수가 주입되도록 프론트엔드 폴더 내에 .env 생성
+            # 2. 🔥 Next.js 빌드 시 환경변수가 주입되도록 .env 생성
             cat << EOF > .env
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
             NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.NEXT_PUBLIC_KAKAO_CLIENT_ID }}
@@ -46,17 +46,16 @@ jobs:
             NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GOOGLE_REDIRECT_URI }}
             EOF
 
-            # 3. 주도권을 쥔 백엔드 디렉토리로 이동합니다.
-            cd /home/ubuntu/backend
-
-            # 4. 🚨 이름 충돌 및 확실한 교체를 위해 컨테이너 이름을 직접 지정해 강제 삭제합니다.
+            # 3. 🚨 기존에 실행 중이던 프론트엔드 컨테이너를 안전하게 내리고 지웁니다.
+            # (이름 충돌 Conflict 원천 차단)
+            docker compose down || true
             docker rm -f pilter-FE || true
 
-            # 5. 🚨 서비스명(frontend)을 조준하여 캐시 없이 최신 코드로 빌드합니다.
-            docker compose build --no-cache frontend
+            # 4. 🚨 완전히 갱신된 파일과 .env로 캐시 없이 완전 생짜 새 빌드를 수행합니다.
+            docker compose build --no-cache
 
-            # 6. 🚨 빌드된 새 이미지를 기반으로 프론트엔드 서비스만 백그라운드로 올립니다.
-            docker compose up -d frontend
+            # 5. 프론트엔드 컨테이너 백그라운드 실행
+            docker compose up -d
 
-            # 7. 배포 상태 모니터링 (STATUS가 방금 켜진 'Up Less than a minute'로 바뀌는지 확인용)
+            # 6. 배포 상태 모니터링 (STATUS가 방금 켜진 상태인지 확인용)
             docker ps

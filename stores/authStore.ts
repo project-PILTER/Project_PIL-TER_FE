@@ -3,16 +3,19 @@ import { create } from "zustand";
 
 interface AuthState {
   user: User | null;
+  accessToken: string | null;
   isLoading: boolean;
 
   setUser: (user: User | null) => void;
   setUserInfo: (userInfo: UserInfo | null) => void;
+  setAccessToken: (token: string | null) => void;
   setLoading: (loading: boolean) => void;
   clearUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
+  accessToken: null,
   isLoading: true,
 
   setUser: (user) => set({ user }),
@@ -35,9 +38,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     };
     set({user: mappedUser})
   },
+  setAccessToken: (accessToken) => set({accessToken}),
   setLoading: (isLoading) => set({isLoading}),
   clearUser: () => set({
     user: null,
+    accessToken: null,
     isLoading: false,
   }),
 }))

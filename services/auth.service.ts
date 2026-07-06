@@ -13,10 +13,14 @@ import {
 import { api } from "./axios";
 
 // 유저 정보 조회
-export async function getUser(): Promise<UserInfo | null> {
+export async function getUser(accessToken: string | null): Promise<UserInfo | null> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-      credentials: "include"
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
+      }
     })
 
     if(!res.ok) {
@@ -36,6 +40,7 @@ export async function getUser(): Promise<UserInfo | null> {
 export async function loginUser(loginData: LoginData) {
   try {
     const res = await api.post("/login", loginData);
+    console.log("서버가 준 응답", res);
 
     return res.data;
   } catch (error) {
@@ -49,7 +54,7 @@ export async function signupUser(signupData: Signup) {
   try {
     const res = await api.post("/user/signup", signupData);
 
-    return res.data;
+    return res;
   } catch (error) {
     console.error("회원 가입 실패", error);
     throw error;

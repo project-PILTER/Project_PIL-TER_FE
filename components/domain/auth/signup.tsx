@@ -36,15 +36,14 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
       password: data.password
     }
     const res = await signupUser(request);
-    const user = res.data;
 
-    if(user) {
-      alert("회원가입이 완료되었습니다.");
+    if(res) {
+      alert("회원가입에 성공했습니다.");
       router.push("/");
-      onOpenChange(false);
     } else {
-      alert("회원가입에 실패하였습니다. 다시시도해주세요.");
+      alert("회원가입에 실패했습니다. 다시시도해주세요.");
     }
+    
   }
 
   return (

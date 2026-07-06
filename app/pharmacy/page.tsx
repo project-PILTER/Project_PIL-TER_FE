@@ -1,3 +1,7 @@
 export default function Pharmacy() {
-  return <h1>약국 찾기</h1>
+  return (
+    <div className="w-full max-w-7xl">
+      <h2>약국찾기</h2>
+    </div>
+  )
 }

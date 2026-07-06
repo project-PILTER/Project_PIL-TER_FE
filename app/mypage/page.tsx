@@ -9,15 +9,17 @@ import { RecentJournalRecord } from "@/types/journal.type";
 import { redirect } from "next/navigation";
 
 export default async function Mypage() {
-  // const mypageData = await getMypage();
+  const mypageData = await getMypage();
 
-  // if(!mypageData) {
-  //   redirect("/");
-  // }
+  console.log("마이페이지 데이터", mypageData);
+
+  if(!mypageData) {
+    redirect("/");
+  }
 
   let recordsArray: RecentJournalRecord[] = [];
   
-  if(mypageInfo.recentJournals) {
+  if(mypageData.recentJournals) {
     const conditionMap: Record<string, string> = {
       EXCELLENT: "아주 좋음",
       GOOD: "좋음",
@@ -25,20 +27,20 @@ export default async function Mypage() {
       BAD: "나쁨",
       AWFUL: "아주 나쁨"
     }
-    const statusText = conditionMap[mypageInfo.recentJournals.condition] || "보통";
+    const statusText = conditionMap[mypageData.recentJournals.condition] || "보통";
 
     recordsArray = [
       {
         id: "1",
-        dateLabel: mypageInfo.recentJournals.dataLabel,
+        dateLabel: mypageData.recentJournals.dataLabel,
         status: statusText
       }
     ]
   }
 
   return(
-    <div className="w-7xl mx-auto px-4 py-6 space-y-6">
-      <ProfileSection data={mypageInfo} />
+    <div className="w-full max-w-7xl mx-auto px-4 py-6 space-y-6">
+      <ProfileSection data={mypageData} />
 
       <ActivityCountCard counts={userActivityCounts} />
 

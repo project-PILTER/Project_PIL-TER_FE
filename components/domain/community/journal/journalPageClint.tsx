@@ -68,7 +68,7 @@ export default function JournalPageClient({
     : journals;
 
   return (
-    <div className="container mx-auto max-w-7xl p-6 space-y-6">
+    <div className="container mx-auto w-full max-w-7xl p-6 space-y-6">
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">건강 일지</h1>

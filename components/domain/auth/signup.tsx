@@ -26,8 +26,7 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(signupSchema) });
-  const router = useRouter();
+  } = useForm<SignupData>({ resolver: zodResolver(signupSchema) });
 
   const onSubmit = async(data: SignupData) => {
     const request = {
@@ -39,7 +38,7 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
 
     if(res) {
       alert("회원가입에 성공했습니다.");
-      router.push("/");
+      onSwitchToLogin();
     } else {
       alert("회원가입에 실패했습니다. 다시시도해주세요.");
     }
@@ -64,7 +63,7 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
             <p className="mt-2 text-red-500">{errors.email.message}</p>
           )}
 
-          <div className="space-y-2">
+          <div className="mt-4">
             <label htmlFor="nickname">닉네임</label>
             <Input
               className="mt-1"

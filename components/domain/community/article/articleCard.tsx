@@ -19,7 +19,7 @@ export default function ArticleCard({ article }: CommunityListProps) {
   return (
     <Link href={`/community/articles/${article.id}`} className="block">
       <Card className="w-full p-6">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center">
           <div className="flex ml-2 gap-2">
             <Badge className="bg-[#efeefa] text-[#6e6ed7]">
               {article.category.name}

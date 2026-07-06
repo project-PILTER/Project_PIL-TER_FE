@@ -12,7 +12,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   // 검색한 결과 가져오는 로직
 
   return (
-    <div className="w-4xl mx-auto p-8">
+    <div className="w-full max-w-4xl mx-auto p-8">
       <h1 className="text-2xl font-bold mb-6">
         &ldquo;<span>{query}</span>&rdquo;에 대한 검색 결과
       </h1>

@@ -30,7 +30,12 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
   const router = useRouter();
 
   const onSubmit = async(data: SignupData) => {
-    const res = await signupUser(data);
+    const request = {
+      email: data.email,
+      nickname: data.nickname,
+      password: data.password
+    }
+    const res = await signupUser(request);
     const user = res.data;
 
     if(user) {

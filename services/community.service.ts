@@ -99,6 +99,7 @@ export async function getTemporaryArticles(): Promise<Article[] | null> {
       console.error("임시저장 조회 실패");
       return null;
     }
+    
     return await res.json();
   } catch (error) {
     console.error("임시 저장 글 조회 실패", error);

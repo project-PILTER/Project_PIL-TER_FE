@@ -7,30 +7,34 @@ import {
   MypageInfo,
   ProfileDataRequest,
   Signup,
-  User,
+  TokenResponse,
   UserInfo,
 } from "@/types/auth.type";
 import { api } from "./axios";
+import { getCookie } from "@/utils/cookie";
 
+// 유저
 // 유저 정보 조회
-export async function getUser(accessToken: string | null): Promise<UserInfo | null> {
+export async function getUser(
+  accessToken: string | null,
+): Promise<UserInfo | null> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
-      }
-    })
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-    if(!res.ok) {
+    if (!res.ok) {
       throw new Error(`유저 정보 조회 실패 (Status: ${res.status})`);
     }
 
     const user: UserInfo = await res.json();
 
     return user;
-  } catch(error) {
+  } catch (error) {
     console.error("유저 정보 조회 실패", error);
     return null;
   }
@@ -54,7 +58,7 @@ export async function signupUser(signupData: Signup) {
   try {
     const res = await api.post("/user/signup", signupData);
 
-    return res;
+    return res.data;
   } catch (error) {
     console.error("회원 가입 실패", error);
     throw error;
@@ -66,8 +70,8 @@ export async function logOut(id: number) {
   try {
     const res = await api.post("/logout", null, {
       params: {
-        id
-      }
+        id,
+      },
     });
 
     return res.data;
@@ -76,6 +80,23 @@ export async function logOut(id: number) {
     throw error;
   }
 }
+
+// 새로고침 시 신규 토큰 발급
+
+export const refreshAccessToken = async (): Promise<string> => {
+  const tokenFromCookie = getCookie("refreshToken");
+
+  if (!tokenFromCookie) {
+    throw new Error("쿠키에 refreshToken이 없습니다.");
+  }
+  const res = await api.post<TokenResponse>(
+    "/token",
+    { refreshToken: tokenFromCookie },
+    { withCredentials: true },
+  );
+
+  return res.data.accessToken;
+};
 
 // 마이페이지
 

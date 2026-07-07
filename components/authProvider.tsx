@@ -17,31 +17,32 @@ export default function AuthProvider({
         auth.setLoading(false);
         return;
       }
-      auth.setLoading(true);
-      let currentToken = auth.accessToken;
 
-      try {
-        if (!currentToken) {
-          console.log("accessToken이 없어 재발급을 시도합니다.");
-          currentToken = await refreshAccessToken();
+      const hasLoggedInBefore = localStorage.getItem("isLoggedIn") === "true";
+
+      if(!hasLoggedInBefore) {
+        auth.clearUser();
+        return;
+      }
+
+      if (!auth.accessToken) {
+        try {
+          auth.setLoading(true);
+          const currentToken = await refreshAccessToken();
           auth.setAccessToken(currentToken);
-        }
 
-        if (currentToken) {
-          const userInfo = await getUser(auth.accessToken);
+          const userInfo = await getUser(currentToken);
           if (userInfo) {
-            console.log("유저 정보 조회 성공", userInfo);
             auth.setUserInfo(userInfo);
           }
+        } catch (error) {
+          console.error('AuthProvider 재발급 에러 상세', error);
+          auth.clearUser();
+        } finally {
+          auth.setLoading(false);
         }
-      } catch (error) {
-        console.error("인증 초기화 실패");
-        auth.clearUser();
-      } finally {
-        auth.setLoading(false);
       }
     };
-
     initializeUser();
   }, []);
 

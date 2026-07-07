@@ -84,15 +84,7 @@ export async function logOut(id: number) {
 // 새로고침 시 신규 토큰 발급
 
 export const refreshAccessToken = async (): Promise<string> => {
-  const tokenFromCookie = getCookie("refreshToken");
-
-  if (!tokenFromCookie) {
-    throw new Error("쿠키에 refreshToken이 없습니다.");
-  }
-  const res = await api.post<TokenResponse>(
-    "/token",
-    { refreshToken: tokenFromCookie },
-  );
+  const res = await api.post<TokenResponse>("/token");
 
   return res.data.accessToken;
 };

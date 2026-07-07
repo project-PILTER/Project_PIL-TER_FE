@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/auth.schema";
 import SocialLogin from "./socialLogin";
-import { loginUser } from "@/services/auth.service";
+import { getUser, loginUser } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -29,6 +29,7 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
     formState: { errors },
   } = useForm<LoginData>({ resolver: zodResolver(loginSchema) });
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const setUserInfo = useAuthStore((state) => state.setUserInfo);
   const router = useRouter();
 
   const onSubmit = async(data: LoginData) => {
@@ -36,7 +37,15 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
 
     if(res.isSuccess && res.result?.accessToken) {
       alert("로그인에 성공했습니다.");
-      setAccessToken(res.result?.accessToken);
+      const token = res.result.accessToken;
+      setAccessToken(token);
+
+      const userInfo = await getUser(token);
+      if(userInfo) {
+        setUserInfo(userInfo);
+      }
+
+      localStorage.setItem("isLoggedIn", "true");
 
       onOpenChange(false);
       router.refresh();

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 /*
   메인페이지
   배너(HeroSection)가 있으며

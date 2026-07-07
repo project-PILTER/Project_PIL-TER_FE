@@ -106,9 +106,13 @@ export default function WritePage({articleId}:WritePageProps) {
           draft: false
         });
 
-        if(res.data) {
+        if(res && res.isSuccess) {
           alert("글이 등록되었습니다.");
-          router.push(`/community/articles/${res.data.id}`);
+
+          const articleId = res.data?.id || res.result?.id;
+          router.push(`/community/articles/${articleId}`);
+        } else {
+          alert(res?.message || "글 등록에 실패했습니다.");
         }
       }
     } catch (error) {

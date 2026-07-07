@@ -34,9 +34,9 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
   const onSubmit = async(data: LoginData) => {
     const res = await loginUser(data);
 
-    if(res.accessToken && res.refreshToken) {
+    if(res.isSuccess && res.result?.accessToken) {
       alert("로그인에 성공했습니다.");
-      setAccessToken(res.accessToken);
+      setAccessToken(res.result?.accessToken);
 
       onOpenChange(false);
       router.refresh();
@@ -77,7 +77,7 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
         {errors.password && (
           <p className="text-red-500">{errors.password.message}</p>
         )}
-          <Button className="mt-2 bg-[#615ed6] h-9" type="submit">
+          <Button className="mt-4 bg-[#615ed6] h-9" type="submit">
             로그인
           </Button>
           <div className="flex flex-col mt-6 gap-2">

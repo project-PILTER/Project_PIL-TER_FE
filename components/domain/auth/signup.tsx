@@ -14,7 +14,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SocialLogin from "./socialLogin";
 import { signupUser } from "@/services/auth.service";
-import { useRouter } from "next/navigation";
 
 interface SignupProps {
   onOpenChange: (open:boolean) => void;
@@ -34,15 +33,20 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
       nickname: data.nickname,
       password: data.password
     }
-    const res = await signupUser(request);
 
-    if(res) {
-      alert("회원가입에 성공했습니다.");
-      onSwitchToLogin();
-    } else {
-      alert("회원가입에 실패했습니다. 다시시도해주세요.");
+    try {
+      const res = await signupUser(request);
+
+      if(res?.isSuccess) {
+        alert("회원가입에 성공했습니다.");
+        onSwitchToLogin();
+      } else {
+        alert(res?.message || "회원가입에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("회원가입 실패");
+      alert("회원가입 실패");
     }
-    
   }
 
   return (
@@ -104,7 +108,7 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
           {errors.passwordConfirm && (<p className="mt-2 text-red-500">{errors.passwordConfirm.message}</p>)}
         </div>
 
-        <Button className="mt-2 bg-[#615ed6] mr-2 h-9" type="submit">
+        <Button className="mt-4 bg-[#615ed6] mr-2 h-9" type="submit">
           회원가입
         </Button>
         <div className="flex flex-col mt-6 gap-2">

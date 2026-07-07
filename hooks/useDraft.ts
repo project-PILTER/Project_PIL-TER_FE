@@ -43,6 +43,7 @@ export default function useDraft() {
         setDrafts(mappedDrafts);
       } else {
         setDrafts([]);
+        return;
       }
     } catch (error) {
       console.error("임시저장 조회 실패");
@@ -67,5 +68,5 @@ export default function useDraft() {
     };
   }, [loadDrafts]);
 
-  return { drafts, saveDraft, deleteDraft, loadDrafts };
+  return { drafts, saveDraft, deleteDraft, loadDrafts, isLoading };
 }

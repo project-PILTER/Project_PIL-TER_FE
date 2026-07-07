@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { mypageInfo } from "@/components/domain/auth/mypageExamples";
 import ActivityCountCard from "@/components/domain/mypage/activityCountCard";
 import MonthlySummary from "@/components/domain/mypage/monthlySummary";

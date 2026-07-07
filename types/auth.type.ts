@@ -68,3 +68,7 @@ export interface UserInfo {
   name: string;
   role: string;
 }
+
+export interface TokenResponse {
+  accessToken: string;
+}

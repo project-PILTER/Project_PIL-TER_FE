@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ArticleCard from "@/components/domain/community/article/articleCard";
 import { getArticles } from "@/services/community.service";
 import CommonPagination from "@/components/common/pagination";

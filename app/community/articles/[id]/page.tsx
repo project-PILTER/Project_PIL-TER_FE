@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ArticleDetail from "@/components/domain/community/article/articleDetail";
 import CommentList from "@/components/domain/community/comment/commentList";
 import { articles } from "@/components/domain/community/examples/articleExamples";

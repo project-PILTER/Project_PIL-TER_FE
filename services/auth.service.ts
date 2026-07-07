@@ -92,7 +92,6 @@ export const refreshAccessToken = async (): Promise<string> => {
   const res = await api.post<TokenResponse>(
     "/token",
     { refreshToken: tokenFromCookie },
-    { withCredentials: true },
   );
 
   return res.data.accessToken;

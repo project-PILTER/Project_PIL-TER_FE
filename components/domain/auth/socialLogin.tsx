@@ -16,7 +16,7 @@ export default function SocialLogin({ onOpenChange }: SocialLoginProps) {
   const handleSocialLogin = (type: "kakao" | "google" | "naver") => {
     onOpenChange(false);
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
     const urls = {
       kakao: `${API_URL}/oauth2/authorization/kakao`,

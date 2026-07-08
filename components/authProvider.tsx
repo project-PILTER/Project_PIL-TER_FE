@@ -36,6 +36,8 @@ export default function AuthProvider({
             auth.setUserInfo(userInfo);
           }
         } catch (error) {
+          localStorage.removeItem("isLoggedIn");
+          
           console.error('AuthProvider 재발급 에러 상세', error);
           auth.clearUser();
         } finally {

@@ -8,7 +8,7 @@ import { api } from "./axios";
 // 건강일지 조회
 export async function getJournals(): Promise<JournalDiary[] | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/journals`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/journals`, {
       credentials: "include",
     });
 
@@ -39,7 +39,7 @@ export async function postJournal(journalData: JournalRequest) {
 export async function getOneJournal(id: number) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/journals/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/journals/${id}`,
       { credentials: "include" },
     );
 

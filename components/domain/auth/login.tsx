@@ -30,27 +30,35 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
   } = useForm<LoginData>({ resolver: zodResolver(loginSchema) });
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setUserInfo = useAuthStore((state) => state.setUserInfo);
+  const setLoading = useAuthStore((state) => state.setLoading);
   const router = useRouter();
 
   const onSubmit = async(data: LoginData) => {
-    const res = await loginUser(data);
+    try {
+      setLoading(true);
 
-    if(res.isSuccess && res.result?.accessToken) {
-      alert("로그인에 성공했습니다.");
-      const token = res.result.accessToken;
-      setAccessToken(token);
+      const res = await loginUser(data);
 
-      const userInfo = await getUser(token);
-      if(userInfo) {
-        setUserInfo(userInfo);
+      if(res.isSuccess && res.result.accessToken) {
+        alert("로그인에 성공했습니다.");
+        const token = res.result.accessToken;
+        setAccessToken(token);
+
+        const userInfo = await getUser(token);
+        if(userInfo) {
+          setUserInfo(userInfo)
+        }
+
+        localStorage.setItem("isLoggedIn", "true");
+
+        onOpenChange(false);
+        router.refresh();
       }
-
-      localStorage.setItem("isLoggedIn", "true");
-
-      onOpenChange(false);
-      router.refresh();
-    } else {
-      alert("로그인에 실패했습니다. 다시시도해주세요.");
+    } catch (error) {
+      console.error('로그인 중 에러 발생');
+      alert("로그인 처리 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
     }
   }
 

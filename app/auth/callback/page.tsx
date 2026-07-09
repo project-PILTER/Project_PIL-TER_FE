@@ -30,8 +30,8 @@ export default function CallbackPage() {
         localStorage.setItem("isLoggedIn", "true");
 
         alert("로그인에 성공했습니다.");
+
         router.push("/");
-        router.refresh();
       };
 
       handleLoginSuccess();

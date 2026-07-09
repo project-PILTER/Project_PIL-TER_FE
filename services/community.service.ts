@@ -10,7 +10,7 @@ import { articles } from "@/components/domain/community/examples/articleExamples
 export async function getArticles(): Promise<Article[] | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/community/articles`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/community/articles`,
       { credentials: "include" },
     );
 
@@ -42,7 +42,7 @@ export async function postArticle(articleData: ArticleInput) {
 export async function getArticleDetail(id: number): Promise<Article | null> {
   try {
     // const res = await fetch(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/community/articles/${id}`,
+    //   `${process.env.NEXT_PUBLIC_API_URL}/api/community/articles/${id}`,
     //   { credentials: "include" },
     // );
 
@@ -91,7 +91,7 @@ export async function deleteArticle(id: number) {
 export async function getTemporaryArticles(): Promise<Article[] | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/community/articles/drafts`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/community/articles/drafts`,
       { credentials: "include" },
     );
 

@@ -19,7 +19,7 @@ export async function getUser(
   accessToken: string | null,
 ): Promise<UserInfo | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -94,7 +94,7 @@ export const refreshAccessToken = async (): Promise<string> => {
 // 마이페이지 데이터 조회
 export async function getMypage(): Promise<MypageInfo | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/mypage`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage`, {
       credentials: "include",
     });
 

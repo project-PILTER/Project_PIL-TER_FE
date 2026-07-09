@@ -50,6 +50,7 @@ export default function LoginButton() {
           clearUser();
           alert("로그아웃 되었습니다.");
 
+          localStorage.removeItem("isLoggedIn");
           router.push("/");
           router.refresh();
         },

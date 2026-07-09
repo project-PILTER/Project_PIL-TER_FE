@@ -40,7 +40,6 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
       const res = await loginUser(data);
 
       if(res.isSuccess && res.result.accessToken) {
-        alert("로그인에 성공했습니다.");
         const token = res.result.accessToken;
         setAccessToken(token);
 
@@ -50,7 +49,8 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
         }
 
         localStorage.setItem("isLoggedIn", "true");
-
+        alert("로그인에 성공했습니다.");
+        
         onOpenChange(false);
         router.refresh();
       }

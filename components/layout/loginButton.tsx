@@ -21,14 +21,15 @@ export default function LoginButton() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"login" | "signup">("login");
+  const user = useAuthStore((state) => state.user);
+  const clearUser = useAuthStore((state) => state.clearUser);
+  const isLoading = useAuthStore((state) => state.isLoading);
 
-  const auth = useAuthStore();
-
-  if(auth.isLoading) {
+  if(isLoading) {
     return (<Skeleton />)
   }
 
-  if (auth.user) {
+  if (user) {
     const dropdownOptions: DropdownOption[] = [
       {
         label: "마이페이지",
@@ -40,14 +41,13 @@ export default function LoginButton() {
         label: "로그아웃",
         icon: <LogOut className="w-4 h-4" />,
         onClick: async () => {
-          if(!auth.user) return;
           try {
-            await logOut(auth.user.id);
+            await logOut(user.id);
           } catch (error) {
             console.error("서버 로그아웃 처리 실패")
           }
 
-          auth.clearUser();
+          clearUser();
           alert("로그아웃 되었습니다.");
 
           router.push("/");
@@ -59,10 +59,10 @@ export default function LoginButton() {
     return (
       <Dropdown options={dropdownOptions} align="end" trigger={
         <Button className="bg-transparent hover:bg-neutral-100 border-none rounded-full p-0 w-10 h-10">
-          {auth.user.profileImage ? (
-            <Image src={auth.user.profileImage} alt={auth.user.nickname} width={40} height={40} className="rounded-full object-cover border border-gray-200 dark:border-neutral-100" />
+          {user.profileImage ? (
+            <Image src={user.profileImage} alt={user.nickname} width={40} height={40} className="rounded-full object-cover border border-gray-200 dark:border-neutral-100" />
           ) : (
-            <div className="w-10 h-10 rounded-full text-white flex items-center justify-center font-medium">{auth.user.nickname}</div>
+            <div className="w-10 h-10 rounded-full text-white flex items-center justify-center font-medium">{user.nickname}</div>
           )}
         </Button>
       } />

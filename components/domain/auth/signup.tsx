@@ -37,11 +37,11 @@ export default function Signup({ onOpenChange, onSwitchToLogin }: SignupProps) {
     try {
       const res = await signupUser(request);
 
-      if(res?.isSuccess) {
+      if(res && res.status >= 200 && res.status < 300) {
         alert("회원가입에 성공했습니다.");
         onSwitchToLogin();
       } else {
-        alert(res?.message || "회원가입에 실패했습니다.");
+        alert("회원가입에 실패했습니다.");
       }
     } catch (error) {
       console.error("회원가입 실패");

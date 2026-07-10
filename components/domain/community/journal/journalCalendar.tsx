@@ -17,6 +17,17 @@ export default function JournalCalendar({
   selectedDate,
   onSelect,
 }: JournalCalendarProps) {
+  if (!journals || !Array.isArray(journals) || journals.length === 0) {
+    return (
+      <Calendar
+        mode="single"
+        locale={ko}
+        selected={selectedDate}
+        onSelect={onSelect}
+        className="w-full"
+      />
+    );
+  }
   const goodDays = journals
     .filter((journal) => journal.conditionStatus === "GOOD")
     .map((journal) => parse(journal.journalDate, "yyyy-MM-dd", new Date()));

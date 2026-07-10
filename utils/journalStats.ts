@@ -2,6 +2,15 @@ import { JournalDiary } from "@/types/journal.type";
 
 export function getJournalStats(journals: JournalDiary[]) {
   const totalRecords = journals.length;
+
+  if(!journals || !Array.isArray(journals) || journals.length === 0) {
+    return {
+      streak: 0,
+      averageCondition: "보통",
+      averagePain: 0,
+      totalRecords: 0
+    };
+  }
   
   const averagePain =
     journals.length === 0

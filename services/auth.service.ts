@@ -11,7 +11,6 @@ import {
   UserInfo,
 } from "@/types/auth.type";
 import { api } from "./axios";
-import { getCookie } from "@/utils/cookie";
 
 // 유저
 // 유저 정보 조회
@@ -57,8 +56,7 @@ export async function loginUser(loginData: LoginData) {
 export async function signupUser(signupData: Signup) {
   try {
     const res = await api.post("/user/signup", signupData);
-
-    return res.data;
+    return res;
   } catch (error) {
     console.error("회원 가입 실패", error);
     throw error;

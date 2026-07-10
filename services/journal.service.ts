@@ -4,6 +4,7 @@ import {
   OneJournalRequest,
 } from "@/types/journal.type";
 import { api } from "./axios";
+import { JournalFormValues } from "@/schemas/journal.schema";
 
 // 건강일지 조회
 export async function getJournals(): Promise<JournalDiary[] | null> {
@@ -24,7 +25,7 @@ export async function getJournals(): Promise<JournalDiary[] | null> {
 }
 
 // 건강일지 추가
-export async function postJournal(journalData: JournalRequest) {
+export async function postJournal(journalData: JournalFormValues) {
   try {
     const res = await api.post("/journals", journalData);
 

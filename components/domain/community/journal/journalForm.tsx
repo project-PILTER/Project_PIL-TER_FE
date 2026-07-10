@@ -41,8 +41,8 @@ export default function JournalForm({
       journalDate: new Date().toISOString().split("T")[0],
       conditionStatus: "GOOD",
       painScore: 0,
-      symptoms: [],
-      supplements: [],
+      symptoms: defaultValues?.symptoms || "",
+      supplements: defaultValues?.supplements || "",
       content: "",
       ...defaultValues
     },
@@ -56,21 +56,24 @@ export default function JournalForm({
     control,
   } = form;
 
+  console.log("건강일지 form error", errors);
+
   const conditionStatus = watch("conditionStatus");
   const selectedSymptoms = watch("symptoms");
   const painScore = watch("painScore");
 
   const toggleSymptom = (symptom: string) => {
-    const exists = selectedSymptoms.includes(symptom);
+    const currentArray = selectedSymptoms ? selectedSymptoms.split(",").map((item) => item.trim()) : [];
 
-    if (exists) {
-      setValue(
-        "symptoms",
-        selectedSymptoms.filter((item) => item !== symptom),
-      );
+    const exists = currentArray.includes(symptom);
+    let newArray: string[];
+
+    if(exists) {
+      newArray = currentArray.filter((item) => item !== symptom)
     } else {
-      setValue("symptoms", [...selectedSymptoms, symptom]);
+      newArray = [...currentArray, symptom]
     }
+    setValue("symptoms", newArray.join(","), {shouldValidate: true});
   };
 
   return (
@@ -162,25 +165,28 @@ export default function JournalForm({
       <div>
         <h3 className="mb-3 font-medium">증상 선택</h3>
         <div className="flex flex-wrap gap-2">
-          {symptomOptions.map((symptom) => (
+          {symptomOptions.map((symptom) => {
+            const isSelected = selectedSymptoms ? selectedSymptoms.split(",").map((item) => item.trim()).includes(symptom) : false;
+            return(
             <Button
               key={symptom}
               type="button"
               variant={
-                selectedSymptoms.includes(symptom) ? "default" : "outline"
+                isSelected ? "default" : "outline"
               }
               size="sm"
               onClick={() => toggleSymptom(symptom)}
               className={cn(
                 "rounded-lg",
-                selectedSymptoms.includes(symptom)
+                isSelected
                   ? "border-[#615ED6] bg-[#615ED6] text-white hover:bg-[#615ED6]"
                   : "hover:border-[#7F82E8]",
               )}
             >
               {symptom}
             </Button>
-          ))}
+            )
+          })}
         </div>
       </div>
 

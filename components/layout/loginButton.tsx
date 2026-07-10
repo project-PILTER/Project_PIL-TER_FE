@@ -25,10 +25,6 @@ export default function LoginButton() {
   const clearUser = useAuthStore((state) => state.clearUser);
   const isLoading = useAuthStore((state) => state.isLoading);
 
-  if(isLoading) {
-    return (<Skeleton />)
-  }
-
   if (user) {
     const dropdownOptions: DropdownOption[] = [
       {
@@ -61,7 +57,7 @@ export default function LoginButton() {
       <Dropdown options={dropdownOptions} align="end" trigger={
         <Button className="bg-transparent hover:bg-neutral-100 border-none rounded-full p-0 w-10 h-10">
           {user.profileImage ? (
-            <Image src={user.profileImage} alt={user.nickname} width={40} height={40} className="rounded-full object-cover border border-gray-200 dark:border-neutral-100" />
+            <Image src={user.profileImage} alt="닉네임" width={40} height={40} className="rounded-full object-cover border border-gray-200 dark:border-neutral-100" />
           ) : (
             <div className="w-10 h-10 rounded-full text-white flex items-center justify-center font-medium">{user.nickname}</div>
           )}

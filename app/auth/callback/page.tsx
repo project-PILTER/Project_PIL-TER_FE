@@ -36,8 +36,8 @@ export default function CallbackPage() {
 
       handleLoginSuccess();
     } else {
-      alert("로그인에 실패했습니다. 다시시도해주세요.");
-      router.push("/");
+      alert("로그인에 실패했습니다. 다시 시도 해주세요.");
+      window.location.href = "/";
     }
   }, [searchParams, setAccessToken, setUserInfo, router]);
 

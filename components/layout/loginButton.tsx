@@ -15,7 +15,6 @@ import { DropdownOption } from "@/types/ui.type";
 import { useRouter } from "next/navigation";
 import { logOut } from "@/services/auth.service";
 import Dropdown from "../common/dropdown";
-import Skeleton from "../domain/mypage/skeleton";
 
 export default function LoginButton() {
   const router = useRouter();
@@ -23,7 +22,6 @@ export default function LoginButton() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
-  const isLoading = useAuthStore((state) => state.isLoading);
 
   if (user) {
     const dropdownOptions: DropdownOption[] = [
@@ -44,11 +42,10 @@ export default function LoginButton() {
           }
 
           clearUser();
+          localStorage.removeItem("isLoggedIn");
           alert("로그아웃 되었습니다.");
 
-          localStorage.removeItem("isLoggedIn");
-          router.push("/");
-          router.refresh();
+          window.location.href = "/";
         },
         className: "hover:bg-red-50 dark:hover:bg-red-950"
       }

@@ -33,8 +33,6 @@ export default function CommentItem({
 }: CommentItemProps) {
   const { id, author: commentAuthor, content, likeCount, createdAt } = comment;
 
-  const router = useRouter();
-
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [liked, setLiked] = useState(false);

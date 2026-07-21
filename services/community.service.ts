@@ -2,7 +2,7 @@
   커뮤니티 관련 api 함수들 모음
 */
 
-import { Article, ArticleInput, CommentInput } from "@/types/community.type";
+import { Article, ArticleInput, CommentInput, TemporaryArticleInput } from "@/types/community.type";
 import { api } from "./axios";
 import { articles } from "@/components/domain/community/examples/articleExamples";
 
@@ -103,6 +103,44 @@ export async function getTemporaryArticles(): Promise<Article[] | null> {
     return await res.json();
   } catch (error) {
     console.error("임시 저장 글 조회 실패", error);
+    return null;
+  }
+}
+
+// 임시저장 단건 조회(이어쓰기용)
+export async function getTemporaryDetailArticle(id: number): Promise<Article[] | null> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/community/articles/drafts/${id}`, {credentials: "include"})
+
+    if(!res.ok) {
+      console.error("임시저장 단건조회 실패");
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("임시저장 단건 조회 실패", error);
+    return null;
+  }
+}
+
+// 임시저장 생성
+export async function postTemporaryArticle(data: TemporaryArticleInput) {
+  try {
+    const res = await api.post("/community/articles/drafts", data);
+    return res.data;
+  } catch (error) {
+    console.error("임시저장 생성 실패", error);
+    return null;
+  }
+}
+
+// 임시저장 글 삭제
+export async function deleteTemporaryArticle(id: number) {
+  try {
+    const res = await api.delete(`/community/articles/drafts/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error("임시저장 글 삭제 실패", error);
     return null;
   }
 }

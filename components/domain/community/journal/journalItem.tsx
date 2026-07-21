@@ -20,7 +20,7 @@ const conditionConfig = {
   },
   GOOD: {
     label: "좋음",
-    className: " ml-2 bg-green-100 text-green-600",
+    className: "ml-2 bg-green-100 text-green-600",
   },
   NORMAL: {
     label: "보통",

@@ -64,3 +64,10 @@ export interface CommentInput {
   communityArticleId: number;
   content: string;
 }
+
+// api request 임시저장
+export interface TemporaryArticleInput {
+  title: string;
+  content: string;
+  category: string;
+}

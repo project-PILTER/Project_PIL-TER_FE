@@ -9,7 +9,13 @@ import WriteForm from "@/components/domain/community/write/writeForm";
 import WriteHeader from "@/components/domain/community/write/writeHeader";
 import useCommunityEditor from "@/hooks/useCommunityEditor";
 import useDraft from "@/hooks/useDraft";
-import { getArticleDetail, getTemporaryArticles, postArticle, putArticle } from "@/services/community.service";
+import {
+  getArticleDetail,
+  getTemporaryArticles,
+  postArticle,
+  postTemporaryArticle,
+  putArticle,
+} from "@/services/community.service";
 import { Draft } from "@/types/community.type";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,7 +29,7 @@ interface WritePageProps {
   articleId?: number;
 }
 
-export default function WritePage({articleId}:WritePageProps) {
+export default function WritePage({ articleId }: WritePageProps) {
   const router = useRouter();
   const isEditMode = !!articleId;
 
@@ -38,12 +44,12 @@ export default function WritePage({articleId}:WritePageProps) {
   const { editor, characterCount } = useCommunityEditor();
 
   useEffect(() => {
-    if(!isEditMode || !articleId || !editor) return;
-  
-    const fetchOriginalArticle = async() => {
+    if (!isEditMode || !articleId || !editor) return;
+
+    const fetchOriginalArticle = async () => {
       try {
         const res = await getArticleDetail(articleId);
-        if(res) {
+        if (res) {
           setTitle(res.title);
           setCategoryId(String(res.category.id));
           editor.commands.setContent(res.content);
@@ -54,25 +60,35 @@ export default function WritePage({articleId}:WritePageProps) {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
     fetchOriginalArticle();
-  }, [articleId, isEditMode, editor, router])
+  }, [articleId, isEditMode, editor, router]);
 
-  if (!editor || isLoading) return <div>로딩중...</div>
-  
+  if (!editor || isLoading) return <div>로딩중...</div>;
 
   const handleImageFileAdd = (blobUrl: string, file: File) => {
     setImageFiles((prev) => [...prev, { blobUrl, file }]);
   };
 
-  const handleOpenDrafts = async() => {
+  const handleOpenDrafts = async () => {
     await getTemporaryArticles();
     loadDrafts();
     setIsDraftModalOpen(true);
   };
 
-  const handleSave = () => {
-    saveDraft({ title, categoryId, content: editor.getHTML() });
+  const handleSave = async () => {
+    try {
+      const res = await postTemporaryArticle({
+        title,
+        content: editor.getHTML(),
+        category: categoryId,
+      });
+      if (res && res.isSuccess) {
+        alert("임시저장 글이 등록되었습니다.");
+      }
+    } catch (error) {
+      console.error("임시저장 등록에 실패했습니다. 다시시도해주세요.");
+    }
   };
 
   const handlePublish = async () => {
@@ -85,16 +101,19 @@ export default function WritePage({articleId}:WritePageProps) {
     try {
       if (isEditMode && articleId) {
         // 수정모드
-        const res = await putArticle({
-          title,
-          content: editor.getHTML(),
-          categoryId: Number(categoryId),
-          imageUrl: "/logo/logo.png",
-          draft: false
-        }, articleId)
+        const res = await putArticle(
+          {
+            title,
+            content: editor.getHTML(),
+            categoryId: Number(categoryId),
+            imageUrl: "/logo/logo.png",
+            draft: false,
+          },
+          articleId,
+        );
 
-        if(res.data) {
-          alert("수정이 완료되었습니다.")
+        if (res.data) {
+          alert("수정이 완료되었습니다.");
           router.push(`/community/articles/${articleId}`);
         }
       } else {
@@ -103,14 +122,14 @@ export default function WritePage({articleId}:WritePageProps) {
           content: editor.getHTML(),
           categoryId: Number(categoryId),
           imageUrl: "/logo/logo.png",
-          draft: false
+          draft: false,
         });
 
-        if(res && res.isSuccess) {
+        if (res && res.status === 200 || res.status === 201) {
           alert("글이 등록되었습니다.");
 
           const articleId = res.data?.id || res.result?.id;
-          router.push(`/community/articles/${articleId}`);
+          window.location.href = `/community/articles/${articleId}`;
         } else {
           alert(res?.message || "글 등록에 실패했습니다.");
         }
@@ -138,6 +157,7 @@ export default function WritePage({articleId}:WritePageProps) {
         onSave={handleSave}
         onPublish={handlePublish}
         isEditMode={isEditMode}
+        isSubmitting={isSubmitting}
       />
 
       <WriteForm

@@ -54,7 +54,7 @@ export interface Comment {
 export interface ArticleInput {
   title: string;
   content: string;
-  categoryId: number;
+  categoryId: string;
   imageUrl?: string | null;
   draft: boolean;
 }
@@ -69,5 +69,5 @@ export interface CommentInput {
 export interface TemporaryArticleInput {
   title: string;
   content: string;
-  category: string;
+  categoryId: string;
 }

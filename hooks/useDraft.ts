@@ -1,31 +1,12 @@
 "use client";
 
-import { getTemporaryArticles } from "@/services/community.service";
+import { getTemporaryArticles, postTemporaryArticle } from "@/services/community.service";
 import { Article, Draft, DraftInput } from "@/types/community.type";
 import { useCallback, useEffect, useState } from "react";
 
 export default function useDraft() {
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const saveDraft = async (draft: DraftInput) => {
-    // const res = await postDraft();
-    // if(res) {
-    //   alert("임시저장 되었습니다.");
-    // } else {
-    //   alert("임시저장 실패");
-    // }
-  };
-
-  const deleteDraft = async (id: string) => {
-    // const res = await deleteDraft(id);
-    // await loadDrafts();
-    // if(res) {
-    //   alert("임시저장 글 삭제 완료");
-    // } else {
-    //   alert("임시저장 삭제 실패");
-    // }
-  };
 
   const loadDrafts = useCallback(async () => {
     setIsLoading(true);
@@ -52,6 +33,36 @@ export default function useDraft() {
       setIsLoading(false);
     }
   }, []);
+
+  const saveDraft = async (draft: DraftInput) => {
+    try {
+      const res = await postTemporaryArticle({
+      title: draft.title,
+      content: draft.content,
+      categoryId: draft.categoryId || draft.categoryId
+      });
+      if(res && res.isSuccess) {
+        alert("임시저장 되었습니다.");
+        await loadDrafts();
+        return true;
+      } else {
+        alert("임시저장 실패");
+      }  
+    } catch (error) {
+      console.error("임시저장 에러");
+      return false;
+    }
+  };
+
+  const deleteDraft = async (id: string) => {
+    // const res = await deleteDraft(id);
+    // await loadDrafts();
+    // if(res) {
+    //   alert("임시저장 글 삭제 완료");
+    // } else {
+    //   alert("임시저장 삭제 실패");
+    // }
+  };
 
   useEffect(() => {
     let isMounted = true;

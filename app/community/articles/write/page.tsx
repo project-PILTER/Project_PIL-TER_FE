@@ -11,14 +11,13 @@ import useCommunityEditor from "@/hooks/useCommunityEditor";
 import useDraft from "@/hooks/useDraft";
 import {
   getArticleDetail,
-  getTemporaryArticles,
   postArticle,
-  postTemporaryArticle,
   putArticle,
 } from "@/services/community.service";
 import { Draft } from "@/types/community.type";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { categories } from "@/components/domain/community/examples/categoryExamples";
 
 interface ImageFileMap {
   blobUrl: string;
@@ -42,6 +41,9 @@ export default function WritePage({ articleId }: WritePageProps) {
 
   const { drafts, saveDraft, loadDrafts, deleteDraft } = useDraft();
   const { editor, characterCount } = useCommunityEditor();
+
+  const selectedCategory = categories.find((c) => String(c.id) == categoryId);
+  const categoryName = selectedCategory ? selectedCategory.name : "";
 
   useEffect(() => {
     if (!isEditMode || !articleId || !editor) return;
@@ -71,25 +73,17 @@ export default function WritePage({ articleId }: WritePageProps) {
   };
 
   const handleOpenDrafts = async () => {
-    await getTemporaryArticles();
-    loadDrafts();
+    await loadDrafts();
     setIsDraftModalOpen(true);
   };
 
   const handleSave = async () => {
-    try {
-      const res = await postTemporaryArticle({
-        title,
-        content: editor.getHTML(),
-        category: categoryId,
-      });
-      if (res && res.isSuccess) {
-        alert("임시저장 글이 등록되었습니다.");
-      }
-    } catch (error) {
-      console.error("임시저장 등록에 실패했습니다. 다시시도해주세요.");
-    }
-  };
+    await saveDraft({
+      title,
+      content: editor.getHTML(),
+      categoryId: categoryName
+    })
+  }
 
   const handlePublish = async () => {
     if (!title.trim()) return alert("제목을 입력해주세요.");
@@ -105,7 +99,7 @@ export default function WritePage({ articleId }: WritePageProps) {
           {
             title,
             content: editor.getHTML(),
-            categoryId: Number(categoryId),
+            categoryId: categoryName,
             imageUrl: "/logo/logo.png",
             draft: false,
           },
@@ -120,14 +114,13 @@ export default function WritePage({ articleId }: WritePageProps) {
         const res = await postArticle({
           title,
           content: editor.getHTML(),
-          categoryId: Number(categoryId),
+          categoryId: categoryName,
           imageUrl: "/logo/logo.png",
           draft: false,
         });
 
         if (res && res.status === 200 || res.status === 201) {
           alert("글이 등록되었습니다.");
-
           const articleId = res.data?.id || res.result?.id;
           window.location.href = `/community/articles/${articleId}`;
         } else {

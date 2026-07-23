@@ -9,17 +9,9 @@ import { articles } from "@/components/domain/community/examples/articleExamples
 // 모든 게시글 가져오기
 export async function getArticles(): Promise<Article[] | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/community/articles`,
-      { credentials: "include" },
-    );
+    const res = await api.get("/community/articles");
 
-    if (!res.ok) {
-      console.error("게시글 로드 실패");
-      return null;
-    }
-
-    return await res.json();
+    return await res.data;
   } catch (error) {
     console.error("게시글 가져오기 실패", error);
     return null;
@@ -41,17 +33,10 @@ export async function postArticle(articleData: ArticleInput) {
 // 특정 게시글 조회
 export async function getArticleDetail(id: number): Promise<Article | null> {
   try {
-    // const res = await fetch(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/api/community/articles/${id}`,
-    //   { credentials: "include" },
-    // );
+    // const res = await api.get(
+    //   `/community/articles/${id}`);
 
-    // if (!res.ok) {
-    //   console.error("특정 게시글 로드 실패")
-    //   return null;
-    // }
-
-    // return await res.json();
+    // return res.data;
 
     // 하드코딩된 데이터로 불러오기
     const mockArticle = articles.find((item) => item.id === id);
@@ -90,17 +75,9 @@ export async function deleteArticle(id: number) {
 // 임시저장 글 조회
 export async function getTemporaryArticles(): Promise<Article[] | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/community/articles/drafts`,
-      { credentials: "include" },
-    );
-
-    if (!res.ok) {
-      console.error("임시저장 조회 실패");
-      return null;
-    }
+    const res = await api.get("/community/articles/drafts");
     
-    return await res.json();
+    return await res.data;
   } catch (error) {
     console.error("임시 저장 글 조회 실패", error);
     return null;
@@ -110,13 +87,9 @@ export async function getTemporaryArticles(): Promise<Article[] | null> {
 // 임시저장 단건 조회(이어쓰기용)
 export async function getTemporaryDetailArticle(id: number): Promise<Article[] | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/community/articles/drafts/${id}`, {credentials: "include"})
+    const res = await api.get(`/community/articles/drafts/${id}`);
 
-    if(!res.ok) {
-      console.error("임시저장 단건조회 실패");
-      return null;
-    }
-    return await res.json();
+    return res.data;
   } catch (error) {
     console.error("임시저장 단건 조회 실패", error);
     return null;

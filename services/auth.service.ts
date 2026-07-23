@@ -14,25 +14,10 @@ import { api } from "./axios";
 
 // 유저
 // 유저 정보 조회
-export async function getUser(
-  accessToken: string | null,
-): Promise<UserInfo | null> {
+export async function getUser(): Promise<UserInfo | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`유저 정보 조회 실패 (Status: ${res.status})`);
-    }
-
-    const user: UserInfo = await res.json();
-
-    return user;
+    const res = await api.get<UserInfo>("/user");
+    return res.data;
   } catch (error) {
     console.error("유저 정보 조회 실패", error);
     return null;
@@ -92,16 +77,9 @@ export const refreshAccessToken = async (): Promise<string> => {
 // 마이페이지 데이터 조회
 export async function getMypage(): Promise<MypageInfo | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mypage`, {
-      credentials: "include",
-    });
+    const res = await api.get("/mypage");
 
-    if (!res.ok) {
-      console.error("마이페이지 데이터 로드 실패");
-      return null;
-    }
-
-    return res.json();
+    return res.data;
   } catch (error) {
     console.error("마이페이지 데이터 조회 실패", error);
     return null;

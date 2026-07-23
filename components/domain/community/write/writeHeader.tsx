@@ -41,7 +41,7 @@ export default function WriteHeader({
         ) : (
           <div>
             <Navigation size={18} />
-            {isEditMode ? "수정하기" : "등록하기"}
+            {isEditMode ? "수정" : "등록"}
           </div>
         )}
         

@@ -39,11 +39,12 @@ export default function Login({ onOpenChange, onSwitchToSignup }: LoginProps) {
 
       const res = await loginUser(data);
 
-      if(res.isSuccess && res.result.accessToken) {
-        const token = res.result.accessToken;
+      const token = res?.result?.accessToken || res?.accessToken || res?.data?.accessToken;
+
+      if(res && (res.isSuccess || token)) {
         setAccessToken(token);
 
-        const userInfo = await getUser(token);
+        const userInfo = await getUser();
         if(userInfo) {
           setUserInfo(userInfo)
         }

@@ -19,7 +19,7 @@ export default function CallbackPage() {
         setAccessToken(token);
 
         try {
-          const userInfo = await getUser(token);
+          const userInfo = await getUser();
           if (userInfo) {
             setUserInfo(userInfo);
           }

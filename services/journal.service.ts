@@ -1,6 +1,5 @@
 import {
   JournalDiary,
-  JournalRequest,
   OneJournalRequest,
 } from "@/types/journal.type";
 import { api } from "./axios";
@@ -9,15 +8,9 @@ import { JournalFormValues } from "@/schemas/journal.schema";
 // 건강일지 조회
 export async function getJournals(): Promise<JournalDiary[] | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/journals`, {
-      credentials: "include",
-    });
+    const res = await api.get("/journals");
 
-    if (!res.ok) {
-      console.error("건강일지 데이터 실패");
-      return null;
-    }
-    return res.json();
+    return res.data;
   } catch (error) {
     console.error("건강일지 조회 실패", error);
     return null;
@@ -39,17 +32,9 @@ export async function postJournal(journalData: JournalFormValues) {
 // 건강일지 단건 조회
 export async function getOneJournal(id: number) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/journals/${id}`,
-      { credentials: "include" },
-    );
+    const res = await api.get(`/journals/${id}`);
 
-    if (!res.ok) {
-      console.error("건강일지 단건 실패");
-      return null;
-    }
-
-    return res.json();
+    return res.data;
   } catch (error) {
     console.error("건강일지 단건 조회 실패", error);
     return null;

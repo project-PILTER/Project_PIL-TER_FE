@@ -78,11 +78,18 @@ export default function WritePage({ articleId }: WritePageProps) {
   };
 
   const handleSave = async () => {
-    await saveDraft({
-      title,
-      content: editor.getHTML(),
-      categoryId: categoryName
-    })
+    if(!title.trim() && editor.isEmpty) {
+      return alert("저장할 내용이 없습니다.");
+    }
+
+    try {
+      await saveDraft({title, content: editor.getHTML(), categoryId: categoryName});
+
+      alert("임시저장 되었습니다.")
+    } catch (error) {
+      console.error("임시저장 실패");
+      alert("임시저장에 실패했습니다.");
+    }
   }
 
   const handlePublish = async () => {
@@ -106,7 +113,7 @@ export default function WritePage({ articleId }: WritePageProps) {
           articleId,
         );
 
-        if (res.data) {
+        if (res && (res.isSuccess || res.ok)) {
           alert("수정이 완료되었습니다.");
           router.push(`/community/articles/${articleId}`);
         }
@@ -119,10 +126,10 @@ export default function WritePage({ articleId }: WritePageProps) {
           draft: false,
         });
 
-        if (res && res.status === 200 || res.status === 201) {
+        if (res && (res.isSuccess || res.id || res.data?.id)) {
           alert("글이 등록되었습니다.");
           const articleId = res.data?.id || res.result?.id;
-          window.location.href = `/community/articles/${articleId}`;
+          router.push(`/community/articles/${articleId}`);
         } else {
           alert(res?.message || "글 등록에 실패했습니다.");
         }

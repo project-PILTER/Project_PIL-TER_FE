@@ -28,10 +28,12 @@ export default function AuthProvider({
       if (!auth.accessToken) {
         try {
           auth.setLoading(true);
+
+          // refreshToken으로 새 accessToken 발급
           const currentToken = await refreshAccessToken();
           auth.setAccessToken(currentToken);
 
-          const userInfo = await getUser(currentToken);
+          const userInfo = await getUser();
           if (userInfo) {
             auth.setUserInfo(userInfo);
           }

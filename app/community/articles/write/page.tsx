@@ -128,8 +128,7 @@ export default function WritePage({ articleId }: WritePageProps) {
 
         if (res && (res.isSuccess || res.id || res.data?.id)) {
           alert("글이 등록되었습니다.");
-          const articleId = res.data?.id || res.result?.id;
-          router.push(`/community/articles/${articleId}`);
+          router.push(`/community/articles`);
         } else {
           alert(res?.message || "글 등록에 실패했습니다.");
         }

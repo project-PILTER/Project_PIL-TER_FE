@@ -15,7 +15,7 @@ export default function useDraft() {
       if (res) {
         const mappedDrafts: Draft[] = res.map((article) => ({
           id: String(article.id),
-          categoryId: String(article.category?.id || ""),
+          categoryId: String(article.category?.name || ""),
           title: article.title,
           content: article.content,
           createdAt: article.createdAt
@@ -39,10 +39,9 @@ export default function useDraft() {
       const res = await postTemporaryArticle({
       title: draft.title,
       content: draft.content,
-      categoryId: draft.categoryId || draft.categoryId
+      categoryId: draft.categoryId
       });
-      if(res && res.isSuccess) {
-        alert("임시저장 되었습니다.");
+      if(res.isSuccess || res.status === 200 || res.id) {
         await loadDrafts();
         return true;
       } else {

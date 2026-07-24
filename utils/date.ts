@@ -12,3 +12,9 @@ export function formatDate(date: string): string {
 
   return format(new Date(date), "yyyy-MM-dd");
 }
+
+export function formatDateTime(date: string): string {
+  if(!date) return "";
+
+  return format(new Date(date), "yyyy-MM-dd HH:mm");
+}

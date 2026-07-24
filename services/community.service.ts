@@ -2,9 +2,13 @@
   커뮤니티 관련 api 함수들 모음
 */
 
-import { Article, ArticleInput, CommentInput, TemporaryArticleInput } from "@/types/community.type";
+import {
+  Article,
+  ArticleInput,
+  CommentInput,
+  TemporaryArticleInput,
+} from "@/types/community.type";
 import { api } from "./axios";
-import { articles } from "@/components/domain/community/examples/articleExamples";
 
 // 모든 게시글 가져오기
 export async function getArticles(): Promise<Article[] | null> {
@@ -31,17 +35,13 @@ export async function postArticle(articleData: ArticleInput) {
 }
 
 // 특정 게시글 조회
-export async function getArticleDetail(id: number): Promise<Article | null> {
+export async function getArticleDetail(
+  id: number,
+): Promise<Article | null> {
   try {
-    // const res = await api.get(
-    //   `/community/articles/${id}`);
+    const res = await api.get(`/community/articles/${id}`);
 
-    // return res.data;
-
-    // 하드코딩된 데이터로 불러오기
-    const mockArticle = articles.find((item) => item.id === id);
-
-    return mockArticle ?? null;
+    return res.data;
   } catch (error) {
     console.error("특정 게시글 가져오기 실패", error);
     return null;
@@ -76,7 +76,7 @@ export async function deleteArticle(id: number) {
 export async function getTemporaryArticles(): Promise<Article[] | null> {
   try {
     const res = await api.get("/community/articles/drafts");
-    
+
     return await res.data;
   } catch (error) {
     console.error("임시 저장 글 조회 실패", error);
@@ -85,7 +85,9 @@ export async function getTemporaryArticles(): Promise<Article[] | null> {
 }
 
 // 임시저장 단건 조회(이어쓰기용)
-export async function getTemporaryDetailArticle(id: number): Promise<Article[] | null> {
+export async function getTemporaryDetailArticle(
+  id: number,
+): Promise<Article[] | null> {
   try {
     const res = await api.get(`/community/articles/drafts/${id}`);
 

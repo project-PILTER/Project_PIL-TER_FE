@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Article } from "@/types/community.type";
 import Link from "next/link";
 import { getRelativeTime } from "@/utils/date";
+import { stripHtml } from "@/utils/string";
 
 interface CommunityListProps {
   article: Article;
@@ -36,7 +37,7 @@ export default function ArticleCard({ article }: CommunityListProps) {
 
         <div className="mx-4 font-bold hover:text-[#615ED6]">{article.title}</div>
 
-        <div className="mx-4 truncate">{article.content}</div>
+        <div className="mx-4 truncate">{stripHtml(article.content)}</div>
 
         <div className="mx-4 flex justify-between">
           <div className="flex">

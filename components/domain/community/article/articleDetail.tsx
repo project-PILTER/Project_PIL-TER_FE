@@ -11,12 +11,13 @@ import {
 } from "@/services/community.service";
 import { Article } from "@/types/community.type";
 import { DropdownOption } from "@/types/ui.type";
+import { formatDateTime } from "@/utils/date";
+import { stripHtml } from "@/utils/string";
 import {
   Bookmark,
   Edit2,
   Eye,
   Heart,
-  MoreHorizontal,
   Share2,
   Trash2,
 } from "lucide-react";
@@ -119,7 +120,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
               {article.author.nickname}
             </div>
             <div className="flex items-center gap-2 text-xs">
-              <span>{article.createdAt}</span>
+              <span>{formatDateTime(article.createdAt)}</span>
 
               <span className="flex items-center gap-1">
                 <Eye />
@@ -133,7 +134,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
       </div>
 
       <div className="whitespace-pre-wrap leading-relaxed text-1.125rem min-h-[18.75rem] mb-8">
-        {article.content}
+        {stripHtml(article.content)}
       </div>
 
       <div className="pt-6 border-t border-gray-100 flex justify-between items-center text-sm">

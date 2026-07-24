@@ -1,7 +1,4 @@
-import {
-  JournalDiary,
-  OneJournalRequest,
-} from "@/types/journal.type";
+import { JournalDiary, OneJournalRequest } from "@/types/journal.type";
 import { api } from "./axios";
 import { JournalFormValues } from "@/schemas/journal.schema";
 

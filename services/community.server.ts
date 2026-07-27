@@ -6,7 +6,7 @@ export async function getArticles(): Promise<Article[] | null> {
   try {
     const res = await serverApiGet("/community/articles");
 
-    return await res.data;
+    return res;
   } catch (error) {
     console.error("게시글 가져오기 실패", error);
     return null;
@@ -20,7 +20,7 @@ export async function getArticleDetail(
   try {
     const res = await serverApiGet(`/community/articles/${id}`);
 
-    return res.data;
+    return res;
   } catch (error) {
     console.error("특정 게시글 가져오기 실패", error);
     return null;

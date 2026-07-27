@@ -1,12 +1,12 @@
 export const dynamic = 'force-dynamic';
 
 import ArticleCard from "@/components/domain/community/article/articleCard";
-import { getArticles } from "@/services/community.service";
 import CommonPagination from "@/components/common/pagination";
 import { ClipboardList, SquarePen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getArticles } from "@/services/community.server";
 
 export default async function CommunityPage({
   searchParams,

@@ -10,10 +10,10 @@ import WriteHeader from "@/components/domain/community/write/writeHeader";
 import useCommunityEditor from "@/hooks/useCommunityEditor";
 import useDraft from "@/hooks/useDraft";
 import {
-  getArticleDetail,
+  getArticleDetailClient,
   postArticle,
   putArticle,
-} from "@/services/community.service";
+} from "@/services/community.client";
 import { Draft } from "@/types/community.type";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -50,7 +50,7 @@ export default function WritePage({ articleId }: WritePageProps) {
 
     const fetchOriginalArticle = async () => {
       try {
-        const res = await getArticleDetail(articleId);
+        const res = await getArticleDetailClient(articleId);
         if (res) {
           setTitle(res.title);
           setCategoryId(String(res.category.id));

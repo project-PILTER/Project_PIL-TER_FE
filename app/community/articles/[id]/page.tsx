@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import ArticleDetail from "@/components/domain/community/article/articleDetail";
 import CommentList from "@/components/domain/community/comment/commentList";
-import { getArticleDetail } from "@/services/community.service";
+import { getArticleDetail } from "@/services/community.server";
 import { redirect } from "next/navigation";
 
 interface ArticlePageProps {

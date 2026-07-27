@@ -5,7 +5,7 @@ import MonthlySummary from "@/components/domain/mypage/monthlySummary";
 import { monthlyActivitySummary} from "@/components/domain/mypage/mypageExamples";
 import ProfileSection from "@/components/domain/mypage/profileSection";
 import RecentJournal from "@/components/domain/mypage/recentJournal";
-import { getMypage } from "@/services/auth.service";
+import { getMypage } from "@/services/auth.server";
 import { MonthlyActivitySummary, UserActivityCounts } from "@/types/auth.type";
 import { RecentJournalRecord } from "@/types/journal.type";
 import { redirect } from "next/navigation";

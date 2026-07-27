@@ -1,6 +1,10 @@
 "use client";
 
-import { getTemporaryArticles, postTemporaryArticle } from "@/services/community.service";
+import {
+  deleteTemporaryArticle,
+  getTemporaryArticles,
+  postTemporaryArticle,
+} from "@/services/community.service";
 import { Article, Draft, DraftInput } from "@/types/community.type";
 import { useCallback, useEffect, useState } from "react";
 
@@ -18,8 +22,8 @@ export default function useDraft() {
           categoryId: String(article.category?.name || ""),
           title: article.title,
           content: article.content,
-          createdAt: article.createdAt
-        }))
+          createdAt: article.createdAt,
+        }));
 
         setDrafts(mappedDrafts);
       } else {
@@ -37,16 +41,16 @@ export default function useDraft() {
   const saveDraft = async (draft: DraftInput) => {
     try {
       const res = await postTemporaryArticle({
-      title: draft.title,
-      content: draft.content,
-      categoryId: draft.categoryId
+        title: draft.title,
+        content: draft.content,
+        categoryId: draft.categoryId,
       });
-      if(res.isSuccess || res.status === 200 || res.id) {
+      if (res.isSuccess || res.status === 200 || res.id) {
         await loadDrafts();
         return true;
       } else {
         alert("임시저장 실패");
-      }  
+      }
     } catch (error) {
       console.error("임시저장 에러");
       return false;
@@ -54,13 +58,18 @@ export default function useDraft() {
   };
 
   const deleteDraft = async (id: string) => {
-    // const res = await deleteDraft(id);
-    // await loadDrafts();
-    // if(res) {
-    //   alert("임시저장 글 삭제 완료");
-    // } else {
-    //   alert("임시저장 삭제 실패");
-    // }
+    try {
+      const res = await deleteTemporaryArticle(Number(id));
+
+      if (res.isSuccess || res.status === 200 || res.status === 201) {
+        alert("임시저장 글이 삭제되었습니다.");
+        await loadDrafts();
+        return true;
+      }
+    } catch (error) {
+      alert("임시저장 삭제에 실패했습니다. 다시시도해주세요.");
+      return false;
+    }
   };
 
   useEffect(() => {

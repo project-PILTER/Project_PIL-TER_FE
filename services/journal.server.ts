@@ -6,7 +6,7 @@ export async function getJournals(): Promise<JournalDiary[] | null> {
   try {
     const res = await serverApiGet("/journals");
 
-    return res.data;
+    return res;
   } catch (error) {
     console.error("건강일지 조회 실패", error);
     return null;

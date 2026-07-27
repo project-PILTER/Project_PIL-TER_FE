@@ -16,7 +16,8 @@ export default async function Mypage() {
   console.log("마이페이지 데이터", mypageData);
 
   if(!mypageData) {
-    redirect("/");
+    alert("마이페이지에 정보가 없습니다.");
+    return null;
   }
 
   let recordsArray: RecentJournalRecord[] = [];

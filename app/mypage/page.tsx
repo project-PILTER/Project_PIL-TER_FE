@@ -22,7 +22,7 @@ export default async function Mypage() {
 
   let recordsArray: RecentJournalRecord[] = [];
   
-  if(mypageData.recentJournals) {
+  if(Array.isArray(mypageData.recentJournals) && mypageData.recentJournals.length > 0) {
     const conditionMap: Record<string, string> = {
       EXCELLENT: "아주 좋음",
       GOOD: "좋음",
@@ -30,12 +30,14 @@ export default async function Mypage() {
       BAD: "나쁨",
       AWFUL: "아주 나쁨"
     }
+
+    const recent = mypageData.recentJournals[0];
     const statusText = conditionMap[mypageData.recentJournals.condition] || "보통";
 
     recordsArray = [
       {
-        id: "1",
-        dateLabel: mypageData.recentJournals.dataLabel,
+        id: String(recent.id ?? "1"),
+        dateLabel: recent.dataLabel || recent.createdAt || "",
         status: statusText
       }
     ]
@@ -45,7 +47,7 @@ export default async function Mypage() {
     totalPosts: mypageData.articleCount,
     totalLikesReceived: mypageData.totalLikesReceived,
     totalComments: mypageData.commentCount,
-    totalHealthDays: mypageData.totalHealthDays
+    totalHealthDays: mypageData.continuousHealthDays ?? 0
   }
 
   // const monthlyActivitySummary: MonthlyActivitySummary = {

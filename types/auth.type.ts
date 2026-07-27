@@ -26,13 +26,16 @@ export interface User {
 }
 
 export interface Mypage{
+  id: number | string;
   nickname: string;
   email: string;
+  profileImage: string;
   createdAt: string;
   articleCount: number;
   commentCount: number;
   totalLikesReceived: number;
-  totalHealthDays: number;
+  continuousHealthDays: number;
+  monthlyActivitySummary: MonthlyActivitySummary;
 }
 
 export interface UserActivityCounts {

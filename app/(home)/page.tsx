@@ -9,9 +9,8 @@ export const dynamic = 'force-dynamic';
 import '../globals.css';
 import ArticleCard from '@/components/domain/community/article/articleCard';
 import HeroSection from '@/components/domain/home/heroSection';
+import { getArticles } from '@/services/community.server';
 import { TrendingUp } from 'lucide-react';
-import { getArticles } from '@/services/community.service';
-// import { articles } from '@/components/domain/community/examples/articleExamples';
 
 export default async function Home() {
   const articles = await getArticles() ?? [];

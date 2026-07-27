@@ -1,19 +1,6 @@
-import { JournalDiary, OneJournalRequest } from "@/types/journal.type";
+import { OneJournalRequest } from "@/types/journal.type";
 import { api } from "./axios";
 import { JournalFormValues } from "@/schemas/journal.schema";
-import { serverApiGet } from "./serverApi";
-
-// 건강일지 조회
-export async function getJournals(): Promise<JournalDiary[] | null> {
-  try {
-    const res = await serverApiGet("/journals");
-
-    return res.data;
-  } catch (error) {
-    console.error("건강일지 조회 실패", error);
-    return null;
-  }
-}
 
 // 건강일지 추가
 export async function postJournal(journalData: JournalFormValues) {

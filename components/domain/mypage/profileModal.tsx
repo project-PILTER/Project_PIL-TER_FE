@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { putProfile } from "@/services/auth.service";
+import { putProfile } from "@/services/auth.client";
 import { useRouter } from "next/navigation";
 
 interface ProfileModalProps {

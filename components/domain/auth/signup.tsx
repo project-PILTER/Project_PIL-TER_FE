@@ -13,7 +13,7 @@ import { SignupData } from "@/types/auth.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SocialLogin from "./socialLogin";
-import { signupUser } from "@/services/auth.service";
+import { signupUser } from "@/services/auth.client";
 
 interface SignupProps {
   onOpenChange: (open:boolean) => void;

@@ -1,6 +1,6 @@
 "use client";
 
-import { getUser } from "@/services/auth.service";
+import { getUser } from "@/services/auth.client";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";

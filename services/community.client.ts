@@ -9,19 +9,6 @@ import {
   TemporaryArticleInput,
 } from "@/types/community.type";
 import { api } from "./axios";
-import { serverApiGet } from "./serverApi";
-
-// 모든 게시글 가져오기
-export async function getArticles(): Promise<Article[] | null> {
-  try {
-    const res = await serverApiGet("/community/articles");
-
-    return await res.data;
-  } catch (error) {
-    console.error("게시글 가져오기 실패", error);
-    return null;
-  }
-}
 
 // 새로운 게시글 등록
 export async function postArticle(articleData: ArticleInput) {
@@ -32,20 +19,6 @@ export async function postArticle(articleData: ArticleInput) {
   } catch (error) {
     console.error("게시글 등록 실패", error);
     throw error;
-  }
-}
-
-// 특정 게시글 조회
-export async function getArticleDetail(
-  id: number,
-): Promise<Article | null> {
-  try {
-    const res = await serverApiGet(`/community/articles/${id}`);
-
-    return res.data;
-  } catch (error) {
-    console.error("특정 게시글 가져오기 실패", error);
-    return null;
   }
 }
 
@@ -70,6 +43,20 @@ export async function deleteArticle(id: number) {
   } catch (error) {
     console.error("게시글 삭제 실패", error);
     throw error;
+  }
+}
+
+// 특정 게시글 조회
+export async function getArticleDetailClient(
+  id: number,
+): Promise<Article | null> {
+  try {
+    const res = await api.get(`/community/articles/${id}`);
+
+    return res.data;
+  } catch (error) {
+    console.error("특정 게시글 가져오기 실패", error);
+    return null;
   }
 }
 

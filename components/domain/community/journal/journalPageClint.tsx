@@ -10,7 +10,7 @@ import JournalModal from "./journalModal";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Plus } from "lucide-react";
-import { deleteJournal, postJournal, putJournal } from "@/services/journal.service";
+import { deleteJournal, postJournal, putJournal } from "@/services/journal.client";
 import { useRouter } from "next/navigation";
 
 interface JournalPageClientProps {

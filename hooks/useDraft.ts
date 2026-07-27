@@ -4,7 +4,7 @@ import {
   deleteTemporaryArticle,
   getTemporaryArticles,
   postTemporaryArticle,
-} from "@/services/community.service";
+} from "@/services/community.client";
 import { Article, Draft, DraftInput } from "@/types/community.type";
 import { useCallback, useEffect, useState } from "react";
 

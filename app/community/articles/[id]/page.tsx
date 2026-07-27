@@ -2,9 +2,8 @@ export const dynamic = 'force-dynamic';
 
 import ArticleDetail from "@/components/domain/community/article/articleDetail";
 import CommentList from "@/components/domain/community/comment/commentList";
-import { articles } from "@/components/domain/community/examples/articleExamples";
 import { getArticleDetail } from "@/services/community.service";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 interface ArticlePageProps {
   params: Promise<{id: string}> | {id: string}
@@ -19,11 +18,6 @@ export default async function ArticlePage({params}:ArticlePageProps) {
   if(!article) {
     redirect("/");
   }
-
-  // const article = articles.find((item) => item.id === articleId);
-  // if(!article) {
-  //   notFound();
-  // }
 
   const comments = article.comments;
 

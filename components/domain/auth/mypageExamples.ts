@@ -16,6 +16,7 @@ export const mypageInfo: MypageInfo = {
   // 3. ✨ 새로 확장된 MypageInfo 전용 필드 (최근 건강 일지 기록)
   recentJournals: {
     dataLabel: "2026-07-02T03:42:27.209Z", // 최근 작성 날짜 및 일지 제목
-    condition: "약간의 메스꺼움이 있으나 식사 섭취량은 양호함. 처방받은 항구토제 복용 완료." // 현재 환자 상태 요약
+    condition: "약간의 메스꺼움이 있으나 식사 섭취량은 양호함. 처방받은 항구토제 복용 완료.",
+    content: "음하하하" // 현재 환자 상태 요약
   }
 };

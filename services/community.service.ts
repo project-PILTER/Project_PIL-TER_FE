@@ -9,11 +9,12 @@ import {
   TemporaryArticleInput,
 } from "@/types/community.type";
 import { api } from "./axios";
+import { serverApiGet } from "./serverApi";
 
 // 모든 게시글 가져오기
 export async function getArticles(): Promise<Article[] | null> {
   try {
-    const res = await api.get("/community/articles");
+    const res = await serverApiGet("/community/articles");
 
     return await res.data;
   } catch (error) {
@@ -39,7 +40,7 @@ export async function getArticleDetail(
   id: number,
 ): Promise<Article | null> {
   try {
-    const res = await api.get(`/community/articles/${id}`);
+    const res = await serverApiGet(`/community/articles/${id}`);
 
     return res.data;
   } catch (error) {

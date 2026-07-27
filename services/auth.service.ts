@@ -11,6 +11,7 @@ import {
   UserInfo,
 } from "@/types/auth.type";
 import { api } from "./axios";
+import { serverApiGet } from "./serverApi";
 
 // 유저
 // 유저 정보 조회
@@ -77,7 +78,7 @@ export const refreshAccessToken = async (): Promise<string> => {
 // 마이페이지 데이터 조회
 export async function getMypage(): Promise<MypageInfo | null> {
   try {
-    const res = await api.get("/mypage");
+    const res = await serverApiGet("/mypage");
 
     return res.data;
   } catch (error) {

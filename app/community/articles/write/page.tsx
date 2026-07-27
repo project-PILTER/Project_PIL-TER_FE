@@ -85,7 +85,7 @@ export default function WritePage({ articleId }: WritePageProps) {
     try {
       await saveDraft({title, content: editor.getHTML(), categoryId: categoryName});
 
-      alert("임시저장 되었습니다.")
+      alert("임시저장 되었습니다.");
     } catch (error) {
       console.error("임시저장 실패");
       alert("임시저장에 실패했습니다.");

@@ -28,7 +28,7 @@ export default function RecentJournal({ records }: RecentJournalProps) {
             className="bg-gray-100 dark:bg-[#141529] p-2 rounded-lg flex items-center justify-between gap-4"
           >
             <div className="flex flex-col gap-1 min-w-0 flex-1 text-left">
-              <span className="text-sm font-bold text-gray-700 dark:text-[#686b85]">
+              <span className="text-sm font-bold text-gray-700 dark:text-[#686b85]" suppressHydrationWarning>
                 {getRelativeTime(record.dateLabel)}
               </span>
             </div>

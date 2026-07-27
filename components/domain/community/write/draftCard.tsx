@@ -34,7 +34,7 @@ export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
 
               <div className="mt-2 flex items-center gap-2">
                 <Badge>{categoryName}</Badge>
-                <span>{getRelativeTime(draft.createdAt)}</span>
+                <span suppressHydrationWarning>{getRelativeTime(draft.createdAt)}</span>
               </div>
               <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{draft.content.replace(/<[^>]*>/g, "")}</p>
             </div>

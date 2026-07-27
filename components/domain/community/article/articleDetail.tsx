@@ -119,7 +119,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
             <div className="flex items-center gap-1">
               {article.author.nickname}
             </div>
-            <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-2 text-xs" suppressHydrationWarning>
               <span>{formatDateTime(article.createdAt)}</span>
 
               <span className="flex items-center gap-1">

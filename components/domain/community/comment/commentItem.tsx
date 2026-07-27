@@ -93,7 +93,7 @@ export default function CommentItem({
                 {author.expertTitle || "인증의료인"}
               </Badge>
             )}
-            <p className="text-xs">{getRelativeTime(createdAt)}</p>
+            <p className="text-xs" suppressHydrationWarning>{getRelativeTime(createdAt)}</p>
           </div>
 
           {isMyComment && !isEditing && (

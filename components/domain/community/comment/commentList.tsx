@@ -3,10 +3,11 @@
 import { Comment, CommentInput } from "@/types/community.type";
 import CommentItem from "./commentItem";
 import CommentForm from "./commentForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { deleteComment, postComment, putComment } from "@/services/community.service";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
 
 interface CommentListProps {
   initialComments: Comment[];
@@ -15,12 +16,18 @@ interface CommentListProps {
 
 export default function CommentList({ initialComments, articleId }: CommentListProps) {
   const router = useRouter();
-  const user = useAuthStore((state) => state.user);
+  const {user, isLoading} = useAuthStore();
   const [comments, setComments] = useState<Comment[]>(initialComments);
 
-  if(!user) {
-    router.push("/");
-    return null;
+  useEffect(() => {
+    if(!isLoading && !user) {
+      alert("로그인 상태가 아닙니다. 홈으로 이동합니다.");
+      router.push("/");
+    }
+  }, [user, isLoading, router]);
+
+  if(isLoading || !user) {
+    return <Loading />
   }
   
   const rootComments = comments.filter((comment) => comment.parentId === null);
@@ -45,6 +52,8 @@ export default function CommentList({ initialComments, articleId }: CommentListP
       if(res) {
         setComments((prev) => [...prev, res]);
       }
+      alert("댓글이 정상적으로 등록됐습니다.");
+      router.push(`/community/articles/${articleId}`);
     } catch (error) {
       console.error("댓글 처리 문제 발생");
     }

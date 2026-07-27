@@ -1,6 +1,6 @@
 "use client";
 
-import { getUser, refreshAccessToken } from "@/services/auth.service";
+import { getUser, refreshAccessToken } from "@/services/auth.client";
 import { useAuthStore } from "@/stores/authStore";
 import { useEffect } from "react";
 

@@ -13,7 +13,7 @@ import Image from "next/image";
 import { useAuthStore } from "@/stores/authStore";
 import { DropdownOption } from "@/types/ui.type";
 import { useRouter } from "next/navigation";
-import { logOut } from "@/services/auth.service";
+import { logOut } from "@/services/auth.client";
 import Dropdown from "../common/dropdown";
 
 export default function LoginButton() {

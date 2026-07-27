@@ -8,7 +8,7 @@ import {
   deleteArticle,
   postLike,
   putArticle,
-} from "@/services/community.service";
+} from "@/services/community.client";
 import { Article } from "@/types/community.type";
 import { DropdownOption } from "@/types/ui.type";
 import { formatDateTime } from "@/utils/date";

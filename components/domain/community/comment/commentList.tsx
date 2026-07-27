@@ -4,7 +4,7 @@ import { Comment, CommentInput } from "@/types/community.type";
 import CommentItem from "./commentItem";
 import CommentForm from "./commentForm";
 import { useEffect, useState } from "react";
-import { deleteComment, postComment, putComment } from "@/services/community.service";
+import { deleteComment, postComment, putComment } from "@/services/community.client";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";

@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/auth.schema";
 import SocialLogin from "./socialLogin";
-import { getUser, loginUser } from "@/services/auth.service";
+import { getUser, loginUser } from "@/services/auth.client";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authStore";
 

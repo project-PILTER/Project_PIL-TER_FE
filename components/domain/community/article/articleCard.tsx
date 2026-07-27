@@ -32,7 +32,7 @@ export default function ArticleCard({ article }: CommunityListProps) {
               </Badge>
             )}
           </div>
-          <p className="mr-4">{getRelativeTime(article.updatedAt)}</p>
+          <p className="mr-4" suppressHydrationWarning>{getRelativeTime(article.updatedAt)}</p>
         </div>
 
         <div className="mx-4 font-bold hover:text-[#615ED6]">{article.title}</div>

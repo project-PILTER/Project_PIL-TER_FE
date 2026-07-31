@@ -26,7 +26,7 @@ export default function WriteHeader({
       )}
 
       {!isEditMode && (
-        <Button variant="outline" onClick={onSave} disabled={isSubmitting}>
+        <Button type="button" variant="outline" onClick={onSave} disabled={isSubmitting}>
           <Save size={18} />
           임시저장
         </Button>

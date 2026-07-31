@@ -11,9 +11,9 @@ export const journalSchema = z.object({
 
   content: z.string().max(50, "내용은 50자 이하로 입력해주세요."),
 
-  symptoms: z.string(),
+  symptoms: z.string().array(),
 
-  supplements: z.string()
+  supplements: z.string().array()
 })
 
 export type JournalFormValues = z.infer<typeof journalSchema>;

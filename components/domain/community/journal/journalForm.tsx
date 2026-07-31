@@ -38,13 +38,13 @@ export default function JournalForm({
     resolver: zodResolver(journalSchema),
 
     defaultValues: {
-      journalDate: new Date().toISOString().split("T")[0],
-      conditionStatus: "GOOD",
-      painScore: 0,
+      journalDate:
+        defaultValues?.journalDate || new Date().toISOString().split("T")[0],
+      conditionStatus: defaultValues?.conditionStatus || "GOOD",
+      painScore: defaultValues?.painScore || 0,
       symptoms: defaultValues?.symptoms || [],
       supplements: defaultValues?.supplements || [],
-      content: "",
-      ...defaultValues
+      content: defaultValues?.content || "",
     },
   });
   const {
@@ -59,13 +59,16 @@ export default function JournalForm({
   console.log("건강일지 form error", errors);
 
   const conditionStatus = watch("conditionStatus");
-  const selectedSymptoms = watch("symptoms");
+  const selectedSymptoms = watch("symptoms") || [];
+  const supplements = watch("supplements") || [];
   const painScore = watch("painScore");
 
   const toggleSymptom = (symptom: string) => {
     const exists = selectedSymptoms.includes(symptom);
-    const newArray = exists ? selectedSymptoms.filter((item) => item !== symptom) : [...selectedSymptoms, symptom];
-    setValue("symptoms", newArray, {shouldValidate: true});
+    const newArray = exists
+      ? selectedSymptoms.filter((item) => item !== symptom)
+      : [...selectedSymptoms, symptom];
+    setValue("symptoms", newArray, { shouldValidate: true });
   };
 
   return (
@@ -159,25 +162,23 @@ export default function JournalForm({
         <div className="flex flex-wrap gap-2">
           {symptomOptions.map((symptom) => {
             const isSelected = selectedSymptoms.includes(symptom);
-            return(
-            <Button
-              key={symptom}
-              type="button"
-              variant={
-                isSelected ? "default" : "outline"
-              }
-              size="sm"
-              onClick={() => toggleSymptom(symptom)}
-              className={cn(
-                "rounded-lg",
-                isSelected
-                  ? "border-[#615ED6] bg-[#615ED6] text-white hover:bg-[#615ED6]"
-                  : "hover:border-[#7F82E8]",
-              )}
-            >
-              {symptom}
-            </Button>
-            )
+            return (
+              <Button
+                key={symptom}
+                type="button"
+                variant={isSelected ? "default" : "outline"}
+                size="sm"
+                onClick={() => toggleSymptom(symptom)}
+                className={cn(
+                  "rounded-lg",
+                  isSelected
+                    ? "border-[#615ED6] bg-[#615ED6] text-white hover:bg-[#615ED6]"
+                    : "hover:border-[#7F82E8]",
+                )}
+              >
+                {symptom}
+              </Button>
+            );
           })}
         </div>
       </div>
@@ -187,7 +188,16 @@ export default function JournalForm({
 
         <Input
           placeholder="복용한 약을 입력하세요(쉼표로 구분)"
-          {...register("supplements")}
+          value={supplements.join(", ")}
+          onChange={(e) => {
+            const rawValue = e.target.value;
+            const parsedArray = rawValue
+              .split(",")
+              .map((s) => s.trim())
+              .filter((s) => s.length > 0);
+
+            setValue("supplements", parsedArray, { shouldValidate: true });
+          }}
         />
       </div>
 

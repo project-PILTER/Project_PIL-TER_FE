@@ -42,6 +42,7 @@ export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onDelete();

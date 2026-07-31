@@ -38,7 +38,11 @@ export default function useDraft() {
     }
   }, []);
 
-  const saveDraft = async (draft: DraftInput) => {
+  const saveDraft = async (draft: DraftInput, e?: React.SyntheticEvent) => {
+    if(e) {
+      e.preventDefault();
+    }
+    
     try {
       const res = await postTemporaryArticle({
         title: draft.title,
@@ -46,7 +50,7 @@ export default function useDraft() {
         categoryId: draft.categoryId,
       });
       console.log("임시저장 response 정보: ", res);
-      if (res.isSuccess || res.status === 200 || res.id) {
+      if (typeof res === "number" || typeof res?.data === "number") {
         alert("임시저장 되었습니다.");
         await loadDrafts();
         return true;

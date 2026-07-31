@@ -50,13 +50,13 @@ export default async function Mypage() {
     totalHealthDays: mypageData.continuousHealthDays ?? 0
   }
 
-  // const monthlyActivitySummary: MonthlyActivitySummary = {
-  //   currentPosts: mypageData.current,
-  //   targetPosts: 10,
-  //   currentComments: 24,
-  //   targetComments: 30,
-  //   healthRecordRate: 90,
-  // }
+  const monthlyActivitySummary: MonthlyActivitySummary = {
+    currentPosts: mypageData.articleCount,
+    targetPosts: 10,
+    currentComments: mypageData.commentCount,
+    targetComments: 30,
+    healthRecordRate: Math.round(30 / mypageData.continuousHealthDays) * 100,
+  }
 
   return(
     <div className="w-full max-w-7xl mx-auto px-4 py-6 space-y-6">

@@ -31,11 +31,11 @@ export interface Mypage{
   email: string;
   profileImage: string;
   createdAt: string;
+  monthlyActivitySummary: MonthlyActivitySummary;
   articleCount: number;
   commentCount: number;
   totalLikesReceived: number;
   continuousHealthDays: number;
-  monthlyActivitySummary: MonthlyActivitySummary;
 }
 
 export interface UserActivityCounts {

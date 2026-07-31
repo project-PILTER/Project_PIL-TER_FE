@@ -7,8 +7,8 @@ export interface JournalDiary {
   conditionStatus: conditionType;
   painScore: number; // 1~10
   content: string;
-  symptoms: string;
-  supplements: string;
+  symptoms: string[];
+  supplements: string[];
   createdAt: string;
 }
 

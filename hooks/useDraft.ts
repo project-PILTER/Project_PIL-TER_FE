@@ -45,7 +45,9 @@ export default function useDraft() {
         content: draft.content,
         categoryId: draft.categoryId,
       });
+      console.log("임시저장 response 정보: ", res);
       if (res.isSuccess || res.status === 200 || res.id) {
+        alert("임시저장 되었습니다.");
         await loadDrafts();
         return true;
       } else {

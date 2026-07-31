@@ -41,8 +41,8 @@ export default function JournalForm({
       journalDate: new Date().toISOString().split("T")[0],
       conditionStatus: "GOOD",
       painScore: 0,
-      symptoms: defaultValues?.symptoms || "",
-      supplements: defaultValues?.supplements || "",
+      symptoms: defaultValues?.symptoms || [],
+      supplements: defaultValues?.supplements || [],
       content: "",
       ...defaultValues
     },
@@ -63,17 +63,9 @@ export default function JournalForm({
   const painScore = watch("painScore");
 
   const toggleSymptom = (symptom: string) => {
-    const currentArray = selectedSymptoms ? selectedSymptoms.split(",").map((item) => item.trim()) : [];
-
-    const exists = currentArray.includes(symptom);
-    let newArray: string[];
-
-    if(exists) {
-      newArray = currentArray.filter((item) => item !== symptom)
-    } else {
-      newArray = [...currentArray, symptom]
-    }
-    setValue("symptoms", newArray.join(","), {shouldValidate: true});
+    const exists = selectedSymptoms.includes(symptom);
+    const newArray = exists ? selectedSymptoms.filter((item) => item !== symptom) : [...selectedSymptoms, symptom];
+    setValue("symptoms", newArray, {shouldValidate: true});
   };
 
   return (
@@ -166,7 +158,7 @@ export default function JournalForm({
         <h3 className="mb-3 font-medium">증상 선택</h3>
         <div className="flex flex-wrap gap-2">
           {symptomOptions.map((symptom) => {
-            const isSelected = selectedSymptoms ? selectedSymptoms.split(",").map((item) => item.trim()).includes(symptom) : false;
+            const isSelected = selectedSymptoms.includes(symptom);
             return(
             <Button
               key={symptom}

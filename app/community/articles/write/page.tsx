@@ -81,15 +81,7 @@ export default function WritePage({ articleId }: WritePageProps) {
     if(!title.trim() && editor.isEmpty) {
       return alert("저장할 내용이 없습니다.");
     }
-
-    try {
-      await saveDraft({title, content: editor.getHTML(), categoryId: categoryName});
-
-      alert("임시저장 되었습니다.");
-    } catch (error) {
-      console.error("임시저장 실패");
-      alert("임시저장에 실패했습니다.");
-    }
+    await saveDraft({title, content: editor.getHTML(), categoryId: categoryName});
   }
 
   const handlePublish = async () => {

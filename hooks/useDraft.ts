@@ -16,13 +16,15 @@ export default function useDraft() {
     setIsLoading(true);
     try {
       const res: Article[] | null = await getTemporaryArticles();
+
+      console.log("임시저장글 정보: ", res);
       if (res) {
         const mappedDrafts: Draft[] = res.map((article) => ({
           id: String(article.id),
-          categoryId: String(article.category?.name || ""),
+          category: String(article.category?.name || ""),
           title: article.title,
           content: article.content,
-          createdAt: article.createdAt,
+          updatedAt: article.updatedAt,
         }));
 
         setDrafts(mappedDrafts);
@@ -47,7 +49,8 @@ export default function useDraft() {
       const res = await postTemporaryArticle({
         title: draft.title,
         content: draft.content,
-        categoryId: draft.categoryId,
+        category: draft.category,
+        updatedAt: draft.updatedAt
       });
       console.log("임시저장 response 정보: ", res);
       if (typeof res === "number" || typeof res?.data === "number") {

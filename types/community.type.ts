@@ -33,10 +33,10 @@ export interface Article {
 
 export interface Draft {
   id: string;
-  categoryId: string;
+  category: string;
   title: string;
   content: string;
-  createdAt: string;
+  updatedAt: string;
 }
 
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
@@ -69,5 +69,6 @@ export interface CommentInput {
 export interface TemporaryArticleInput {
   title: string;
   content: string;
-  categoryId: string;
+  category: string;
+  updatedAt: string;
 }

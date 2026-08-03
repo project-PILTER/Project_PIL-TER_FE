@@ -19,7 +19,7 @@ interface DraftCardProps {
 
 export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
   const categoryName =
-    categories.find((category) => category.id === Number(draft.categoryId))
+    categories.find((category) => category.id === Number(draft.category))
       ?.name ?? "미분류";
   return (
     <Card
@@ -34,7 +34,7 @@ export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
 
               <div className="mt-2 flex items-center gap-2">
                 <Badge>{categoryName}</Badge>
-                <span suppressHydrationWarning>{getRelativeTime(draft.createdAt)}</span>
+                <span suppressHydrationWarning>{getRelativeTime(draft.updatedAt)}</span>
               </div>
               <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{draft.content.replace(/<[^>]*>/g, "")}</p>
             </div>

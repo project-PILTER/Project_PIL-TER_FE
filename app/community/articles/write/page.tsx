@@ -81,7 +81,7 @@ export default function WritePage({ articleId }: WritePageProps) {
     if(!title.trim() && editor.isEmpty) {
       return alert("저장할 내용이 없습니다.");
     }
-    await saveDraft({title, content: editor.getHTML(), categoryId: categoryName});
+    await saveDraft({title, content: editor.getHTML(), category: categoryName, updatedAt: new Date().toISOString()});
   }
 
   const handlePublish = async () => {
@@ -134,7 +134,7 @@ export default function WritePage({ articleId }: WritePageProps) {
 
   const handleLoadDraft = (draft: Draft) => {
     setTitle(draft.title);
-    setCategoryId(draft.categoryId);
+    setCategoryId(draft.category);
 
     editor.commands.setContent(draft.content);
 

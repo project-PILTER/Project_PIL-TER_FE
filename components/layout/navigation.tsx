@@ -36,7 +36,7 @@ export default function Navigation() {
             <Link href="/">홈</Link>
           </li>
           <li className="list-none transition-all duration-100 ease-in-out hover:scale-105">
-            <Link href="/community">커뮤니티</Link>
+            <Link href="/community/articles">커뮤니티</Link>
           </li>
           <li className="list-none transition-all duration-100 ease-in-out hover:scale-105">
             <Link href="/journal">건강일지</Link>

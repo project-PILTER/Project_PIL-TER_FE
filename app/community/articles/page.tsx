@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 import ArticleCard from "@/components/domain/community/article/articleCard";
 import CommonPagination from "@/components/common/pagination";
@@ -16,9 +16,8 @@ export default async function CommunityPage({
   const params = await searchParams;
   const articles = await getArticles();
 
-  if(!articles) {
-    alert("가져올 게시글이 없습니다.");
-    redirect('/');
+  if (!articles) {
+    redirect("/");
   }
 
   const page = Number(params.page ?? 1);

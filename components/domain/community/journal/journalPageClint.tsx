@@ -59,6 +59,8 @@ export default function JournalPageClient({
     } catch (error) {
       alert("건강기록 삭제 실패");
     }
+
+    router.refresh();
   }
 
   const filteredJournals = selectedDate

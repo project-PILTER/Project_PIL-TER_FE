@@ -40,7 +40,7 @@ export default function ProfileSection({ data }: ProfileSectionProps) {
                 className="object-cover"
               />
             ) : (
-              <span>{data.nickname.charAt(0).toUpperCase() ?? "?"}</span>
+              <span>{data.nickname?.charAt(0).toUpperCase() ?? "?"}</span>
             )}
           </div>
           <div>

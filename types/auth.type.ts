@@ -55,7 +55,7 @@ export interface MonthlyActivitySummary {
 
 export interface MypageInfo extends Mypage {
   recentJournals: {
-    dataLabel: string,
+    dateLabel: string,
     condition: string,
     content: string
   },

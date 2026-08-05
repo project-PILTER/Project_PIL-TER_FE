@@ -18,9 +18,7 @@ interface DraftCardProps {
 }
 
 export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
-  const categoryName =
-    categories.find((category) => category.id === Number(draft.category))
-      ?.name ?? "미분류";
+  const categoryName = categories.find((category) => category.name.trim() === draft.category.trim())?.name ?? "미분류";
   return (
     <Card
       className="cursor-pointer transition-all hover:border-violet-300 hover:shadow-md" 
@@ -33,7 +31,7 @@ export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
               <h3 className="font-semibold truncate">{draft.title}</h3>
 
               <div className="mt-2 flex items-center gap-2">
-                <Badge>{categoryName}</Badge>
+                <Badge className="bg-[#eceef9] text-black">{categoryName}</Badge>
                 <span suppressHydrationWarning>{getRelativeTime(draft.updatedAt)}</span>
               </div>
               <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{draft.content.replace(/<[^>]*>/g, "")}</p>
@@ -47,6 +45,7 @@ export default function DraftCard({ draft, onLoad, onDelete }: DraftCardProps) {
                   e.stopPropagation();
                   onDelete();
                 }}
+                className="bg-transparent text-gray-500 hover:bg-[#7F82E8] hover:text-red-500"
               >
                 <Trash2 size={18} className="bg-none"/>
               </Button>

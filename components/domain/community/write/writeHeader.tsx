@@ -34,13 +34,13 @@ export default function WriteHeader({
 
       <Button className="bg-[#615ed6]" onClick={onPublish} disabled={isSubmitting}>
         {isSubmitting ? (
-          <div>
-            <Loader2 size={18} />
+          <div className="flex gap-1">
+            <Loader2 size={18} className="mt-1"/>
             {isEditMode ? "수정 중..." : "등록 중..."}
           </div>
         ) : (
-          <div>
-            <Navigation size={18} />
+          <div className="flex gap-1">
+            <Navigation size={18} className="mt-1"/>
             {isEditMode ? "수정" : "등록"}
           </div>
         )}

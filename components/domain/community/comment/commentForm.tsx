@@ -11,6 +11,7 @@ import { CommentFormData, commentSchema } from "@/schemas/community.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@/types/auth.type";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface CommentFormProps {
   author?: Author | User | null;
@@ -22,6 +23,8 @@ export default function CommentForm({author, onSubmit, initialContent = ""}:Comm
   const profileSrc = author?.profileImage || defaultProfile;
 
   const isEditMode = !!initialContent;
+
+  const router = useRouter();
 
   const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm<CommentFormData>({
     resolver: zodResolver(commentSchema),
@@ -41,6 +44,7 @@ export default function CommentForm({author, onSubmit, initialContent = ""}:Comm
     try {
       await onSubmit(data.content);
       reset({content: ""});
+      router.refresh();
     } catch (error) {
       console.error("댓글 등록 실패");
     }

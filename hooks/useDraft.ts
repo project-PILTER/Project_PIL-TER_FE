@@ -17,11 +17,10 @@ export default function useDraft() {
     try {
       const res: Article[] | null = await getTemporaryArticles();
 
-      console.log("임시저장글 정보: ", res);
       if (res) {
         const mappedDrafts: Draft[] = res.map((article) => ({
           id: String(article.id),
-          category: String(article.category?.name || ""),
+          category: String(article.category || ""),
           title: article.title,
           content: article.content,
           updatedAt: article.updatedAt,

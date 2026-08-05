@@ -49,11 +49,13 @@ export default function CommentList({ initialComments, articleId }: CommentListP
       } 
       const res = await postComment(request);
 
+      console.log("댓글 response 정보: ", res);
+
       if(res) {
         setComments((prev) => [...prev, res]);
       }
       alert("댓글이 정상적으로 등록됐습니다.");
-      router.push(`/community/articles/${articleId}`);
+      router.refresh();
     } catch (error) {
       console.error("댓글 처리 문제 발생");
     }
@@ -95,11 +97,11 @@ export default function CommentList({ initialComments, articleId }: CommentListP
       <div className="flex flex-col gap-6">
         {rootComments.map((rootComment) => (
           <div key={rootComment.id} className="flex flex-col gap-4">
-            <CommentItem author={user} comment={rootComment} onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
+            <CommentItem currentUser={user} comment={rootComment} onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
             {getReplies(rootComment.id).length > 0 && (
               <div className="flex flex-col gap-4 pl-5 border-l-2 border-gray-200 ml-14">
                 {getReplies(rootComment.id).map((reply) => (
-                  <CommentItem key={reply.id} author={user} comment={reply} isReply onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
+                  <CommentItem key={reply.id} currentUser={user} comment={reply} isReply onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
                 ))}
               </div>
             )}

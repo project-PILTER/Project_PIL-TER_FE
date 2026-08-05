@@ -10,11 +10,10 @@ import CommentForm from "./commentForm";
 import { getRelativeTime } from "@/utils/date";
 import { DropdownOption } from "@/types/ui.type";
 import Dropdown from "@/components/common/dropdown";
-import { useRouter } from "next/navigation";
 import { User } from "@/types/auth.type";
 
 interface CommentItemProps {
-  author: Author | User;
+  currentUser: Author | User;
   comment: Comment;
   isReply?: boolean;
   onReplySubmit?: (content: string, parentId: number) => Promise<void> | void;
@@ -23,7 +22,7 @@ interface CommentItemProps {
   onDelete?: (commentId: number) => Promise<void> | void;
 }
 export default function CommentItem({
-  author,
+  currentUser,
   comment,
   isReply = false,
   onReplySubmit,
@@ -31,14 +30,16 @@ export default function CommentItem({
   onUpdate,
   onDelete,
 }: CommentItemProps) {
-  const { id, author: commentAuthor, content, likeCount, createdAt } = comment;
+  const { id, content, likeCount, createdAt } = comment;
 
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [liked, setLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
 
-  const isMyComment = author.nickname === commentAuthor.nickname;
+  const commentAuthor = comment.author;
+
+  const isMyComment = currentUser.id === commentAuthor.id;
 
   const handleLikeClick = () => {
     const nextLikedState = !liked;
@@ -87,10 +88,10 @@ export default function CommentItem({
       <div className="flex flex-col gap-1 w-full">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
-            <p className="font-semibold text-sm">{author.nickname}</p>
-            {author.isMedicalExpert && (
+            <p className="font-semibold text-sm">{commentAuthor.nickname}</p>
+            {commentAuthor.isMedicalExpert && (
               <Badge className="bg-[#eceef9] rounded-xl font-medium text-black text-xs px-2 py-2">
-                {author.expertTitle || "인증의료인"}
+                {commentAuthor.expertTitle || "인증의료인"}
               </Badge>
             )}
             <p className="text-xs" suppressHydrationWarning>{getRelativeTime(createdAt)}</p>
@@ -104,7 +105,7 @@ export default function CommentItem({
           {isEditing ? (
           <div>
             <CommentForm
-              author={author}
+              author={commentAuthor}
               onSubmit={handleEditSubmit}
               initialContent={content}
             />
@@ -150,7 +151,7 @@ export default function CommentItem({
       {isReplying && (
         <div className="mt-4 pl-14 w-full">
           <CommentForm
-            author={author}
+            author={commentAuthor}
             onSubmit={handleReplySubmit}
           />
         </div>

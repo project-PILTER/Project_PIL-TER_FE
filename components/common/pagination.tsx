@@ -31,7 +31,7 @@ export default function CommonPagination({currentPage, totalPages, basePath}:Pag
 
         {currentPage < totalPages && (
           <PaginationItem>
-            <PaginationNext href={`${basePath}?page=${currentPage - 1}`} />
+            <PaginationNext href={`${basePath}?page=${currentPage + 1}`} />
           </PaginationItem>
         )}
       </PaginationContent>

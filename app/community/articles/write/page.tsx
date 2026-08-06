@@ -98,9 +98,10 @@ export default function WritePage({ articleId }: WritePageProps) {
           {
             title,
             content: editor.getHTML(),
-            categoryId: categoryName,
+            category: categoryName,
             imageUrl: "/logo/logo.png",
             draft: false,
+            updatedAt: new Date().toISOString()
           },
           articleId,
         );

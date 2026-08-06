@@ -60,6 +60,14 @@ export interface ArticleInput {
   updatedAt: string;
 }
 
+export type PostArticleInput = {
+  title: string;
+  content: string;
+  imageUrl?: string | null;
+  draft: boolean;
+  categoryId: string;
+}
+
 // api request 댓글
 export interface CommentInput {
   communityArticleId: number;

@@ -6,12 +6,13 @@ import {
   Article,
   ArticleInput,
   CommentInput,
+  PostArticleInput,
   TemporaryArticleInput,
 } from "@/types/community.type";
 import { api } from "./axios";
 
 // 새로운 게시글 등록
-export async function postArticle(articleData: ArticleInput) {
+export async function postArticle(articleData: PostArticleInput) {
   try {
     const res = await api.post("/community/articles", articleData);
 

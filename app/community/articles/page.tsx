@@ -21,9 +21,10 @@ export default async function CommunityPage({
   }
 
   const page = Number(params.page ?? 1);
-  const PAGE_SIZE = 8;
+  const PAGE_SIZE = 10;
   const startIndex = (page - 1) * PAGE_SIZE;
   const currentArticles = articles.slice(startIndex, startIndex + PAGE_SIZE);
+  const totalPages = Math.ceil(articles.length / PAGE_SIZE);
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-2">
@@ -47,8 +48,8 @@ export default async function CommunityPage({
       <div className="mt-8">
         <CommonPagination
           currentPage={page}
-          totalPages={5}
-          basePath="/community"
+          totalPages={totalPages}
+          basePath="/community/articles"
         />
       </div>
     </div>

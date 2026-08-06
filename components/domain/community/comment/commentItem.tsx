@@ -151,7 +151,7 @@ export default function CommentItem({
       {isReplying && (
         <div className="mt-4 pl-14 w-full">
           <CommentForm
-            author={commentAuthor}
+            author={currentUser}
             onSubmit={handleReplySubmit}
           />
         </div>

@@ -51,7 +51,7 @@ export default function useDraft() {
         category: draft.category,
         updatedAt: draft.updatedAt
       });
-      console.log("임시저장 response 정보: ", res);
+      
       if (typeof res === "number" || typeof res?.data === "number") {
         alert("임시저장 되었습니다.");
         await loadDrafts();

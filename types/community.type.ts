@@ -54,9 +54,18 @@ export interface Comment {
 export interface ArticleInput {
   title: string;
   content: string;
-  categoryId: string;
+  category: string;
   imageUrl?: string | null;
   draft: boolean;
+  updatedAt: string;
+}
+
+export type PostArticleInput = {
+  title: string;
+  content: string;
+  imageUrl?: string | null;
+  draft: boolean;
+  categoryId: string;
 }
 
 // api request 댓글

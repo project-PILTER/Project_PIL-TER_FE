@@ -20,7 +20,7 @@ export async function getUser(): Promise<UserInfo | null> {
     return res.data;
   } catch (error) {
     console.error("유저 정보 조회 실패", error);
-    return null;
+    throw error;
   }
 }
 
@@ -28,7 +28,6 @@ export async function getUser(): Promise<UserInfo | null> {
 export async function loginUser(loginData: LoginData) {
   try {
     const res = await api.post("/login", loginData);
-    console.log("서버가 준 응답", res);
 
     return res.data;
   } catch (error) {
@@ -65,7 +64,6 @@ export async function logOut(id: number) {
 }
 
 // 새로고침 시 신규 토큰 발급
-
 export const refreshAccessToken = async (): Promise<string> => {
   const res = await api.post<TokenResponse>("/token");
 

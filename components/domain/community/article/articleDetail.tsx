@@ -9,7 +9,7 @@ import {
   postLike,
   putArticle,
 } from "@/services/community.client";
-import { Article } from "@/types/community.type";
+import { Article, ArticleInput } from "@/types/community.type";
 import { DropdownOption } from "@/types/ui.type";
 import { formatDateTime } from "@/utils/date";
 import { stripHtml } from "@/utils/string";
@@ -36,8 +36,21 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
   const [likeCount, setLikeCount] = useState(article.likeCount);
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleEdit = () => {
-    router.push(`/community/articles/edit/${id}`);
+  const handleEdit = async() => {
+    const request: ArticleInput = {
+      title: article.title,
+      content: article.content,
+      imageUrl: article.imageUrl,
+      category: article.category.name,
+      updatedAt: new Date().toISOString(),
+      draft: false
+    }
+    const res = await putArticle(request, id);
+
+    if(res) {
+      alert("게시글 수정 성공");
+      console.log("게시글 수정 정보: ", res);
+    }
   };
 
   const handleDelete = async () => {
@@ -52,7 +65,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
     }
   };
 
-  const handleLikeClick = async () => {
+  const handleLikeClick = async() => {
     const previousIsLiked = isLiked;
     const previousLikeCount = likeCount;
 
@@ -67,9 +80,11 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
     try {
       const res = await postLike(id);
 
-      if (!res || !res.data) {
-        throw new Error("좋아요 api 실패");
+      if(res) {
+        alert("좋아요 성공");
+        console.log("좋아요 정보: ", res);
       }
+
     } catch (error) {
       console.error("좋아요 요청 실패", error);
       alert("좋아요에 실패했습니다. 다시시작해주세요.");

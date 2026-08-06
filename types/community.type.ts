@@ -54,9 +54,10 @@ export interface Comment {
 export interface ArticleInput {
   title: string;
   content: string;
-  categoryId: string;
+  category: string;
   imageUrl?: string | null;
   draft: boolean;
+  updatedAt: string;
 }
 
 // api request 댓글

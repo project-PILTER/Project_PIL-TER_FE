@@ -1,10 +1,10 @@
-import { Article } from "@/types/community.type";
+import { Article, ArticleResponse } from "@/types/community.type";
 import { serverApiGet } from "./serverApi";
 
 // 모든 게시글 가져오기
-export async function getArticles(): Promise<Article[] | null> {
+export async function getArticles(page: number): Promise<ArticleResponse<Article> | null> {
   try {
-    const res = await serverApiGet("/community/articles");
+    const res = await serverApiGet<ArticleResponse<Article>>(`/community/articles?page=${page-1}&size=10`);
 
     return res;
   } catch (error) {
@@ -18,7 +18,7 @@ export async function getArticleDetail(
   id: number,
 ): Promise<Article | null> {
   try {
-    const res = await serverApiGet(`/community/articles/${id}`);
+    const res = await serverApiGet<Article>(`/community/articles/${id}`);
 
     return res;
   } catch (error) {

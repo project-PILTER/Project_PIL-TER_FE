@@ -17,6 +17,7 @@ import { api } from "./axios";
 export async function getUser(): Promise<UserInfo | null> {
   try {
     const res = await api.get<UserInfo>("/user");
+    
     return res.data;
   } catch (error) {
     console.error("유저 정보 조회 실패", error);

@@ -14,17 +14,18 @@ export default async function CommunityPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const params = await searchParams;
-  const articles = await getArticles();
 
+  const page = Number(params.page ?? 1);
+
+  const articles = await getArticles(page);
   if (!articles) {
     redirect("/");
   }
 
-  const page = Number(params.page ?? 1);
-  const PAGE_SIZE = 10;
-  const startIndex = (page - 1) * PAGE_SIZE;
-  const currentArticles = articles.slice(startIndex, startIndex + PAGE_SIZE);
-  const totalPages = Math.ceil(articles.length / PAGE_SIZE);
+  console.log("articles 정보: ", articles);
+
+  const currentArticles = articles.content;
+  const totalPages = articles.totalPages;
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-2">

@@ -2,11 +2,11 @@ import "server-only"
 import { cookies } from "next/headers";
 import { api } from "./axios";
 
-export async function serverApiGet(url: string) {
+export async function serverApiGet<T>(url: string) {
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value;
 
-  const res = await api.get(url, {
+  const res = await api.get<T>(url, {
     headers: {
       Authorization: `Bearer ${token}`,
       Cookie: `accessToken=${token}`,

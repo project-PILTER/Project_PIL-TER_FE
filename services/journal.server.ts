@@ -4,7 +4,7 @@ import { serverApiGet } from "./serverApi";
 // 건강일지 조회
 export async function getJournals(): Promise<JournalDiary[] | null> {
   try {
-    const res = await serverApiGet("/journals");
+    const res = await serverApiGet<JournalDiary[]>("/journals");
 
     return res;
   } catch (error) {

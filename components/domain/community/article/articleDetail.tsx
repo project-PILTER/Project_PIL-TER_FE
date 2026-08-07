@@ -81,7 +81,11 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
       const res = await postLike(id);
 
       if(res) {
-        alert("좋아요 성공");
+        if(res.isLiked) {
+          alert("좋아요 등록 성공");
+        } else {
+          alert("좋아요가 취소되었습니다.");
+        }
         console.log("좋아요 정보: ", res);
       }
 

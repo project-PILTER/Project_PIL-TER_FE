@@ -35,11 +35,10 @@ export default function AuthProvider({
           // refreshToken으로 새 accessToken 발급
           const currentToken = await refreshAccessToken();
 
-          api.defaults.headers.common.Authorization = `Bearer ${currentToken}`;
-
           auth.setAccessToken(currentToken);
 
           const userInfo = await getUser();
+
           if (userInfo) {
             auth.setUserInfo(userInfo);
           }

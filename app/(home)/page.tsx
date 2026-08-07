@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { articles } from '@/components/domain/community/examples/articleExamples';
 /*
   메인페이지
   배너(HeroSection)가 있으며
@@ -13,8 +14,13 @@ import { getArticles } from '@/services/community.server';
 import { TrendingUp } from 'lucide-react';
 
 export default async function Home() {
-  const articles = await getArticles() ?? [];
-  const hotArticles = articles.filter((article) => article.isHot)
+  const articles = await getArticles(1);
+
+  if(!articles) {
+    return null;
+  }
+  
+  const hotArticles = articles.content.filter((article) => article.isHot);
 
   return (
     <div>

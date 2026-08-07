@@ -7,6 +7,7 @@ import {
   ArticleInput,
   CommentInput,
   PostArticleInput,
+  PutCommentRequest,
   TemporaryArticleInput,
 } from "@/types/community.type";
 import { api } from "./axios";
@@ -124,9 +125,9 @@ export async function postComment(commentData: CommentInput) {
 }
 
 // 댓글 수정
-export async function putComment(content: string, id: number) {
+export async function putComment(data: PutCommentRequest, id: number) {
   try {
-    const res = await api.put(`/community/comments/${id}`, content);
+    const res = await api.put(`/community/comments/${id}`, data);
 
     return res.data;
   } catch (error) {

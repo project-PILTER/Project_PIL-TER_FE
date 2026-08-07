@@ -1,6 +1,6 @@
 "use client";
 
-import { Comment, CommentInput } from "@/types/community.type";
+import { Comment, CommentInput, PutCommentRequest } from "@/types/community.type";
 import CommentItem from "./commentItem";
 import CommentForm from "./commentForm";
 import { useEffect, useState } from "react";
@@ -57,7 +57,15 @@ export default function CommentList({ initialComments, articleId }: CommentListP
 
   const handleCommentUpdate = async(commentId: number, content: string) => {
     try {
-      const res = await putComment(content, commentId);
+      const targetComment = comments.find((comment) => comment.id === commentId);
+      const request: PutCommentRequest = {
+        content,
+        updatedAt: new Date().toISOString(),
+        parentId: targetComment?.parentId
+      }
+      const res = await putComment(request, commentId);
+      
+      console.log("댓글 수정 정보: ", res);
 
       if(res) {
         setComments((prev) => prev.map((c) => (c.id === commentId ? {...c, content: res.content} : c)));

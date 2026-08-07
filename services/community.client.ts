@@ -150,7 +150,7 @@ export async function deleteComment(id: number) {
 
 // 좋아요
 
-// 좋아요 보내기
+// 게시글 좋아요
 export async function postLike(id: number) {
   try {
     const res = await api.post(`/community/articles/${id}/likes`);
@@ -158,6 +158,18 @@ export async function postLike(id: number) {
     return res.data;
   } catch (error) {
     console.error("좋아요 실패", error);
+    throw error;
+  }
+}
+
+// 댓글 좋아요
+export async function postCommentLike(id: number) {
+  try {
+    const res = await api.post(`/community/comments/${id}/likes`);
+
+    return res.data;
+  } catch (error) {
+    console.error("댓글 좋아요 실패", error);
     throw error;
   }
 }

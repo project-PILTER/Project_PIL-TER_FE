@@ -11,6 +11,7 @@ import { getRelativeTime } from "@/utils/date";
 import { DropdownOption } from "@/types/ui.type";
 import Dropdown from "@/components/common/dropdown";
 import { User } from "@/types/auth.type";
+import { postCommentLike } from "@/services/community.client";
 
 interface CommentItemProps {
   currentUser: Author | User;
@@ -26,26 +27,50 @@ export default function CommentItem({
   comment,
   isReply = false,
   onReplySubmit,
-  onLikeToggle,
   onUpdate,
   onDelete,
 }: CommentItemProps) {
-  const { id, content, likeCount, createdAt } = comment;
+  const { id, content, createdAt } = comment;
 
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [liked, setLiked] = useState(false);
-  const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(comment.likeCount);
 
   const commentAuthor = comment.author;
 
   const isMyComment = currentUser.id === commentAuthor.id;
 
-  const handleLikeClick = () => {
-    const nextLikedState = !liked;
-    setCurrentLikeCount((prev) => (nextLikedState ? prev + 1 : prev - 1));
-    setLiked(nextLikedState);
-    if (onLikeToggle) onLikeToggle(id, nextLikedState);
+  const handleLikeClick = async () => {
+    const previousIsLiked = isLiked;
+    const previousLikeCount = likeCount;
+
+    if (isLiked) {
+      setLikeCount((prev) => prev - 1);
+      setIsLiked(false);
+    } else {
+      setLikeCount((prev) => prev + 1);
+      setIsLiked(true);
+    }
+
+    try {
+      const res = await postCommentLike(id);
+
+      if (res) {
+        if (res.isLiked) {
+          alert("좋아요 등록 성공");
+        } else {
+          alert("좋아요가 취소되었습니다.");
+        }
+        console.log("좋아요 정보: ", res);
+      }
+    } catch (error) {
+      console.error("좋아요 요청 실패", error);
+      alert("좋아요에 실패했습니다. 다시시작해주세요.");
+
+      setIsLiked(previousIsLiked);
+      setLikeCount(previousLikeCount);
+    }
   };
 
   const handleEditSubmit = async (newContent: string) => {
@@ -56,11 +81,10 @@ export default function CommentItem({
   };
 
   const handleReplySubmit = async (content: string) => {
-    if(onReplySubmit) {
+    if (onReplySubmit) {
       await onReplySubmit(content, id);
       setIsReplying(false);
     }
-    
   };
 
   const dropdownOptions: DropdownOption[] = [
@@ -81,47 +105,52 @@ export default function CommentItem({
     <div className="flex flex-col w-full">
       <div className="flex gap-4 items-start w-full">
         <Avatar className="w-10 h-10">
-          <AvatarImage src={commentAuthor.profileImage ?? undefined} alt={commentAuthor.nickname} />
+          <AvatarImage
+            src={commentAuthor.profileImage ?? undefined}
+            alt={commentAuthor.nickname}
+          />
           <AvatarFallback>{commentAuthor.nickname}</AvatarFallback>
         </Avatar>
 
-      <div className="flex flex-col gap-1 w-full">
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-2">
-            <p className="font-semibold text-sm">{commentAuthor.nickname}</p>
-            {commentAuthor.isMedicalExpert && (
-              <Badge className="bg-[#eceef9] rounded-xl font-medium text-black text-xs px-2 py-2">
-                {commentAuthor.expertTitle || "인증의료인"}
-              </Badge>
-            )}
-            <p className="text-xs" suppressHydrationWarning>{getRelativeTime(createdAt)}</p>
-          </div>
+        <div className="flex flex-col gap-1 w-full">
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <p className="font-semibold text-sm">{commentAuthor.nickname}</p>
+              {commentAuthor.isMedicalExpert && (
+                <Badge className="bg-[#eceef9] rounded-xl font-medium text-black text-xs px-2 py-2">
+                  {commentAuthor.expertTitle || "인증의료인"}
+                </Badge>
+              )}
+              <p className="text-xs" suppressHydrationWarning>
+                {getRelativeTime(createdAt)}
+              </p>
+            </div>
 
-          {isMyComment && !isEditing && (
-            <Dropdown options={dropdownOptions} align="end" />
-          )}
-        </div>
+            {isMyComment && !isEditing && (
+              <Dropdown options={dropdownOptions} align="end" />
+            )}
+          </div>
 
           {isEditing ? (
-          <div>
-            <CommentForm
-              author={commentAuthor}
-              onSubmit={handleEditSubmit}
-              initialContent={content}
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs text-gray-400"
-              onClick={() => setIsEditing(false)}
-            >
-              취소
-            </Button>
-          </div>
+            <div>
+              <CommentForm
+                author={commentAuthor}
+                onSubmit={handleEditSubmit}
+                initialContent={content}
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs text-gray-400"
+                onClick={() => setIsEditing(false)}
+              >
+                취소
+              </Button>
+            </div>
           ) : (
-          <p className="text-sm leading-relaxed whitespace-pre-wrap">
-            {content}
-          </p>
+            <p className="text-sm leading-relaxed whitespace-pre-wrap">
+              {content}
+            </p>
           )}
 
           {!isEditing && (
@@ -131,7 +160,7 @@ export default function CommentItem({
                 onClick={handleLikeClick}
               >
                 <ThumbsUp />
-                <p>{currentLikeCount}</p>
+                <p>{likeCount}</p>
               </Button>
 
               {!isReply && (
@@ -150,10 +179,7 @@ export default function CommentItem({
 
       {isReplying && (
         <div className="mt-4 pl-14 w-full">
-          <CommentForm
-            author={currentUser}
-            onSubmit={handleReplySubmit}
-          />
+          <CommentForm author={currentUser} onSubmit={handleReplySubmit} />
         </div>
       )}
     </div>

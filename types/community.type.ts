@@ -60,12 +60,27 @@ export interface ArticleInput {
   updatedAt: string;
 }
 
-export type PostArticleInput = {
+export interface PostArticleInput {
   title: string;
   content: string;
   imageUrl?: string | null;
   draft: boolean;
   categoryId: string;
+}
+
+// getArticles에서 받는 response
+export interface ArticleResponse<T> {
+  content: T[];
+
+  totalPages: number;
+  totalElements: number;
+
+  number: number;
+  size: number;
+
+  first: boolean;
+  last: boolean;
+  empty: boolean;
 }
 
 // api request 댓글

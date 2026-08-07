@@ -41,13 +41,15 @@ export default function CommentList({ initialComments, articleId }: CommentListP
       );
   };
 
-  const handleCommentSubmit = async(content: string) => {
+  const handleCommentSubmit = async(content: string, id?: number) => {
     try {
       const request: CommentInput = {
         communityArticleId: articleId,
-        content: content
+        content,
+        parentId: id ?? null
       } 
-      await postComment(request);
+      const res = await postComment(request);
+      setComments(prev => [...prev, res]);
     } catch (error) {
       console.error("댓글 처리 문제 발생");
     }

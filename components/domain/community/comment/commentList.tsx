@@ -47,15 +47,7 @@ export default function CommentList({ initialComments, articleId }: CommentListP
         communityArticleId: articleId,
         content: content
       } 
-      const res = await postComment(request);
-
-      console.log("댓글 response 정보: ", res);
-
-      if(res) {
-        setComments((prev) => [...prev, res]);
-      }
-      alert("댓글이 정상적으로 등록됐습니다.");
-      router.refresh();
+      await postComment(request);
     } catch (error) {
       console.error("댓글 처리 문제 발생");
     }

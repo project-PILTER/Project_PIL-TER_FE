@@ -43,8 +43,9 @@ export default function CommentForm({author, onSubmit, initialContent = ""}:Comm
   const onValidSubmit = async(data: CommentFormData) => {
     try {
       await onSubmit(data.content);
-      reset({content: ""});
+      alert("댓글이 정상적으로 등록되었습니다.");
       router.refresh();
+      reset({content: ""});
     } catch (error) {
       console.error("댓글 등록 실패");
     }

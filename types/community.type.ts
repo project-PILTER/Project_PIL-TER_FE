@@ -90,6 +90,12 @@ export interface CommentInput {
   parentId?: number | null;
 }
 
+export interface PutCommentRequest {
+  content: string;
+  updatedAt: string;
+  parentId?: number | null;
+}
+
 // api request 임시저장
 export interface TemporaryArticleInput {
   title: string;

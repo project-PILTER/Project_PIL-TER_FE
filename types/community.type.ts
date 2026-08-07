@@ -87,6 +87,7 @@ export interface ArticleResponse<T> {
 export interface CommentInput {
   communityArticleId: number;
   content: string;
+  parentId?: number | null;
 }
 
 // api request 임시저장

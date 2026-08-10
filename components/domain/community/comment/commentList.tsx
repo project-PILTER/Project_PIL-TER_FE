@@ -30,6 +30,30 @@ export default function CommentList({ initialComments, articleId }: CommentListP
     return <Loading />
   }
 
+  const addReplyToComment = (comments: Comment[], id: number, reply: Comment): Comment[] => {
+    return comments.map((comment) => {
+      if(comment.id === id) {
+        return {
+          ...comment,
+          children: [...comment.children, reply]
+        };
+      }
+
+      if(comment.children.length > 0) {
+        return {
+          ...comment,
+          children: addReplyToComment(
+            comment.children,
+            id,
+            reply
+          )
+        }
+      }
+
+      return comment;
+    });
+  };
+
   const handleCommentSubmit = async(content: string, id?: number) => {
     try {
       const request: CommentInput = {
@@ -39,7 +63,13 @@ export default function CommentList({ initialComments, articleId }: CommentListP
       }
       const res = await postComment(request);
       
-      setComments(prev => [...prev, res]);
+      setComments((prev) => {
+        if(id == null) {
+          return [...prev, res];
+        }
+
+        return addReplyToComment(prev, id, res);
+      });
     } catch (error) {
       console.error("댓글 처리 문제 발생");
     }

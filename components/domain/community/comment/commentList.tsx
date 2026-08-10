@@ -29,17 +29,6 @@ export default function CommentList({ initialComments, articleId }: CommentListP
   if(isLoading || !user) {
     return <Loading />
   }
-  
-  const rootComments = comments.filter((comment) => comment.parentId === null);
-
-  const getReplies = (commentId: number) => {
-    return comments
-      .filter((comment) => comment.parentId === commentId)
-      .sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
-  };
 
   const handleCommentSubmit = async(content: string, id?: number) => {
     try {
@@ -47,8 +36,9 @@ export default function CommentList({ initialComments, articleId }: CommentListP
         communityArticleId: articleId,
         content,
         parentId: id ?? null
-      } 
+      }
       const res = await postComment(request);
+      
       setComments(prev => [...prev, res]);
     } catch (error) {
       console.error("댓글 처리 문제 발생");
@@ -97,12 +87,12 @@ export default function CommentList({ initialComments, articleId }: CommentListP
       <hr className="my-6 border-gray-400" />
 
       <div className="flex flex-col gap-6">
-        {rootComments.map((rootComment) => (
-          <div key={rootComment.id} className="flex flex-col gap-4">
-            <CommentItem currentUser={user} comment={rootComment} onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
-            {getReplies(rootComment.id).length > 0 && (
+        {comments.map((comment) => (
+          <div key={comment.id} className="flex flex-col gap-4">
+            <CommentItem currentUser={user} comment={comment} onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
+            {comment.children.length > 0 && (
               <div className="flex flex-col gap-4 pl-5 border-l-2 border-gray-200 ml-14">
-                {getReplies(rootComment.id).map((reply) => (
+                {comment.children.map((reply) => (
                   <CommentItem key={reply.id} currentUser={user} comment={reply} isReply onReplySubmit={handleCommentSubmit} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
                 ))}
               </div>

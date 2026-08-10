@@ -42,12 +42,13 @@ export interface Draft {
 export type DraftInput = Omit<Draft, "id" | "createdAt">;
 export interface Comment {
   id: number;
-  articleId: number;
+  communityArticleId: number;
   parentId: number | null // 대댓글시 부모 댓글 id
   author: CommentUser;
   content: string;
   likeCount: number;
   createdAt: string;
+  children: Comment[];
 }
 
 // api request 게시글

@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-import { articles } from '@/components/domain/community/examples/articleExamples';
 /*
   메인페이지
   배너(HeroSection)가 있으며

@@ -120,7 +120,7 @@ export default function WritePage({ articleId }: WritePageProps) {
           file: imageFiles[0]?.file ?? null
         });
 
-        console.log("file: ", imageFiles[0]?.file);
+        console.log("postArticle 정보: ", res);
 
         if (res && (res.isSuccess || res.id || res.data?.id)) {
           alert("글이 등록되었습니다.");

@@ -12,15 +12,7 @@ import {
 import { Article, ArticleInput } from "@/types/community.type";
 import { DropdownOption } from "@/types/ui.type";
 import { formatDateTime } from "@/utils/date";
-import { stripHtml } from "@/utils/string";
-import {
-  Bookmark,
-  Edit2,
-  Eye,
-  Heart,
-  Share2,
-  Trash2,
-} from "lucide-react";
+import { Bookmark, Edit2, Eye, Heart, Share2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -36,18 +28,18 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
   const [likeCount, setLikeCount] = useState(article.likeCount);
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleEdit = async() => {
+  const handleEdit = async () => {
     const request: ArticleInput = {
       title: article.title,
       content: article.content,
       imageUrl: article.imageUrl,
       category: article.category.name,
       updatedAt: new Date().toISOString(),
-      draft: false
-    }
+      draft: false,
+    };
     const res = await putArticle(request, id);
 
-    if(res) {
+    if (res) {
       alert("게시글 수정 성공");
       console.log("게시글 수정 정보: ", res);
     }
@@ -65,7 +57,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
     }
   };
 
-  const handleLikeClick = async() => {
+  const handleLikeClick = async () => {
     const previousIsLiked = isLiked;
     const previousLikeCount = likeCount;
 
@@ -80,15 +72,14 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
     try {
       const res = await postLike(id);
 
-      if(res) {
-        if(res.isLiked) {
+      if (res) {
+        if (res.isLiked) {
           alert("좋아요 등록 성공");
         } else {
           alert("좋아요가 취소되었습니다.");
         }
         console.log("좋아요 정보: ", res);
       }
-
     } catch (error) {
       console.error("좋아요 요청 실패", error);
       alert("좋아요에 실패했습니다. 다시시작해주세요.");
@@ -138,7 +129,10 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
             <div className="flex items-center gap-1">
               {article.author.nickname}
             </div>
-            <div className="flex items-center gap-2 text-xs" suppressHydrationWarning>
+            <div
+              className="flex items-center gap-2 text-xs"
+              suppressHydrationWarning
+            >
               <span>{formatDateTime(article.createdAt)}</span>
 
               <span className="flex items-center gap-1">
@@ -152,8 +146,10 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
         <Dropdown options={dropdownOptions} />
       </div>
 
-      <div className="whitespace-pre-wrap leading-relaxed text-1.125rem min-h-[18.75rem] mb-8" dangerouslySetInnerHTML={{ __html: article.content}}>
-      </div>
+      <div
+        className="whitespace-pre-wrap leading-relaxed text-1.125rem min-h-[18.75rem] mb-8"
+        dangerouslySetInnerHTML={{ __html: article.content }}
+      ></div>
 
       <div className="pt-6 border-t border-gray-100 flex justify-between items-center text-sm">
         <div className="flex items-center gap-2">

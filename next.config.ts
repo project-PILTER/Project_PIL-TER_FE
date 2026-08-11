@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         hostname: "ssl.pstatic.net",
         port: "",
         pathname: "/**"
+      },
+      {
+        protocol: "http",
+        hostname: "k.kakaocdn.net",
+        port: "",
+        pathname: "/**"
       }
     ]
   }

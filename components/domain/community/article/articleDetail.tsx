@@ -152,8 +152,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
         <Dropdown options={dropdownOptions} />
       </div>
 
-      <div className="whitespace-pre-wrap leading-relaxed text-1.125rem min-h-[18.75rem] mb-8">
-        {stripHtml(article.content)}
+      <div className="whitespace-pre-wrap leading-relaxed text-1.125rem min-h-[18.75rem] mb-8" dangerouslySetInnerHTML={{ __html: article.content}}>
       </div>
 
       <div className="pt-6 border-t border-gray-100 flex justify-between items-center text-sm">

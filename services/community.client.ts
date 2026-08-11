@@ -15,7 +15,28 @@ import { api } from "./axios";
 // 새로운 게시글 등록
 export async function postArticle(articleData: PostArticleInput) {
   try {
-    const res = await api.post("/community/articles", articleData);
+    const formData = new FormData();
+
+    const request = {
+      title: articleData.title,
+      content: articleData.content,
+      imageUrl: articleData.imageUrl ?? null,
+      draft: articleData.draft,
+      categoryId: articleData.categoryId,
+    };
+
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(request)], {
+        type: "application/json",
+      }),
+    );
+
+    if (articleData.file) {
+      formData.append("file", articleData.file);
+    }
+
+    const res = await api.post("/community/articles", formData);
 
     return res.data;
   } catch (error) {

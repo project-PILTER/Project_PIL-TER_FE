@@ -67,6 +67,7 @@ export interface PostArticleInput {
   imageUrl?: string | null;
   draft: boolean;
   categoryId: string;
+  file?: File | null;
 }
 
 // getArticles에서 받는 response

@@ -115,9 +115,12 @@ export default function WritePage({ articleId }: WritePageProps) {
           title,
           content: editor.getHTML(),
           categoryId: categoryName,
-          imageUrl: "/logo/logo.png",
+          imageUrl: null,
           draft: false,
+          file: imageFiles[0]?.file ?? null
         });
+
+        console.log("file: ", imageFiles[0]?.file);
 
         if (res && (res.isSuccess || res.id || res.data?.id)) {
           alert("글이 등록되었습니다.");

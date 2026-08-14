@@ -7,17 +7,26 @@ interface PaginationProps {
 }
 
 export default function CommonPagination({currentPage, totalPages, basePath}:PaginationProps) {
+  const pageGroupSize = 10;
+  const startPage = Math.floor((currentPage - 1) / pageGroupSize) * pageGroupSize + 1;
+
+  const endPage = Math.min(startPage + pageGroupSize - 1, totalPages);
+
   const pages = Array.from(
-    {length: totalPages},
-    (_, i) => i + 1 // 현재값은 필요 없어서 _로 무시
-  ) // 1부터 totalPages까지의 숫자 배열을 생성
+    {length: endPage - startPage + 1},
+    (_, i) => startPage + i
+  )
+
+  const previousPage = startPage - pageGroupSize;
+
+  const nextPage = startPage + pageGroupSize;
 
   return(
     <Pagination>
       <PaginationContent>
-        {currentPage > 1 && (
+        {startPage > 1 && (
           <PaginationItem>
-            <PaginationPrevious href={`${basePath}?page=${currentPage - 1}`} />
+            <PaginationPrevious href={`${basePath}?page=${previousPage}`} />
           </PaginationItem>
         )}
 
@@ -29,9 +38,9 @@ export default function CommonPagination({currentPage, totalPages, basePath}:Pag
           </PaginationItem>
         ))}
 
-        {currentPage < totalPages && (
+        {nextPage <= totalPages && (
           <PaginationItem>
-            <PaginationNext href={`${basePath}?page=${currentPage + 1}`} />
+            <PaginationNext href={`${basePath}?page=${nextPage}`} />
           </PaginationItem>
         )}
       </PaginationContent>

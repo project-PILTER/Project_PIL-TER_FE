@@ -42,6 +42,9 @@ export default function Navigation() {
             <Link href="/journal">건강일지</Link>
           </li>
           <li className="list-none transition-all duration-100 ease-in-out hover:scale-105">
+            <Link href="/medicines">약 정보/후기</Link>
+          </li>
+          <li className="list-none transition-all duration-100 ease-in-out hover:scale-105">
             <Link href="/pharmacy">약국찾기</Link>
           </li>
         </ul>

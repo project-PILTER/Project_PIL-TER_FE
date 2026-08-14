@@ -21,7 +21,13 @@ const nextConfig: NextConfig = {
         hostname: "k.kakaocdn.net",
         port: "",
         pathname: "/**"
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "nedrug.mfds.go.kr",
+        port: "",
+        pathname: "/pbp/cmn/itemImageDownload/**"
+      },
     ]
   }
 };

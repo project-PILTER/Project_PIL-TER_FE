@@ -51,7 +51,7 @@ export default function Navigation() {
       </nav>
       <div className="flex items-center gap-2 pr-4">
         <ThemeButton />
-        <Button className="rounded-full bg-transparent text-black hover:bg-neutral-100">
+        <Button className="rounded-full bg-transparent text-black hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-800">
           <Bell />
         </Button>
         <LoginButton />

@@ -29,7 +29,7 @@ export default function SearchBar() {
   };
   return (
     <div className="flex justify-center items-center">
-      <div className="flex bg-white w-80 h-9 rounded-sm">
+      <div className="flex bg-white w-[30.875rem] h-[3rem] rounded-sm">
         <Search className="text-black h-full mx-2" />
         <input
           className="text-black w-full outline-none"
@@ -40,8 +40,8 @@ export default function SearchBar() {
           onKeyDown={handleKeyDown}
         />
       </div>
-      <div className="ml-2 h-full">
-        <Button className="bg-white text-[#615ed6] rounded-sm hover:bg-white/90">
+      <div className="ml-2">
+        <Button className="bg-white text-[#615ed6] rounded-sm hover:bg-white/90 h-12">
           검색하기
         </Button>
       </div>

@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
 
 export default function ThemeButton() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   
   return (
     <Button
@@ -21,11 +21,8 @@ export default function ThemeButton() {
         setTheme(isDark ? "light" : "dark");
       }}
     >
-      {resolvedTheme === "dark" ? (
-        <Moon className="h-5 w-5" />
-      ) : (
-        <Sun className="h-5 w-5" />
-      )}
+      <Sun className="h-5 w-5 dark:hidden" />
+      <Moon className="hidden h-5 w-5 dark:block" />
     </Button>
   );
 }

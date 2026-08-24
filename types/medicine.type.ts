@@ -1,3 +1,5 @@
+import { User } from "./auth.type";
+
 export interface Medicines {
   id: number;
   atpnQesitm: string; // 주의사항
@@ -9,6 +11,10 @@ export interface Medicines {
   medicineName: string; // 약 이름
   useMethodQesitm: string; // 복용방법
   hot: boolean; // 인기 약 여부
+  averageRating: number; // 평균 평점
+  bookmarkCount: number; // 북마크 개수
+  reviews: MedicineReview[];
+  totalReviewCount: number; // 총 리뷰 개수
 }
 
 export interface MedicineResponse<T> {
@@ -24,4 +30,23 @@ export interface MedicineResponse<T> {
   last: boolean;
   empty: boolean;
 
+}
+
+export interface MedicineReview {
+  id: number;
+  medicine: Medicines;
+  user: User;
+  rating: number;
+  effectType: string;
+  symptomTag: string;
+  content: string;
+  likeCount: number;
+  createdAt: string;
+}
+
+export interface MedicineReviewRequest {
+  rating: number;
+  effectType: string;
+  symptomTag: string;
+  content: string;
 }

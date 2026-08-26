@@ -19,7 +19,7 @@ import {
   putMedicineReview,
 } from "@/services/medicine.client";
 import { useAuthStore } from "@/stores/authStore";
-import { MedicineReviewRequest } from "@/types/medicine.type";
+import { MedicineReview, MedicineReviewRequest } from "@/types/medicine.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CheckCircle,
@@ -36,6 +36,7 @@ interface MedicineReviewFormProps {
   onCancel: () => void;
   onSuccess: () => void;
   medicineId: number;
+  review: MedicineReview | null;
   defaultValues: Partial<MedicineReviewFormValues>;
   mode: "create" | "edit";
 }
@@ -44,6 +45,7 @@ export default function MedicineReviewForm({
   onCancel,
   onSuccess,
   medicineId,
+  review,
   defaultValues,
   mode,
 }: MedicineReviewFormProps) {
@@ -91,9 +93,16 @@ export default function MedicineReviewForm({
 
     try {
       if (mode === "create") {
-        await postMedicineReview(medicineId, user.id, request);
+        const res = await postMedicineReview(medicineId, user.id, request);
+        console.log("후기 작성 res: ", res);
       } else {
-        await putMedicineReview(medicineId, request);
+        if (!review) {
+          alert("수정할 후기를 찾을 수 없습니다.");
+          return;
+        }
+
+        const res = await putMedicineReview(review.id, request);
+        console.log("후기 수정 res: ", res);
       }
 
       alert(

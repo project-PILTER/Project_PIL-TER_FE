@@ -7,7 +7,7 @@ interface MedicineReviewModalProps {
   onOpenChange: (open: boolean) => void;
   mode: "create" | "edit";
   medicineId: number;
-  review?: MedicineReview | null;
+  review: MedicineReview | null;
   onSuccess: () => void;
 }
 
@@ -45,6 +45,7 @@ export default function MedicineReviewModal({
         onCancel={() => onOpenChange(false)}
         onSuccess={onSuccess}
         medicineId={medicineId}
+        review={review}
         mode={mode}
       />
     </Modal>

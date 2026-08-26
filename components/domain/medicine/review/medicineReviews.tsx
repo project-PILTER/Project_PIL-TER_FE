@@ -2,22 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/authStore";
-import {
-  MedicineReview,
-  MedicineReviewRequest,
-  Medicines,
-} from "@/types/medicine.type";
+import { MedicineReview, Medicines } from "@/types/medicine.type";
 import MedicineReviewItem from "./medicineReviewItem";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import MedicineReviewModal from "./medicineReviewModal";
 import { MessageCircle, Send } from "lucide-react";
-import { MedicineReviewFormValues } from "@/schemas/medicine.schema";
-import {
-  postMedicineReview,
-  putMedicineReview,
-} from "@/services/medicine.client";
 
 interface MedicineReviewsProps {
   medicine: Medicines;
@@ -28,9 +19,9 @@ export default function MedicineReviews({ medicine }: MedicineReviewsProps) {
   const { user, isLoading } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"create" | "edit">("create");
-  const [selectedReview, setSelectedReview] = useState<
-    MedicineReview | undefined
-  >();
+  const [selectedReview, setSelectedReview] = useState<MedicineReview | null>(
+    null,
+  );
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -69,7 +60,7 @@ export default function MedicineReviews({ medicine }: MedicineReviewsProps) {
           className="!w-[6.1875rem] !h-8 !px-2 !py-0 bg-[#615ed6]"
           onClick={() => {
             setMode("create");
-            setSelectedReview(undefined);
+            setSelectedReview(null);
             setOpen(true);
           }}
         >

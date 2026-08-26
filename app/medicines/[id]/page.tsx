@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import MedicineHeader from "@/components/domain/medicine/medicineHeader";
 import MedicineInfo from "@/components/domain/medicine/medicineInfo";
 import MedicineReviews from "@/components/domain/medicine/review/medicineReviews";
-import { getMedicineDetail } from "@/services/medicine.client";
+import { getMedicineDetail } from "@/services/medicine.server";
 
 export default async function MedicineDetailPage({
   params,

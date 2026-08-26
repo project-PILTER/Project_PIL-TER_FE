@@ -4,7 +4,7 @@ import CommonPagination from "@/components/common/pagination";
 import MedicineCard from "@/components/domain/medicine/medicineCard";
 import MedicineHeroSection from "@/components/domain/medicine/medicineHeroSection";
 import MedicinePopularCard from "@/components/domain/medicine/medicinePopularCard";
-import { getMedicine } from "@/services/medicine.client";
+import { getMedicine } from "@/services/medicine.server";
 import { Pill, TrendingUp } from "lucide-react";
 
 export default async function MedicinePage({

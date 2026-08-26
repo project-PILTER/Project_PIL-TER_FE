@@ -1,48 +1,106 @@
 "use client";
 
+import Dropdown from "@/components/common/dropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { deleteMedicineReview } from "@/services/medicine.client";
 import { User } from "@/types/auth.type";
 import { MedicineReview } from "@/types/medicine.type";
-import { getRelativeTime } from "@/utils/date";
-import { Star } from "lucide-react";
+import { DropdownOption } from "@/types/ui.type";
+import { formatDateKorean } from "@/utils/date";
+import {
+  Heart,
+  MessageCircle,
+  Pencil,
+  Star,
+  ThumbsDown,
+  ThumbsUp,
+  Trash2,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface MedicineReviewItemProps {
   commentAuthor: User;
   review: MedicineReview;
+  onEdit: (data: MedicineReview) => void;
 }
 
 export default function MedicineReviewItem({
   commentAuthor,
   review,
+  onEdit,
 }: MedicineReviewItemProps) {
-  return (
-    <div className="flex flex-col w-full">
-      <div className="flex gap-4 items-start w-full">
-        <Avatar className="w-10 h-10">
-          <AvatarImage
-            src={commentAuthor.profileImage ?? undefined}
-            alt={commentAuthor.nickname}
-          />
-          <AvatarFallback>{commentAuthor.nickname}</AvatarFallback>
-        </Avatar>
+  const router = useRouter();
+  const dropdownOptions: DropdownOption[] = [
+    {
+      label: "수정",
+      icon: <Pencil className="w-3 h-3" />,
+      onClick: () => onEdit(review),
+    },
+    {
+      label: "삭제",
+      icon: <Trash2 className="w-3 h-3" />,
+      onClick: async () => {
+        await deleteMedicineReview(review.id);
 
-        <div className="flex flex-col gap-1 w-full">
-          <div className="flex items-center justify-between w-full">
+        alert("약 후기 삭제가 완료되었습니다.");
+        router.refresh();
+      },
+    },
+  ];
+
+  const symptomTagLabel: Record<MedicineReview["symptomTag"], string> = {
+    headache: "두통",
+    toothache: "치통",
+    fever: "발열",
+    muscle_pain: "근육통",
+    menstrual_pain: "생리통",
+    other: "기타",
+  };
+
+  return (
+    <div className="w-full rounded-xl border border-gray-200 p-4">
+      <div className="flex items-start justify-between">
+        <div className="flex items-start gap-3">
+          <Avatar className="w-10 h-10">
+            <AvatarImage
+              src={commentAuthor.profileImage ?? undefined}
+              alt={commentAuthor.nickname}
+            />
+            <AvatarFallback>{commentAuthor.nickname}</AvatarFallback>
+          </Avatar>
+
+          <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <p className="font-semibold text-sm">{commentAuthor.nickname}</p>
+
               {commentAuthor.isMedicalExpert && (
                 <Badge className="bg-[#eceef9] rounded-xl font-medium text-black text-xs px-2 py-2">
                   {commentAuthor.expertTitle || "인증의료인"}
                 </Badge>
               )}
-              <p className="text-xs" suppressHydrationWarning>
-                {getRelativeTime(review.createdAt)}
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-gray-400">
+              <p suppressHydrationWarning>
+                {formatDateKorean(review.createdAt)}
               </p>
+
+              <span>·</span>
+
+              <Badge
+                variant="outline"
+                className="font-normal text-xs px-2 py-1"
+              >
+                {symptomTagLabel[review.symptomTag]}
+              </Badge>
             </div>
           </div>
+        </div>
 
-          <div className="flex items-center gap-1">
+        <div className="flex items-start gap-3">
+          <div className="flex items-center gap-0.5 mt-2">
             {Array.from({ length: 5 }, (_, index) => (
               <Star
                 key={index}
@@ -50,9 +108,43 @@ export default function MedicineReviewItem({
               />
             ))}
           </div>
-        </div>
 
-        <p>{review.content}</p>
+          <Dropdown options={dropdownOptions} align="end" />
+        </div>
+      </div>
+
+      <div className="mt-4">
+        {review.effectType === "EFFECTIVE" ? (
+          <Badge className="bg-green-100 text-green-600 hover:bg-green-100">
+            <ThumbsUp className="w-3 h-3 mr-1" />
+            효과 있음
+          </Badge>
+        ) : (
+          <Badge className="bg-gray-100 text-gray-600 hover:bg-gray-100">
+            <ThumbsDown className="w-3 h-3 mr-1" />
+            효과 없음
+          </Badge>
+        )}
+      </div>
+
+      <p className="mt-3 text-sm leading-6 text-gray-600">{review.content}</p>
+
+      <div className="flex items-center gap-2 mt-4 text-xs">
+        <Button
+          type="button"
+          className="flex items-center gap-1 bg-transparent text-gray-500"
+        >
+          <Heart />
+          좋아요 {review.likeCount}
+        </Button>
+
+        <Button
+          type="button"
+          className="flex items-center gap-1 bg-transparent text-gray-500"
+        >
+          <MessageCircle />
+          댓글
+        </Button>
       </div>
     </div>
   );

@@ -14,7 +14,10 @@ import {
   MedicineReviewFormValues,
   medicineReviewSchema,
 } from "@/schemas/medicine.schema";
-import { postMedicineReview } from "@/services/medicine.client";
+import {
+  postMedicineReview,
+  putMedicineReview,
+} from "@/services/medicine.client";
 import { useAuthStore } from "@/stores/authStore";
 import { MedicineReviewRequest } from "@/types/medicine.type";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,12 +34,18 @@ import { useForm } from "react-hook-form";
 
 interface MedicineReviewFormProps {
   onCancel: () => void;
+  onSuccess: () => void;
   medicineId: number;
+  defaultValues: Partial<MedicineReviewFormValues>;
+  mode: "create" | "edit";
 }
 
 export default function MedicineReviewForm({
   onCancel,
+  onSuccess,
   medicineId,
+  defaultValues,
+  mode,
 }: MedicineReviewFormProps) {
   const {
     register,
@@ -49,6 +58,7 @@ export default function MedicineReviewForm({
     defaultValues: {
       rating: 0,
       content: "",
+      ...defaultValues,
     },
   });
   const router = useRouter();
@@ -56,6 +66,7 @@ export default function MedicineReviewForm({
   const rating = watch("rating");
   const effect = watch("effect");
   const sideEffect = watch("sideEffect");
+  const purpose = watch("purpose");
 
   const { user, isLoading } = useAuthStore();
 
@@ -77,18 +88,26 @@ export default function MedicineReviewForm({
       symptomTag: data.purpose,
       content: data.content,
     };
+
     try {
-      const res = await postMedicineReview(medicineId, user.id, request);
+      if (mode === "create") {
+        await postMedicineReview(medicineId, user.id, request);
+      } else {
+        await putMedicineReview(medicineId, request);
+      }
 
-      console.log("request 정보: ", request);
-
-      console.log("post review 정보: ", res);
-      alert("약 후기 작성이 완료되었습니다.");
-      router.push("/medicines");
+      alert(
+        mode === "create"
+          ? "약 후기 작성이 완료되었습니다."
+          : "약 후기 수정이 완료되었습니다.",
+      );
+      onSuccess();
     } catch (error) {
-      console.log("보내기 실패");
+      alert("후기 저장에 실패했습니다. 다시 시도해주세요.");
+      onCancel();
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div>
@@ -121,6 +140,7 @@ export default function MedicineReviewForm({
           <h3 className="font-medium">복용 목적</h3>
         </div>
         <Select
+          value={purpose}
           onValueChange={(value) => {
             setValue("purpose", value as MedicineReviewFormValues["purpose"], {
               shouldValidate: true,

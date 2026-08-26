@@ -37,8 +37,8 @@ export interface MedicineReview {
   medicine: Medicines;
   user: User;
   rating: number;
-  effectType: string;
-  symptomTag: string;
+  effectType: "EFFECTIVE" | "INEFFECTIVE";
+  symptomTag: "headache" | "toothache" | "fever" | "muscle_pain" | "menstrual_pain" | "other";
   content: string;
   likeCount: number;
   createdAt: string;

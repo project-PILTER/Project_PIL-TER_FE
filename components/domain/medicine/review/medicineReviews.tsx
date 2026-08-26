@@ -2,13 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/authStore";
-import { Medicines } from "@/types/medicine.type";
+import {
+  MedicineReview,
+  MedicineReviewRequest,
+  Medicines,
+} from "@/types/medicine.type";
 import MedicineReviewItem from "./medicineReviewItem";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import MedicineReviewModal from "./medicineReviewModal";
 import { MessageCircle, Send } from "lucide-react";
+import { MedicineReviewFormValues } from "@/schemas/medicine.schema";
+import {
+  postMedicineReview,
+  putMedicineReview,
+} from "@/services/medicine.client";
 
 interface MedicineReviewsProps {
   medicine: Medicines;
@@ -18,6 +27,10 @@ export default function MedicineReviews({ medicine }: MedicineReviewsProps) {
   const router = useRouter();
   const { user, isLoading } = useAuthStore();
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<"create" | "edit">("create");
+  const [selectedReview, setSelectedReview] = useState<
+    MedicineReview | undefined
+  >();
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -35,6 +48,12 @@ export default function MedicineReviews({ medicine }: MedicineReviewsProps) {
     router.refresh();
   };
 
+  const handleEditReview = (data: MedicineReview) => {
+    setSelectedReview(data);
+    setMode("edit");
+    setOpen(true);
+  };
+
   return (
     <div className="w-full p-6 border border-gray-100 rounded-2xl shadow-sm mt-8">
       <div className="flex items-center justify-between mb-4">
@@ -48,7 +67,11 @@ export default function MedicineReviews({ medicine }: MedicineReviewsProps) {
           type="button"
           size="default"
           className="!w-[6.1875rem] !h-8 !px-2 !py-0 bg-[#615ed6]"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setMode("create");
+            setSelectedReview(undefined);
+            setOpen(true);
+          }}
         >
           <Send className="h-4 w-4" />
           후기 작성
@@ -56,16 +79,23 @@ export default function MedicineReviews({ medicine }: MedicineReviewsProps) {
       </div>
 
       <div className="flex flex-col gap-6">
-        {medicine.reviews.map((comment) => (
-          <div key={comment.id} className="flex flex-col gap-4">
-            <MedicineReviewItem commentAuthor={user} review={comment} />
+        {medicine.reviews.map((review) => (
+          <div key={review.id} className="flex flex-col gap-4">
+            <MedicineReviewItem
+              commentAuthor={user}
+              review={review}
+              onEdit={(review) => handleEditReview(review)}
+            />
           </div>
         ))}
       </div>
+
       <MedicineReviewModal
         open={open}
         onOpenChange={setOpen}
+        mode={mode}
         medicineId={medicine.id}
+        review={selectedReview}
         onSuccess={handleReviewSuccess}
       />
     </div>

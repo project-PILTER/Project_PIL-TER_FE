@@ -18,3 +18,9 @@ export function formatDateTime(date: string): string {
 
   return format(new Date(date), "yyyy-MM-dd HH:mm");
 }
+
+export function formatDateKorean(date: string): string {
+  if (!date) return "";
+
+  return format(new Date(date), "yyyy년 MM월 dd일", { locale: ko });
+}

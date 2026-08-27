@@ -18,11 +18,11 @@ export default async function MedicineDetailPage({
   return (
     <div>
       <MedicineHeader medicine={medicineDetail} />
-      <div className="mx-auto max-w-7xl flex items-center gap-2 mt-4">
+      <div className="mx-auto w-full max-w-7xl gap-2 mt-4">
         <MedicineInfo medicine={medicineDetail} />
       </div>
 
-      <div className="mx-auto max-w-7xl flex items-center gap-2">
+      <div className="mx-auto max-w-7xl gap-2">
         <MedicineReviews medicine={medicineDetail} />
       </div>
     </div>

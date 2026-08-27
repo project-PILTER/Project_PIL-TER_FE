@@ -1,5 +1,6 @@
 "use client";
 
+import ConfirmDialog from "@/components/common/confirmDialog";
 import Dropdown from "@/components/common/dropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +20,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface MedicineReviewItemProps {
   commentAuthor: User;
@@ -32,6 +34,8 @@ export default function MedicineReviewItem({
   onEdit,
 }: MedicineReviewItemProps) {
   const router = useRouter();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
   const dropdownOptions: DropdownOption[] = [
     {
       label: "수정",
@@ -42,10 +46,7 @@ export default function MedicineReviewItem({
       label: "삭제",
       icon: <Trash2 className="w-3 h-3" />,
       onClick: async () => {
-        await deleteMedicineReview(review.id);
-
-        alert("약 후기 삭제가 완료되었습니다.");
-        router.refresh();
+        setDeleteOpen(true);
       },
     },
   ];
@@ -57,6 +58,19 @@ export default function MedicineReviewItem({
     muscle_pain: "근육통",
     menstrual_pain: "생리통",
     other: "기타",
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteMedicineReview(review.id);
+
+      alert("약 후기 삭제가 완료되었습니다.");
+      setDeleteOpen(false);
+      router.refresh();
+    } catch (error) {
+      console.error("약 후기 삭제 실패");
+      alert("약 후기 삭제에 실패했습니다.");
+    }
   };
 
   return (
@@ -146,6 +160,16 @@ export default function MedicineReviewItem({
           댓글
         </Button>
       </div>
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="후기를 삭제하시겠습니까?"
+        description="삭제한 후기는 복구할 수 없습니다. 정말 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+        onConfirm={handleDelete}
+      />
     </div>
   );
 }

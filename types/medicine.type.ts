@@ -10,7 +10,7 @@ export interface Medicines {
   manufacturer: string; // 약 제조사
   medicineName: string; // 약 이름
   useMethodQesitm: string; // 복용방법
-  hot: boolean; // 인기 약 여부
+  isHot: boolean; // 인기 약 여부
   averageRating: number; // 평균 평점
   bookmarkCount: number; // 북마크 개수
   reviews: MedicineReview[];

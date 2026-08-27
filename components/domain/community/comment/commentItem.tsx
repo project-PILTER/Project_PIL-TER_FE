@@ -12,6 +12,7 @@ import { DropdownOption } from "@/types/ui.type";
 import Dropdown from "@/components/common/dropdown";
 import { User } from "@/types/auth.type";
 import { postCommentLike } from "@/services/community.client";
+import ConfirmDialog from "@/components/common/confirmDialog";
 
 interface CommentItemProps {
   currentUser: Author | User;
@@ -36,6 +37,7 @@ export default function CommentItem({
   const [isEditing, setIsEditing] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const commentAuthor = comment.author;
 
@@ -73,6 +75,21 @@ export default function CommentItem({
     }
   };
 
+  const dropdownOptions: DropdownOption[] = [
+    {
+      label: "수정",
+      icon: <Pencil className="w-3 h-3" />,
+      onClick: () => setIsEditing(true),
+    },
+    {
+      label: "삭제",
+      icon: <Trash2 className="w-3 h-3" />,
+      onClick: () => {
+        setDeleteOpen(true);
+      },
+    },
+  ];
+
   const handleEditSubmit = async (newContent: string) => {
     if (onUpdate) {
       await onUpdate(id, newContent);
@@ -87,20 +104,18 @@ export default function CommentItem({
     }
   };
 
-  const dropdownOptions: DropdownOption[] = [
-    {
-      label: "수정",
-      icon: <Pencil className="w-3 h-3" />,
-      onClick: () => setIsEditing(true),
-    },
-    {
-      label: "삭제",
-      icon: <Trash2 className="w-3 h-3" />,
-      onClick: async () => {
-        if (onDelete) await onDelete(id);
-      },
-    },
-  ];
+  const handleDelete = async () => {
+    if (!onDelete) return;
+
+    try {
+      await onDelete(id);
+      setDeleteOpen(false);
+    } catch (error) {
+      console.error("댓글 삭제 실패");
+      alert("댓글 삭제에 실패했습니다. 다시시도해주세요.");
+    }
+  };
+
   return (
     <div className="flex flex-col w-full">
       <div className="flex gap-4 items-start w-full">
@@ -182,6 +197,16 @@ export default function CommentItem({
           <CommentForm author={currentUser} onSubmit={handleReplySubmit} />
         </div>
       )}
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="댓글을 삭제하시겠습니까?"
+        description="삭제한 댓글은 복구할 수 없습니다. 정말 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+        onConfirm={handleDelete}
+      />
     </div>
   );
 }

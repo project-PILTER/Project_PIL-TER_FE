@@ -17,12 +17,14 @@ export default async function MedicinePage({
 
   const medicines = await getMedicine(page);
 
+  console.log("medicines 정보: ", medicines);
+
   const currentMedicine = medicines.content;
 
-  const hotMedicines = currentMedicine.filter((medicine) => medicine.hot);
+  const hotMedicines = currentMedicine.filter((medicine) => medicine.isHot);
 
   const totalPages = medicines.totalPages;
-  console.log("medicines 정보: ", medicines);
+
   return (
     <div>
       <MedicineHeroSection />
@@ -38,7 +40,7 @@ export default async function MedicinePage({
           ))}
         </div>
 
-        <div className="flex gap-2 my-4">
+        <div className="flex gap-2 mt-8 mb-4">
           <Pill className="text-[#615ed6]" />
           <h2 className="text-xl font-bold text-foreground">전체 약품</h2>
         </div>

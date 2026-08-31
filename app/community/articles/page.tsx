@@ -22,8 +22,6 @@ export default async function CommunityPage({
     redirect("/");
   }
 
-  console.log("articles 정보: ", articles);
-
   const currentArticles = articles.content;
   const totalPages = articles.totalPages;
 

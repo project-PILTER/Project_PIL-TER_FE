@@ -93,16 +93,14 @@ export default function MedicineReviewForm({
 
     try {
       if (mode === "create") {
-        const res = await postMedicineReview(medicineId, user.id, request);
-        console.log("후기 작성 res: ", res);
+        await postMedicineReview(medicineId, user.id, request);
       } else {
         if (!review) {
           alert("수정할 후기를 찾을 수 없습니다.");
           return;
         }
 
-        const res = await putMedicineReview(review.id, request);
-        console.log("후기 수정 res: ", res);
+        await putMedicineReview(review.id, request);
       }
 
       alert(

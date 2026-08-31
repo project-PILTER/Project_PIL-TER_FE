@@ -79,21 +79,15 @@ export default function MedicineReviewItem({
         <div className="flex items-start gap-3">
           <Avatar className="w-10 h-10">
             <AvatarImage
-              src={commentAuthor.profileImage ?? undefined}
-              alt={commentAuthor.nickname}
+              src={review.profileImage || "/logo/logo.png"}
+              alt={review.nickname}
             />
-            <AvatarFallback>{commentAuthor.nickname}</AvatarFallback>
+            <AvatarFallback>{review.nickname}</AvatarFallback>
           </Avatar>
 
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <p className="font-semibold text-sm">{commentAuthor.nickname}</p>
-
-              {commentAuthor.isMedicalExpert && (
-                <Badge className="bg-[#eceef9] rounded-xl font-medium text-black text-xs px-2 py-2">
-                  {commentAuthor.expertTitle || "인증의료인"}
-                </Badge>
-              )}
+              <p className="font-semibold text-sm">{review.nickname}</p>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-gray-400">

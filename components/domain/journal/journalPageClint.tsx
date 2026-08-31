@@ -10,7 +10,11 @@ import JournalModal from "./journalModal";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Plus } from "lucide-react";
-import { deleteJournal, postJournal, putJournal } from "@/services/journal.client";
+import {
+  deleteJournal,
+  postJournal,
+  putJournal,
+} from "@/services/journal.client";
 import { useRouter } from "next/navigation";
 
 interface JournalPageClientProps {
@@ -28,20 +32,24 @@ export default function JournalPageClient({
     JournalDiary | undefined
   >();
 
-  const handleEdit = async(journal: JournalDiary) => {
+  const handleEdit = async (journal: JournalDiary) => {
     setMode("edit");
     setSelectedJournal(journal);
     setOpen(true);
   };
 
-  const handleSubmit = async(data: JournalFormValues) => {
+  const handleSubmit = async (data: JournalFormValues) => {
     try {
-      if(mode === "edit" && selectedJournal) {
+      if (mode === "edit" && selectedJournal) {
         await putJournal(data, selectedJournal.id);
         alert("건강기록이 수정되었습니다.");
+
+        router.refresh();
       } else {
         await postJournal(data);
         alert("건강기록이 등록되었습니다.");
+
+        router.refresh();
       }
 
       setOpen(false);
@@ -52,7 +60,7 @@ export default function JournalPageClient({
     }
   };
 
-  const handleDelete = async(id: number) => {
+  const handleDelete = async (id: number) => {
     try {
       await deleteJournal(id);
       alert("건강기록이 삭제되었습니다.");
@@ -61,7 +69,7 @@ export default function JournalPageClient({
     }
 
     router.refresh();
-  }
+  };
 
   const filteredJournals = selectedDate
     ? journals.filter(
@@ -94,7 +102,11 @@ export default function JournalPageClient({
 
       <div className="grid gap-6 lg:grid-cols-[1fr_21.875rem]">
         <div className="space-y-4">
-          <JournalList journals={filteredJournals} onEdit={handleEdit} onDelete={handleDelete}/>
+          <JournalList
+            journals={filteredJournals}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
         </div>
         <div>
           <JournalCalendar

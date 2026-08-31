@@ -61,9 +61,10 @@ export default function MedicineHeader({ medicine }: MedicineHeaderProps) {
   const handleLike = async () => {
     try {
       const res = await postMedicineLike(medicine.id);
+
       console.log("res 정보: ", res);
 
-      if (res === "인기(Hot) 약품으로 지정되었습니다.") {
+      if (res === "좋아요(Hot) 약품으로 지정되었습니다.") {
         alert("약 좋아요 등록 성공");
       } else {
         alert("약 좋아요 취소");
@@ -126,7 +127,7 @@ export default function MedicineHeader({ medicine }: MedicineHeaderProps) {
 
             <div className="flex items-center gap-1 text-sm text-gray-500">
               <Heart className="w-4 h-4" />
-              <span>좋아요 개</span>
+              <span>좋아요 {medicine.likeCount}개</span>
             </div>
           </div>
 

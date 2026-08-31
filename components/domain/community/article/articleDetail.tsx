@@ -41,7 +41,6 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
 
     if (res) {
       alert("게시글 수정 성공");
-      console.log("게시글 수정 정보: ", res);
     }
   };
 
@@ -78,7 +77,6 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
         } else {
           alert("좋아요가 취소되었습니다.");
         }
-        console.log("좋아요 정보: ", res);
       }
     } catch (error) {
       console.error("좋아요 요청 실패", error);

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -6,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { JournalFormValues, journalSchema } from "@/schemas/journal.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Frown, Meh, Smile } from "lucide-react";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 interface JournalFormProps {
@@ -34,6 +37,9 @@ export default function JournalForm({
   onSubmit,
   onCancel,
 }: JournalFormProps) {
+  const [supplementsInput, setsupplementsInput] = useState(
+    defaultValues?.supplements?.join(", ") || "",
+  );
   const form = useForm<JournalFormValues>({
     resolver: zodResolver(journalSchema),
 
@@ -56,11 +62,8 @@ export default function JournalForm({
     control,
   } = form;
 
-  console.log("건강일지 form error", errors);
-
   const conditionStatus = watch("conditionStatus");
   const selectedSymptoms = watch("symptoms") || [];
-  const supplements = watch("supplements") || [];
   const painScore = watch("painScore");
 
   const toggleSymptom = (symptom: string) => {
@@ -71,8 +74,17 @@ export default function JournalForm({
     setValue("symptoms", newArray, { shouldValidate: true });
   };
 
+  const handleFormSubmit = (data: JournalFormValues) => {
+    const supplements = supplementsInput
+      .split(",")
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0);
+
+    onSubmit({ ...data, supplements });
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       <div>
         <h3 className="font-medium">오늘의 기분</h3>
       </div>
@@ -188,15 +200,9 @@ export default function JournalForm({
 
         <Input
           placeholder="복용한 약을 입력하세요(쉼표로 구분)"
-          value={supplements.join(", ")}
+          value={supplementsInput}
           onChange={(e) => {
-            const rawValue = e.target.value;
-            const parsedArray = rawValue
-              .split(",")
-              .map((s) => s.trim())
-              .filter((s) => s.length > 0);
-
-            setValue("supplements", parsedArray, { shouldValidate: true });
+            setsupplementsInput(e.target.value);
           }}
         />
       </div>

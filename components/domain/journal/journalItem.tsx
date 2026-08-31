@@ -1,3 +1,6 @@
+"use client";
+
+import ConfirmDialog from "@/components/common/confirmDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,6 +9,7 @@ import { JournalDiary } from "@/types/journal.type";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 interface JournalItemProps {
   journal: JournalDiary;
@@ -16,7 +20,7 @@ interface JournalItemProps {
 const conditionConfig = {
   EXCELLENT: {
     label: "아주 좋음",
-    className: ""
+    className: "",
   },
   GOOD: {
     label: "좋음",
@@ -32,8 +36,8 @@ const conditionConfig = {
   },
   AWFUL: {
     label: "아주 나쁨",
-    className: ""
-  }
+    className: "",
+  },
 };
 
 export default function JournalItem({
@@ -42,6 +46,7 @@ export default function JournalItem({
   onDelete,
 }: JournalItemProps) {
   const condition = conditionConfig[journal.conditionStatus];
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   return (
     <Card className="relative p-6 overflow-hidden">
@@ -79,7 +84,7 @@ export default function JournalItem({
           </Button>
           <Button
             className="bg-transparent text-red-500 hover:bg-[#7F82E8]"
-            onClick={() => onDelete?.(journal.id)}
+            onClick={() => setDeleteOpen(true)}
           >
             <Trash2 />
           </Button>
@@ -87,6 +92,16 @@ export default function JournalItem({
       </div>
 
       <p>{journal.content}</p>
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="건강일지를 삭제하시겠습니까?"
+        description="건강일지를 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+        onConfirm={() => onDelete?.(journal.id)}
+      />
     </Card>
   );
 }

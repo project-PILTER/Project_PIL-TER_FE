@@ -78,11 +78,16 @@ export default function WritePage({ articleId }: WritePageProps) {
   };
 
   const handleSave = async () => {
-    if(!title.trim() && editor.isEmpty) {
+    if (!title.trim() && editor.isEmpty) {
       return alert("저장할 내용이 없습니다.");
     }
-    await saveDraft({title, content: editor.getHTML(), category: categoryName, updatedAt: new Date().toISOString()});
-  }
+    await saveDraft({
+      title,
+      content: editor.getHTML(),
+      category: categoryName,
+      updatedAt: new Date().toISOString(),
+    });
+  };
 
   const handlePublish = async () => {
     if (!title.trim()) return alert("제목을 입력해주세요.");
@@ -101,7 +106,7 @@ export default function WritePage({ articleId }: WritePageProps) {
             category: categoryName,
             imageUrl: "/logo/logo.png",
             draft: false,
-            updatedAt: new Date().toISOString()
+            updatedAt: new Date().toISOString(),
           },
           articleId,
         );
@@ -117,10 +122,8 @@ export default function WritePage({ articleId }: WritePageProps) {
           categoryId: categoryName,
           imageUrl: null,
           draft: false,
-          file: imageFiles[0]?.file ?? null
+          file: imageFiles[0]?.file ?? null,
         });
-
-        console.log("postArticle 정보: ", res);
 
         if (res && (res.isSuccess || res.id || res.data?.id)) {
           alert("글이 등록되었습니다.");

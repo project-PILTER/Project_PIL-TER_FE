@@ -15,6 +15,7 @@ export interface Medicines {
   bookmarkCount: number; // 북마크 개수
   reviews: MedicineReview[];
   totalReviewCount: number; // 총 리뷰 개수
+  likeCount: number;
 }
 
 export interface MedicineResponse<T> {
@@ -35,7 +36,8 @@ export interface MedicineResponse<T> {
 export interface MedicineReview {
   id: number;
   medicine: Medicines;
-  user: User;
+  nickname: string;
+  profileImage: string;
   rating: number;
   effectType: "EFFECTIVE" | "INEFFECTIVE";
   symptomTag: "headache" | "toothache" | "fever" | "muscle_pain" | "menstrual_pain" | "other";

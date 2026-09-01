@@ -1,5 +1,6 @@
 "use client";
 
+import ConfirmDialog from "@/components/common/confirmDialog";
 import Dropdown from "@/components/common/dropdown";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
 
   const [likeCount, setLikeCount] = useState(article.likeCount);
   const [isLiked, setIsLiked] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const handleEdit = async () => {
     const request: ArticleInput = {
@@ -45,14 +47,14 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
   };
 
   const handleDelete = async () => {
-    if (!confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
-
     try {
       await deleteArticle(id);
       alert("삭제되었습니다.");
+      setDeleteOpen(false);
+
       router.push("/community/articles");
     } catch (error) {
-      alert("삭제에 실패했습니다.");
+      alert("삭제에 실패했습니다. 다시 시도 해주세요.");
     }
   };
 
@@ -96,7 +98,7 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
     {
       label: "삭제하기",
       icon: <Trash2 className="w-4 h-4" />,
-      onClick: handleDelete,
+      onClick: () => setDeleteOpen(true),
     },
   ];
 
@@ -181,6 +183,16 @@ export default function ArticleDetail({ article, id }: ArticleDetailProps) {
           <span>공유</span>
         </Button>
       </div>
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="게시글을 삭제하시겠습니까?"
+        description="게시글을 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?"
+        onConfirm={handleDelete}
+        confirmText="삭제"
+        cancelText="취소"
+      />
     </Card>
   );
 }
